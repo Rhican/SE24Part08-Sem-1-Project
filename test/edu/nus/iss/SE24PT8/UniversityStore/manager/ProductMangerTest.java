@@ -5,15 +5,10 @@
  */
 package edu.nus.iss.SE24PT8.UniversityStore.manager;
  
-import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
-import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
-import edu.nus.iss.SE24PT8.universityStore.domain.Product;
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.Product;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.Category;
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
     

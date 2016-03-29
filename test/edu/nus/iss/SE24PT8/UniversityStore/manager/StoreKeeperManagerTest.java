@@ -1,14 +1,12 @@
 
 package edu.nus.iss.SE24PT8.UniversityStore.manager;
 
-import edu.nus.iss.SE24PT8.universityStore.manager.StoreKeeperManager;
-import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.StoreKeeper;
 import java.util.ArrayList;
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

@@ -5,19 +5,13 @@
  */
  
 package edu.nus.iss.SE24PT8.UniversityStore.manager;
-import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
-import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
-import edu.nus.iss.SE24PT8.universityStore.domain.MemberDiscount;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadDiscountException;
-import edu.nus.iss.SE24PT8.universityStore.util.Constants;
-import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
+import edu.nus.iss.SE24PT8.UniversityStore.manager.DiscountManager;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.Discount;
+import edu.nus.iss.SE24PT8.UniversityStore.exception.BadDiscountException;
+import edu.nus.iss.SE24PT8.UniversityStore.util.Constants;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 /**
  *
  * @author misitesawn

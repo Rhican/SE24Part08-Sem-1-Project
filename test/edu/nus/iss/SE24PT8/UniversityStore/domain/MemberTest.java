@@ -1,8 +1,7 @@
 
 package edu.nus.iss.SE24PT8.UniversityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Member;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import edu.nus.iss.SE24PT8.UniversityStore.exception.BadMemberRegistrationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

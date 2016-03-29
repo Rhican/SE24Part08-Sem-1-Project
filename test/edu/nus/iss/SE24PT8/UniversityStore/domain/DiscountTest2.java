@@ -5,12 +5,9 @@
  */
 package edu.nus.iss.SE24PT8.UniversityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
-import edu.nus.iss.SE24PT8.universityStore.domain.NonMember;
-import edu.nus.iss.SE24PT8.universityStore.domain.Customer;
-import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
-import edu.nus.iss.SE24PT8.universityStore.util.ApplicationConfig;
-import edu.nus.iss.SE24PT8.universityStore.util.Constants;
+import edu.nus.iss.SE24PT8.UniversityStore.manager.DiscountManager;
+import edu.nus.iss.SE24PT8.UniversityStore.util.ApplicationConfig;
+import edu.nus.iss.SE24PT8.UniversityStore.util.Constants;
 import java.util.ArrayList;
 import java.util.Date;
 import org.junit.After;

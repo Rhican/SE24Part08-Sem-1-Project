@@ -5,8 +5,8 @@
  */
 package edu.nus.iss.SE24PT8.UniversityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadVendorException;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.Vendor;
+import edu.nus.iss.SE24PT8.UniversityStore.exception.BadVendorException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

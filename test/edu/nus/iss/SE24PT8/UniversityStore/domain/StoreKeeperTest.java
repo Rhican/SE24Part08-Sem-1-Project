@@ -6,8 +6,8 @@ package edu.nus.iss.SE24PT8.UniversityStore.domain;
  * and open the template in the editor.
  */
 
-import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadVendorException;
+import edu.nus.iss.SE24PT8.UniversityStore.exception.BadVendorException;
+
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;

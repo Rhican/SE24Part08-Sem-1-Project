@@ -1,8 +1,8 @@
 
 package edu.nus.iss.SE24PT8.UniversityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Customer;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import edu.nus.iss.SE24PT8.UniversityStore.domain.Customer;
+import edu.nus.iss.SE24PT8.UniversityStore.exception.BadMemberRegistrationException;
 import junit.framework.TestCase;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;

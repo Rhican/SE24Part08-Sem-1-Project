@@ -8,7 +8,7 @@
  *
  * @author SE24PT8
  */
-package edu.nus.iss.SE24PT8.universityStore.gui.framework;
+package edu.nus.iss.SE24PT8.UniversityStore.gui.framework;
 
 public class PubSub {
     
