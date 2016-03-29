@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.UniversityStore.gui.components;
 
 /**
  *
