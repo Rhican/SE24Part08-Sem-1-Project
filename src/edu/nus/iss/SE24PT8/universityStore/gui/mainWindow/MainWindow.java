@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.nus.iss.SE24PT8.UniversityStore.gui.mainWindow;
+package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
-import edu.nus.iss.SE24PT8.UniversityStore.gui.components.Home;
-import edu.nus.iss.SE24PT8.UniversityStore.gui.components.ProductView;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
