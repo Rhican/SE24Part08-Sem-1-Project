@@ -14,7 +14,7 @@ import java.util.Date;
  * @author misitesawn
  */
 public  class  Discount  implements Comparable<Discount>{
-    private String discountCode;
+    private String discountCode;//
     private String discountDes;
     private Date discountStartDate;
     private int discountPeriod;
