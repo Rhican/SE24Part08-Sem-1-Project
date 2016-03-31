@@ -5,8 +5,9 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
+import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductView;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import java.awt.Component;
 
 
 /**
@@ -30,7 +36,8 @@ public class MainWindow extends javax.swing.JFrame {
     private Timer timer = null;
     private JPanel currentView = null;
     private JPanel homeView = null;
-    private ProductView productView = null;
+    private ProductPanel productView = null;
+    private CheckoutPanel checkoutView = null; 
 
     /**
      * Creates new form MainWindow
@@ -43,9 +50,6 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
-        
-        // Set to Home view
-        jToggleButtonHome.setSelected(true);
         jToggleButtonHomeActionPerformed(null);
         
         SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
@@ -87,8 +91,6 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void setButtonGroupForLeftMenu(){
-        // Add button group control
-        buttonGroup.add(jToggleButtonHome);
         buttonGroup.add(jToggleButtonCheckOut);
         buttonGroup.add(jToggleButtonMembers);
         buttonGroup.add(jToggleButtonProducts);
@@ -133,7 +135,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabelStoreKeeperName = new javax.swing.JLabel();
         jScrollPaneLeft = new javax.swing.JScrollPane();
         jPanelLeft = new javax.swing.JPanel();
-        jToggleButtonHome = new javax.swing.JToggleButton();
         jToggleButtonCheckOut = new javax.swing.JToggleButton();
         jToggleButtonMembers = new javax.swing.JToggleButton();
         jToggleButtonProducts = new javax.swing.JToggleButton();
@@ -192,13 +193,6 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPaneLeft.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPaneLeft.setMinimumSize(new java.awt.Dimension(23, 300));
 
-        jToggleButtonHome.setText("Home");
-        jToggleButtonHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonHomeActionPerformed(evt);
-            }
-        });
-
         jToggleButtonCheckOut.setText("Checkout");
         jToggleButtonCheckOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,53 +237,48 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         javax.swing.GroupLayout jPanelLeftLayout = new javax.swing.GroupLayout(jPanelLeft);
-        jPanelLeft.setLayout(jPanelLeftLayout);
         jPanelLeftLayout.setHorizontalGroup(
-            jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLeftLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToggleButtonReport, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonCategories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonVendors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonMembers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonStoreKeepers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonCheckOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonDiscounts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonLogOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanelLeftLayout.createSequentialGroup()
+        			.addGap(10)
+        			.addGroup(jPanelLeftLayout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(jToggleButtonReport, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonProducts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonCategories, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonVendors, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonMembers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonCheckOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        			.addContainerGap())
         );
-
-        jPanelLeftLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jToggleButtonCategories, jToggleButtonCheckOut, jToggleButtonDiscounts, jToggleButtonLogOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonReport, jToggleButtonStoreKeepers, jToggleButtonVendors});
-
         jPanelLeftLayout.setVerticalGroup(
-            jPanelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLeftLayout.createSequentialGroup()
-                .addComponent(jToggleButtonHome)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonCheckOut)
-                .addGap(7, 7, 7)
-                .addComponent(jToggleButtonMembers)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonProducts)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonCategories)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonVendors)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonDiscounts)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonStoreKeepers)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonReport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jToggleButtonLogOut)
-                .addGap(0, 0, 0))
+        	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanelLeftLayout.createSequentialGroup()
+        			.addGap(29)
+        			.addComponent(jToggleButtonCheckOut)
+        			.addGap(7)
+        			.addComponent(jToggleButtonMembers)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonProducts)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonCategories)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonVendors)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonDiscounts)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonStoreKeepers)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jToggleButtonReport)
+        			.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+        			.addComponent(jToggleButtonLogOut)
+        			.addGap(0))
         );
-
-        jPanelLeftLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jToggleButtonCategories, jToggleButtonCheckOut, jToggleButtonDiscounts, jToggleButtonLogOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonReport, jToggleButtonStoreKeepers, jToggleButtonVendors});
+        jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
+        jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
+        jPanelLeft.setLayout(jPanelLeftLayout);
 
         jScrollPaneLeft.setViewportView(jPanelLeft);
 
@@ -354,11 +343,16 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jToggleButtonCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCheckOutActionPerformed
         // TODO add your handling code here:
+    	if (checkoutView == null) {
+    		checkoutView = new CheckoutPanel();
+        }
+        switchView(checkoutView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Checkout");
     }//GEN-LAST:event_jToggleButtonCheckOutActionPerformed
 
     private void jToggleButtonProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonProductsActionPerformed
         if (productView == null) {
-            productView = new ProductView();
+            productView = new ProductPanel();
         }
         switchView(productView);
         SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Products");
@@ -438,7 +432,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonCategories;
     private javax.swing.JToggleButton jToggleButtonCheckOut;
     private javax.swing.JToggleButton jToggleButtonDiscounts;
-    private javax.swing.JToggleButton jToggleButtonHome;
     private javax.swing.JToggleButton jToggleButtonLogOut;
     private javax.swing.JToggleButton jToggleButtonMembers;
     private javax.swing.JToggleButton jToggleButtonProducts;

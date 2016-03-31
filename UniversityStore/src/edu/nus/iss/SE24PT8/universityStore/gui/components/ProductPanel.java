@@ -6,6 +6,8 @@
 
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
+import javax.swing.JPanel;
+
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 
@@ -13,12 +15,12 @@ import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
  *
  * @author SE24PT8
  */
-public class ProductView extends javax.swing.JPanel implements INotificable {
+public class ProductPanel extends JPanel implements INotificable {
 
     /**
      * Creates new form Product
      */
-    public ProductView() {
+    public ProductPanel() {
         initComponents();
         
         SubjectManager.getInstance().addNotification("MainWindow", "MenuClicked", this);
