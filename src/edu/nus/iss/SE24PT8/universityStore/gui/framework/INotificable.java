@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package edu.nus.iss.SE24PT8.universityStore.gui.framework;
 
 /**
  *
  * @author SE24PT8
  */
-package edu.nus.iss.SE24PT8.universityStore.gui.framework;
-
-public class PubSub {
-    
+public interface INotificable {
+    public void update(String group, String topic, String data);
 }

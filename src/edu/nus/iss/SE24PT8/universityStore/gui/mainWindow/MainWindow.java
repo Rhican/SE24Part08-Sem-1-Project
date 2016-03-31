@@ -7,6 +7,8 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductView;
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
+import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -45,6 +47,8 @@ public class MainWindow extends javax.swing.JFrame {
         // Set to Home view
         jToggleButtonHome.setSelected(true);
         jToggleButtonHomeActionPerformed(null);
+        
+        SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
         
     }
 
@@ -212,6 +216,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jToggleButtonCategories.setText("Categories");
+        jToggleButtonCategories.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonCategoriesActionPerformed(evt);
+            }
+        });
 
         jToggleButtonVendors.setText("Vendors");
 
@@ -352,6 +361,7 @@ public class MainWindow extends javax.swing.JFrame {
             productView = new ProductView();
         }
         switchView(productView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Products");
     }//GEN-LAST:event_jToggleButtonProductsActionPerformed
 
     private void jToggleButtonDiscountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonDiscountsActionPerformed
@@ -367,7 +377,15 @@ public class MainWindow extends javax.swing.JFrame {
             homeView = new Home();
         }
         switchView(homeView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Home");
     }//GEN-LAST:event_jToggleButtonHomeActionPerformed
+
+    private void jToggleButtonCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
+        // Testing
+        CategoryManager.getInstance().addCategory("123", "Category1");
+        //SubjectManager.getInstance().Update("Category", "Category Add", "123");
+        
+    }//GEN-LAST:event_jToggleButtonCategoriesActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,17 +6,23 @@
 
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
+
 /**
  *
  * @author SE24PT8
  */
-public class ProductView extends javax.swing.JPanel {
+public class ProductView extends javax.swing.JPanel implements INotificable {
 
     /**
      * Creates new form Product
      */
     public ProductView() {
         initComponents();
+        
+        SubjectManager.getInstance().addNotification("MainWindow", "MenuClicked", this);
+        SubjectManager.getInstance().addNotification("Category", "Category Add", this);
     }
 
     /**
@@ -255,4 +261,13 @@ public class ProductView extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldQuantity;
     private javax.swing.JTextField jTextFieldReorder;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(String group, String topic, String data) {
+        if (group.equals("Category") && topic.equals("Category Add")) {
+            // Reload catgeory
+        }
+        
+        System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
+    }
 }

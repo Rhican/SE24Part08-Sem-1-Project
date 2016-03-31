@@ -8,6 +8,7 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class CategoryManager implements IManager{
     public static CategoryManager getInstance(){
         if(instance == null){
             instance = new CategoryManager();
+            
+            // Testing by zehua
+            SubjectManager.getInstance().addSubject("Category", "Category Add");
         }
         return instance;
     }
@@ -57,7 +61,11 @@ public class CategoryManager implements IManager{
         if (getCategory(code) == null){  
             Category newCat = new Category (code, name);
             categories.add(newCat);
-            DataAdapter.writeCategories(categories);
+            
+            //Testing by zehua
+            SubjectManager.getInstance().Update("Category", "Category Add", code);
+            
+            //DataAdapter.writeCategories(categories);
             return new ReturnObject(true,Constants.CONST_CAT_MSG_CREATION_SUCUESS, newCat);
         } else {
             return new ReturnObject(false,Constants.CONST_CAT_ERR_CATCODEEXIST, null);

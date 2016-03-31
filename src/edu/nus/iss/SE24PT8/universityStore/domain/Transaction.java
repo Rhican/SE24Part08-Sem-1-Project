@@ -18,13 +18,6 @@ import java.util.logging.Logger;
  *
  * @author Zehua
  */
-/**
- * *
- * Questions: Transaction ID continuous sequential no? if yes, when after
- * loading old transactions, the id should continue from bigger ID in the past?
- *
- * @author Zehua
- */
 public class Transaction {
     private static long transactionIDCount = 0;
     private long id;
@@ -61,7 +54,7 @@ public class Transaction {
         return !isCloded();
     }
 
-    public void addSaleItem(SaleItem saleItem) {
+    public void insertSaleItemRecord(SaleItem saleItem) {
         saleItems.put(saleItem.getProductID(), saleItem);
     }
     public ReturnObject addSaleItem(Product product, int count) {

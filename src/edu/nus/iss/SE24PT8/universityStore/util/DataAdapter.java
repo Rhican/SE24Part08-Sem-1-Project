@@ -482,23 +482,27 @@ public class DataAdapter {
             
              Transaction transaction=new Transaction();
              //transaction.setTransactionID(token0_TransactionID);
-             //transaction.setTransactionDate(date);
-             //transaction.setCustomerID(token2_CustomerID);
+             transaction.setDate(date);
+             transaction.setMember(token2_CustomerID);
         
+             /*
              if(token2_CustomerID.equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC)){
              customer=new NonMember(Constants.CONST_CUST_TYPE_PUBLIC,Constants.CONST_CUST_TYPE_PUBLIC);
              }else{
              customer=new Member(token2_CustomerID,token2_CustomerID,0);
              }
+             
              //transaction.setCustomer(customer);
-        
+            */
+             
              SaleItem sale=new SaleItem(token1_ProductID,quantity);
             
-             //Product product=new Product();
-             //product.setProductID(token1_ProductID);
+             Product product=new Product();
+             product.setProductId(token1_ProductID);
              sale.setProductID(token1_ProductID);
          
-             transaction.addSaleItem(sale);
+             transaction.insertSaleItemRecord(sale);
+             transaction.close();
              return transaction;
          
             
@@ -512,19 +516,19 @@ public class DataAdapter {
      
      public static ArrayList<Transaction> loadTransactions(){
         ArrayList<Transaction> objectList=new ArrayList<>();
-        HashMap<String,Transaction> transactions=new HashMap<>();
+        HashMap<Long,Transaction> transactions=new HashMap<>();
         Transaction existingTransaction;
         ArrayList<ArrayList<String>> dataLines = FileOperations.readFileTokenized(FILENAME_TRANSACTIONS);
         for(ArrayList<String> tokens:dataLines){
             Transaction transaction=convertTokenstoTransaction(tokens);
             //check if transaction is already in the list
             existingTransaction=null;
-            //existingTransaction=transactions.get(transaction.getTransactionID());
+            existingTransaction=transactions.get(transaction.getId());
 
                 if(existingTransaction==null){
-                 //   transactions.put(transaction.getTransactionID(), transaction);
+                    transactions.put(transaction.getId(), transaction);
                 }else{
-                    existingTransaction.addSaleItem(transaction.getSaleItems().get(0));
+                    existingTransaction.insertSaleItemRecord(transaction.getSaleItems().get(0));
                 }//end of else
         }//end of For loop
 
@@ -539,27 +543,27 @@ public class DataAdapter {
     public static ArrayList<String> convertTransactionToString(Transaction transaction) {
          ArrayList<String> lines=new ArrayList<String>();
          StringBuffer sb;
-         /*
+         
          for(SaleItem item:transaction.getSaleItems()){
              sb=new StringBuffer();
              //1: Transaction id
-            sb.append(transaction.getTransactionID());
+            sb.append(transaction.getId());
             sb.append(comma);
             //2: Product ID
             sb.append(item.getProduct().getProductId());
             sb.append(comma);
             //3 :Member
-            sb.append(transaction.getCustomer().getCustomerID());
+            sb.append(transaction.getMember().getCustomerID());
             sb.append(comma);
             //4: quantity
             sb.append(item.getSaleQuantity());
             sb.append(comma);
             //5: date:
-            sb.append(DF.format(transaction.getTransactionDate()));
+            sb.append(DF.format(transaction.getDate()));
 
           lines.add(sb.toString());
        }
-         */
+         
          return lines;
     }
 
@@ -610,7 +614,7 @@ public class DataAdapter {
         for(Transaction trans:transactions){
             
             System.out.println("----------------------------");
-            //System.out.println("Transaction"+trans.getTransactionID()+comma+trans.getCustomerID()+comma+DF.format(trans.getTransactionDate()));
+            System.out.println("Transaction"+trans.getId()+comma+trans.getMember().getCustomerID()+comma+DF.format(trans.getDate()));
             System.out.println("   sale items:");
             for(SaleItem sale:trans.getSaleItems()){
                 System.out.println("        "+sale.getProductID()+comma+sale.getSaleQuantity());
