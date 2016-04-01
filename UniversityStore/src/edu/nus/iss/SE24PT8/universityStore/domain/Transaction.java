@@ -64,10 +64,10 @@ public class Transaction {
     public ReturnObject addSaleItem(String productID, int count) {
         if (!isCloded()) 
         {
-            return new ReturnObject<>(false, "Exception occurred : Transaction is Closed", null);
+            return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
         if (count <= 0) {
-            return new ReturnObject<>(false, "Exception occurred : Item Quantity less than 1", null);
+            return new ReturnObject(false, "Exception occurred : Item Quantity less than 1", null);
         }
         if (saleItems.containsKey(productID)) {
             //saleItems.get(productID).
@@ -76,7 +76,7 @@ public class Transaction {
             SaleItem newSaleItem = new SaleItem(productID, count);
             saleItems.put(productID, newSaleItem);
         }
-        return new ReturnObject<>(true, "added saleitem", this);
+        return new ReturnObject(true, "added saleitem", this);
     }
 
      public ReturnObject removeSaleItem(SaleItem saleItem) {
@@ -90,10 +90,10 @@ public class Transaction {
     public ReturnObject removeSaleItem(String productID, int count) {
         if (!isCloded()) 
         {
-            return new ReturnObject<>(false, "Exception occurred : Transaction is Closed", null);
+            return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
         if (count <= 0) {
-            return new ReturnObject<>(false, "Exception occurred : Item Quantity less than 1", null);
+            return new ReturnObject(false, "Exception occurred : Item Quantity less than 1", null);
         }
         if (saleItems.containsKey(productID)) {
             SaleItem item = saleItems.get(productID);
@@ -102,26 +102,26 @@ public class Transaction {
                 saleItems.remove(productID);
             }
         } else {
-            return new ReturnObject<>(true, "Sale Item is not exists", this);
+            return new ReturnObject(true, "Sale Item is not exists", this);
         }
-        return new ReturnObject<>(true, "removed saleitem", this);
+        return new ReturnObject(true, "removed saleitem", this);
     }
     
     public ReturnObject changeQuantity(SaleItem saleItem, int count)
     {
         if (!isCloded()) 
         {
-            return new ReturnObject<>(false, "Exception occurred : Transaction is Closed", null);
+            return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
         if (count <= 0) {
-            return new ReturnObject<>(false, "Exception occurred : Item Quantity less than 1", null);
+            return new ReturnObject(false, "Exception occurred : Item Quantity less than 1", null);
         }
         String productID= saleItem.getProductID();
         if (saleItems.containsKey(productID)) {
             //saleItems.get(productID).
             saleItems.get(productID).changeQuantity(count);
         }
-        return new ReturnObject<>(true, "changed saleitem", this);
+        return new ReturnObject(true, "changed saleitem", this);
     }
     
     public boolean close() {

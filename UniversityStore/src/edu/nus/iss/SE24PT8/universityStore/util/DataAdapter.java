@@ -26,6 +26,7 @@ import java.util.HashMap;
 /**
  *
  * @author hendry
+ * Few method added by Mugunthan
  */
 public class DataAdapter {
 
@@ -572,7 +573,12 @@ public class DataAdapter {
         FileOperations.writeFile(dataLines, FILENAME_TRANSACTIONS, true);
 
     }
-
+    
+    public static void createVedorFile(String code) {
+        String filename = FILENAME_VENDOR_PREFIX + code.toUpperCase().trim() + FILENAME_SUFFIX;
+        FileOperations.createFile(filename);
+    }
+    
     public static void removeVedorFile(String code) {
         String filename = FILENAME_VENDOR_PREFIX + code.toUpperCase().trim() + FILENAME_SUFFIX;
         FileOperations.deleteFile(filename);

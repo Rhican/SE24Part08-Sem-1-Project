@@ -8,6 +8,7 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import java.text.SimpleDateFormat;
@@ -21,10 +22,15 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JComponent;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.Window;
 
 
 /**
@@ -37,7 +43,9 @@ public class MainWindow extends javax.swing.JFrame {
     private JPanel currentView = null;
     private JPanel homeView = null;
     private ProductPanel productView = null;
+    private CategoryPanel catView = null;
     private CheckoutPanel checkoutView = null; 
+    private static MainWindow instance;
 
     /**
      * Creates new form MainWindow
@@ -56,6 +64,13 @@ public class MainWindow extends javax.swing.JFrame {
         
     }
 
+    public static MainWindow getInstance() {
+        if(instance == null){
+            instance = new MainWindow();
+            
+        }
+        return instance;
+	}
     /**
      * To Switch to the new view
      *  1. hide the current view
@@ -153,6 +168,7 @@ public class MainWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("UniversityStore POS");
         setAlwaysOnTop(true);
+        setLocation(300, 200);
 
         jPanelTop.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -375,9 +391,11 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonHomeActionPerformed
 
     private void jToggleButtonCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
-        // Testing
-        CategoryManager.getInstance().addCategory("123", "Category1");
-        //SubjectManager.getInstance().Update("Category", "Category Add", "123");
+    	if (catView == null) {
+    		catView = new CategoryPanel();
+        }
+        switchView(catView);
+        
         
     }//GEN-LAST:event_jToggleButtonCategoriesActionPerformed
 
@@ -411,12 +429,13 @@ public class MainWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainWindow().setVisible(true);
+                getInstance().setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelStoreKeeperName;

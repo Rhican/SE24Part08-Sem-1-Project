@@ -5,6 +5,9 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.util;
 
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  *
  * @author misitesawn
@@ -44,6 +47,7 @@ public final class Constants {
     
     //Added by Mugunthan
     public static final String CONST_CAT_ERR_INVALID_DETAILS = "Name and Code of category should be specified";
+    public static final String CONST_CAT_ERR_LONG_CODE = "Code should contain three characters";
     public static final String CONST_CAT_MSG_CREATION_SUCUESS = "Category Sucussfully created.";
     public static final String CONST_CAT_ERR_CATCODEEXIST = "Category code already exist";
     public static final String CONST_CAT_MSG_UPDATE_SUCUESS = "Category updated sucessfully";
@@ -55,5 +59,8 @@ public final class Constants {
     public static final String CONST_VENDOR_ERR_CATCODEMISSING = "Category code is missing";
     public static final String CONST_VENDOR_MSG_CREATION_SUCUESS ="Vendor added Successfully";
     public static final String CONST_VENDOR_MSG_UPDATE_SUCUESS = "VendorList updated Successfully";
+    
+    public static final Color STORE_APP_TITLE_COLOR = new java.awt.Color(0, 64, 128);
+    public static final Font STORE_APP_TITLE_FONT= new java.awt.Font("Segoe UI", 1, 20);
 
 }
