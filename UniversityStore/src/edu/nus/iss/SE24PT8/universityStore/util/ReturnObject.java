@@ -9,14 +9,14 @@ package edu.nus.iss.SE24PT8.universityStore.util;
  *
  * @author misitesawn
  */
-public class ReturnObject<E > {
-    public boolean success;
-    public String message;
-    public E data;
+public class ReturnObject {
+    private boolean success;
+    private String message;
+    private Object data;
 
     
     //By Mugunthan - Added constructor and getter setters
-    public ReturnObject(boolean success, String message, E data) {
+    public ReturnObject(boolean success, String message, Object data) {
         this.success = success;
         this.message = message;
         this.data = data;
@@ -38,11 +38,11 @@ public class ReturnObject<E > {
         this.message = message;
     }
 
-    public E getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(E data) {
+    public void setData(Object data) {
         this.data = data;
     }
     

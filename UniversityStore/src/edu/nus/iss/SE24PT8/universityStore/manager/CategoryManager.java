@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
@@ -27,9 +23,6 @@ public class CategoryManager implements IManager{
     public static CategoryManager getInstance(){
         if(instance == null){
             instance = new CategoryManager();
-            
-            // Testing by zehua
-            SubjectManager.getInstance().addSubject("Category", "Category Add");
         }
         return instance;
     }
@@ -54,18 +47,14 @@ public class CategoryManager implements IManager{
     }
     
     public ReturnObject addCategory(String code, String name){
-        if(code.trim().equals("") || name.trim().equals("") || code == null || name == null)
+        if(code.trim().equals("") || name.trim().equals("") || code == null || name == null|| code.length() > 3)
           return new ReturnObject(false, Constants.CONST_CAT_ERR_INVALID_DETAILS, null);
-        //Changed by hendry. Getcategory should be null
-        //if (getCategory(code) != null){
-        if (getCategory(code) == null){  
-            Category newCat = new Category (code, name);
+        if (getCategory(code.toUpperCase()) == null){  
+            Category newCat = new Category (code.toUpperCase(), name);
             categories.add(newCat);
             
-            //Testing by zehua
-            SubjectManager.getInstance().Update("Category", "Category Add", code);
-            
-            //DataAdapter.writeCategories(categories);
+            DataAdapter.writeCategories(categories);
+            DataAdapter.createVedorFile(code.toUpperCase());
             return new ReturnObject(true,Constants.CONST_CAT_MSG_CREATION_SUCUESS, newCat);
         } else {
             return new ReturnObject(false,Constants.CONST_CAT_ERR_CATCODEEXIST, null);
@@ -73,7 +62,7 @@ public class CategoryManager implements IManager{
         
     }
     
-    //Assumbtion - category code connot be changed
+    //Assumption - category code canno't be changed
     public ReturnObject updateCategory(Category cat) {
         Category oldCategory = getCategory(cat.getCategoryCode());
         if (oldCategory != null ) {
@@ -96,7 +85,6 @@ public class CategoryManager implements IManager{
             } else {
                 categories.remove(cat);
                 DataAdapter.writeCategories(categories);
-                //ToDO Remove vendor files
                 DataAdapter.removeVedorFile(code);
                 return new ReturnObject(true, Constants.CONST_CAT_MSG_DELETE_SUCUESS, cat);
             }                
@@ -116,7 +104,6 @@ public class CategoryManager implements IManager{
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    //Added by Hendry: GEt the list of Vendors that the category is not currently assigned
     public ArrayList<Vendor> getVendorsNotInCategory(Category category){
         Category checkCategory;
         if(category==null){
@@ -144,6 +131,19 @@ public class CategoryManager implements IManager{
         }// end of categories loop
         return vendorsNotAssigned;
     }
+    
+    public Object[][] prepareCategoryTableModel() {
+		ArrayList<Category> list = getCategories();
+		Object[][] tableData = new Object[list.size()][2];
+		for (int i = 0; i < list.size(); i++) {
+			Category category = list.get(i);
+			Object[] rowData = new Object[2];
+			rowData[0] = category.getCategoryCode();
+			rowData[1] = category.getCategoryName();
+			tableData[i] = rowData;
+		}
+		return tableData;
+	}
     
     
 }

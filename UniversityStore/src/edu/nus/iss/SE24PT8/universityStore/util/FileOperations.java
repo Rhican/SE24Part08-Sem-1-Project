@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 /**
  *
  * @author hendry
+ * Few method added by Mugunthan
  */
 public class FileOperations {
 
@@ -80,6 +81,21 @@ public class FileOperations {
         try {
             Path path = Paths.get(filename);
             Files.delete(path);
+        } catch (NoSuchFileException ex) {
+            System.out.println("Exception" + ex);        
+        } catch (IOException ex) {
+            System.out.println("Exception" + ex);
+        }
+    }
+    
+  //Added by Mugunthan
+    public static void createFile(String filename) {
+        System.out.println("Creating a File");
+        try {
+            Path path = Paths.get(filename);
+            if(Files.exists(path))
+            	Files.delete(path);
+        	Files.createFile(path);
         } catch (NoSuchFileException ex) {
             System.out.println("Exception" + ex);        
         } catch (IOException ex) {

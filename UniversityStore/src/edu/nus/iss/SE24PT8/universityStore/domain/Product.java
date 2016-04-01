@@ -133,10 +133,10 @@ public class Product {
     public ReturnObject reduceQuantity(int reduceAmount){
         //check reduce amount
         if(reduceAmount>qty){
-            return new ReturnObject<>(false, "Amount reduced is greated than current quantity", this);
+            return new ReturnObject(false, "Amount reduced is greated than current quantity", this);
         }
         qty=qty-reduceAmount;
-        return new ReturnObject<>(true, "Amount reduced", this);
+        return new ReturnObject(true, "Amount reduced", this);
     }
 
     @Override
