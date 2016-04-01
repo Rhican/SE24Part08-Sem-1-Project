@@ -10,7 +10,6 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
-import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -22,15 +21,10 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComponent;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Window;
 
 
 /**
