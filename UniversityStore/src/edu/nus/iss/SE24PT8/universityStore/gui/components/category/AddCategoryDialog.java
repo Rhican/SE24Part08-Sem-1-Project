@@ -1,5 +1,8 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.category;
 
+import java.awt.GridLayout;
+import java.awt.Label;
+
 import javax.swing.*;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
@@ -25,14 +28,23 @@ public class AddCategoryDialog extends BaseDialogBox {
     }
 
     protected JPanel createFormPanel  ()  {
-    	EntryJPanel e = new EntryJPanel();
-    	
-        e.addCompCol1(new JLabel ("Code"));
-        e.addCompCol1(new JTextField (3));
+    	JPanel p = new JPanel ();
         
-        e.addCompCol1(new JLabel ("Name"));
-        e.addCompCol1( new JTextField (20));
-        return e.getPanel();
+        p.setLayout (new GridLayout (0, 2));
+        p.add (new JLabel ("Code"));
+        codeField = new JTextField (3);
+        p.add (codeField);
+        p.add(new JLabel ("Name"));
+        nameField = new JTextField (20);
+        p.add (nameField);
+//    	EntryJPanel e = new EntryJPanel();
+//    	
+//        e.addCompCol1(new JLabel ("Code"));
+//        e.addCompCol1(new JTextField (3));
+//        
+//        e.addCompCol1(new JLabel ("Name"));
+//        e.addCompCol1( new JTextField (20));
+        return p;
     }
 
     protected boolean performCreateUpdateAction () {
