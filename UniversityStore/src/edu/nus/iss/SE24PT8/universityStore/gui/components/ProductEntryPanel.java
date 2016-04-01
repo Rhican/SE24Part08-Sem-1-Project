@@ -6,10 +6,17 @@ import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import edu.nus.iss.SE24PT8.universityStore.Store;
+import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
+
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -23,8 +30,12 @@ public class ProductEntryPanel extends JPanel{
 	private JTextField txtPrice;
 	private JTextField txtOrderQty;
 	private JTextField txtReorderQty;
+	JTextPane txtDescription;
+	JButton btnAdd ;
 	
 	JComboBox comboCategory;
+	
+	Store store = Store.getInstance();
 	
 	private Dimension jTextFieldDimenstion = new Dimension(500, 150);
 	
@@ -53,22 +64,25 @@ public class ProductEntryPanel extends JPanel{
 		txtBarCode.setSize(jTextFieldDimenstion);
 		
 		comboCategory = new JComboBox();
+		comboCategory.setSize(jTextFieldDimenstion);
 		
-		JTextPane txtDescription = new JTextPane();
+		txtDescription = new JTextPane();
+		
 		
 		txtQty = new JTextField();
-		txtQty.setColumns(10);
+		txtQty.setSize(jTextFieldDimenstion);
 		
 		txtPrice = new JTextField();
 		txtPrice.setSize(jTextFieldDimenstion);
 		
 		txtOrderQty = new JTextField();
-		txtOrderQty.setColumns(10);
+		txtOrderQty.setSize(jTextFieldDimenstion);
 		
 		txtReorderQty = new JTextField();
-		txtReorderQty.setColumns(10);
+		txtReorderQty.setSize(jTextFieldDimenstion);
 		
-		JButton btnAdd = new JButton("ADD");
+		btnAdd = new JButton("ADD");
+		btnAdd.setSize(jTextFieldDimenstion);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -146,6 +160,27 @@ public class ProductEntryPanel extends JPanel{
 					.addGap(39))
 		);
 		setLayout(groupLayout);
+		
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AddNewRecord();
+				
+			}
+		});
+	}
+	
+	public JButton getBtnAdd() {
+		return btnAdd;
+	}
+	
+	public void AddNewRecord(){
+		
+	//	store.getMgrProduct().addNewProduct(txtProdcutName.getText(), txtDescription.getText(),Integer.parseInt( txtQty.getText() )
+		//		, Double.parseDouble(txtPrice.getText()), txtBarCode.getText(), Integer.parseInt(txtQty.getText()), Integer.parseInt(txtReorderQty.getText()),
+			//store.getMgrCategory().getCategory("CLO"));
+		store.getMgrProduct().addNewProduct("ABC", "ABC BRIEF", 3, 23, "12345", 20, 30,store.getMgrCategory().getCategory("CLO"));
 	}
 	
 	public static void main(String args[]){
@@ -155,6 +190,8 @@ public class ProductEntryPanel extends JPanel{
 		f.add(panel, BorderLayout.CENTER);
 		f.pack();
 		f.setVisible(true);
+		
+		
 		
 	}
 }
