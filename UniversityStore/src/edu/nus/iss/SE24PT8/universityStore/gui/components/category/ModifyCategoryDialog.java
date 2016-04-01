@@ -59,7 +59,7 @@ public class ModifyCategoryDialog extends BaseDialogBox {
         	JOptionPane.showMessageDialog(new JFrame(),
         			returnObject.getMessage(),
 					"Success", JOptionPane.INFORMATION_MESSAGE);
-            SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Categories");
+        	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Add");
         	return true;
         } else {
         	JOptionPane.showMessageDialog(new JFrame(),

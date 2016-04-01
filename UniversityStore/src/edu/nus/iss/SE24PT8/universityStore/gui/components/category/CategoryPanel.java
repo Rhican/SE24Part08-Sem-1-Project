@@ -35,11 +35,7 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
 
 	public CategoryPanel() {
 		super("Category");
-		
-		
-		
 		SubjectManager.getInstance().addNotification("CategoryPanel", "Category", this);
-		
 	}
 
 	public void refersh() {
@@ -88,7 +84,7 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
             	JOptionPane.showMessageDialog(new JFrame(),
             			returnObject.getMessage(),
     					"Success", JOptionPane.INFORMATION_MESSAGE);
-                //SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Categories");
+        	refersh();
             } else {
             	JOptionPane.showMessageDialog(new JFrame(),
             			returnObject.getMessage(),
