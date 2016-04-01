@@ -1,5 +1,6 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.category;
 
+import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.Label;
 
@@ -25,6 +26,7 @@ public class AddCategoryDialog extends BaseDialogBox {
 
     public AddCategoryDialog () {
         super (MainWindow.getInstance(), "Add Cetegory","add");
+        super.setModalityType(Dialog.ModalityType.MODELESS);
     }
 
     protected JPanel createFormPanel  ()  {
@@ -51,26 +53,26 @@ public class AddCategoryDialog extends BaseDialogBox {
         String name = nameField.getText();
         String code = codeField.getText();
         if ((name.length() == 0) || (code.length() == 0)) {
-        	JOptionPane.showMessageDialog(new JFrame(),
+        	JOptionPane.showMessageDialog(rootPane,
 					Constants.CONST_CAT_ERR_INVALID_DETAILS,
 					"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (code.length() != 3) {
-        	JOptionPane.showMessageDialog(new JFrame(),
+        	JOptionPane.showMessageDialog(rootPane,
 					Constants.CONST_CAT_ERR_LONG_CODE,
 					"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         ReturnObject  returnObject = Store.getInstance().getMgrCategory().addCategory(code, name);
         if (returnObject.isSuccess()) {
-        	JOptionPane.showMessageDialog(new JFrame(),
+        	JOptionPane.showMessageDialog(rootPane,
         			returnObject.getMessage(),
 					"Success", JOptionPane.INFORMATION_MESSAGE);
         	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Add");
         	return true;
         } else {
-        	JOptionPane.showMessageDialog(new JFrame(),
+        	JOptionPane.showMessageDialog(rootPane,
         			returnObject.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
