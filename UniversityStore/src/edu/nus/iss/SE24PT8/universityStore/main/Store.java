@@ -44,7 +44,7 @@ public class Store {
         mgrMember=MemberManager.getInstance();
         mgrDiscount=DiscountManager.getInstance();
         mgrTransaction=TransactionManager.getInstance();
-        
+        mgrStoreKeeper=StoreKeeperManager.getInstance();
         //After all Managers are loaded, get the related objects
         mgrProduct.getRelatedObjects();
         mgrCategory.getRelatedObjects();
