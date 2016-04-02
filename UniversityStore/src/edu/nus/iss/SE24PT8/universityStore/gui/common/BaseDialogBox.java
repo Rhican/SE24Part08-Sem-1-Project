@@ -1,5 +1,6 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.common;
 
+import java.awt.Dialog;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ public abstract class BaseDialogBox extends JDialog {
 
 	public BaseDialogBox (JFrame parent, String title, String operation) {
         super (parent, title);
+        super.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        super.setLocationRelativeTo(parent);
         if(operation.equals("add")) {
             add ("Center", createFormPanel());        	
         }

@@ -365,7 +365,7 @@ public class MainWindow extends javax.swing.JFrame {
             productView = new ProductPanel();
         }
         switchView(productView);
-        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Products");
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Product");
     }//GEN-LAST:event_jToggleButtonProductsActionPerformed
 
     private void jToggleButtonDiscountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonDiscountsActionPerformed

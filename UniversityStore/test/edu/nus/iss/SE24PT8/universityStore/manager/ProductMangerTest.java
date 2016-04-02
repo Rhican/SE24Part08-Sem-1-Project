@@ -36,10 +36,10 @@ public class ProductMangerTest {
     public void addProdcutTest(){
         
         Category cat1  = categoryMgr.getCategory("CLO");
-        productMgr.addNewProduct("Air Tight Coffee", "Coffe Bup", 14, 24.90, "11994456", 20, 200, cat1);
+        //productMgr.addNewProduct("Air Tight Coffee", "Coffe Bup", 14, 24.90, "11994456", 20, 200, cat1);
       
         Category cat2  = categoryMgr.getCategory("CLO");
-        productMgr.addNewProduct("Coffee Bean Mug", "Coffe Bean Special Mug", 100, 100, "11992235", 30, 100, cat2);
+      //  productMgr.addNewProduct("Coffee Bean Mug", "Coffe Bean Special Mug", 100, 100, "11992235", 30, 100, cat2);
        
         
         Product prod1  = new Product();

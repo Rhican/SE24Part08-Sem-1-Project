@@ -8,6 +8,8 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
+import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -70,6 +72,7 @@ public class ProductManager implements IManager{
      * Add new Product to ProductList
      *
      * @param product
+     * @throws Exception 
      *
      */
     
@@ -81,16 +84,24 @@ public class ProductManager implements IManager{
     //  5-Barcode Number
     // 6-Reorder Quantity
     //  7-Order Quantity
-    public void addNewProduct(String productNmae, String briefDesp, int qty, double price, String barCode, int reorderQty, int orderQty, Category category) {
+    public ReturnObject addNewProduct(String productNmae, String briefDesp, int qty, double price, String barCode, int reorderQty, int orderQty, String categoryCode) throws Exception {
         // new Product(productId, productName, briefDesp, 0, 0, barcode, 0, 0);
         Product product;
-        System.out.println(getProductCountInCategory(category));
-        String productId = category.getCategoryCode() + "/" + Integer.toString(getProductCountInCategory(category) + 1);
+        ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+		Category category;
+		category = categoryManager.getCategory(categoryCode);
 
-        product = new Product(productId, productNmae, briefDesp, qty, price, barCode, reorderQty, orderQty, category);
-        productList.add(product);
+		if (category == null) {
+			throw new Exception("Category Eror during operation!");
+		}
 
-        saveData();
+		String productId = categoryCode + "/" + Integer.toString(getProductCountInCategory(category) + 1);
+
+		product = new Product(productId, productNmae, briefDesp, qty, price, barCode, reorderQty, orderQty, category);
+		productList.add(product);
+
+		saveData();
+		return returnObj;
 
     }
     
@@ -245,4 +256,18 @@ public class ProductManager implements IManager{
           product.setCategory(mgrCategory.getCategory(product.getCategoryCode()));
        }
     }
+     
+     public Object[][] prepareProductTableModel() {
+ 		ArrayList<Product> list = getProductList();
+ 		Object[][] tableData = new Object[list.size()][2];
+ 		for (int i = 0; i < list.size(); i++) {
+ 			Product product = list.get(i);
+ 			Object[] rowData = new Object[3];
+ 			rowData[0] = product.getProductName();
+ 			rowData[1] = product.getBriefDesp();
+ 			rowData[2] = product.getCategory().getCategoryName();
+ 			tableData[i] = rowData;
+ 		}
+ 		return tableData;
+ 	}
 }
