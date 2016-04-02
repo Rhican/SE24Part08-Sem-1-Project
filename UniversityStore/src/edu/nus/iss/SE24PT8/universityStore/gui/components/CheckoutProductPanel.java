@@ -53,15 +53,16 @@ public class CheckoutProductPanel extends JPanel {
 		CategoryManager.getInstance().addCategory("Cat2", "Category 2");
 		CategoryManager.getInstance().addCategory("Cat3", "Category 3");
 
-		ProductManager.getInstance().addNewProduct("Product1", "Product 1", 100, 2.0, "BC0001", 50, 20,
-				CategoryManager.getInstance().getCategory("Cat1"));
-		ProductManager.getInstance().addNewProduct("Product2", "Product 2", 100, 2.0, "BC0002", 50, 20,
-				CategoryManager.getInstance().getCategory("Cat2"));
-		ProductManager.getInstance().addNewProduct("Product3", "Product 3", 100, 2.0, "BC0003", 50, 20,
-				CategoryManager.getInstance().getCategory("Cat3"));
-		ProductManager.getInstance().addNewProduct("Product4", "Product 4", 100, 2.0, "BC0004", 50, 20,
-				CategoryManager.getInstance().getCategory("Cat1"));
-
+		try {
+			ProductManager.getInstance().addNewProduct("Product1", "Product 1", 100, 2.0, "BC0001", 50, 20,"Cat1" );
+			ProductManager.getInstance().addNewProduct("Product2", "Product 2", 100, 2.0, "BC0002", 50, 20,"Cat2" );
+			ProductManager.getInstance().addNewProduct("Product3", "Product 3", 100, 2.0, "BC0003", 50, 20,"Cat3" );
+			ProductManager.getInstance().addNewProduct("Product4", "Product 4", 100, 2.0, "BC0004", 50, 20,"Cat1" );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	
