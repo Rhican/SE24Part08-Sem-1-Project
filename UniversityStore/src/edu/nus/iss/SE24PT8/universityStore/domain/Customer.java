@@ -13,10 +13,9 @@ public class Customer {
     private String customerName;
     private String customerID;
     
-    public Customer(String customerName,String customerID) throws BadMemberRegistrationException
-    {
-       // Name length shoud not exceed more than 20 char
-       // id lenght should not exceed more than 20 char
+    public Customer(String customerName,String customerID) throws BadMemberRegistrationException{
+       // Name length should not exceed more than 20 char
+       // ID length should not exceed more than 20 char
        String error = null;
         if (customerID == null)
              error = Constants.CONST_MEMBER_ERR_INVALIDMEMBERID;
@@ -26,34 +25,28 @@ public class Customer {
              error = Constants.CONST_MEMBER_ERR_INVALIDMEMBERNAME;
         else if(customerName.equals(""))
             error = Constants.CONST_MEMBER_ERR_INVALIDMEMBERNAME;
-        else if(customerName.length()>20)
-        {
+        else if(customerName.length()>20){
             error=Constants.CONST_MEMBER_ERR_MEMBERNAMELENGTH;
         }
-       else if(customerID.length()>20)
-        {
+       else if(customerID.length()>20){
             error=Constants.CONST_MEMBER_ERR_MEMBERIDLENGTH;
         }
-        if (error != null)
-        {
+        if (error != null){
             throw new BadMemberRegistrationException (error);
         }
         this.customerName=customerName;
         this.customerID = customerID;
     }
     
-    public String getName()
-    {
+    public String getName(){
         return this.customerName;
     }
     
-    public String getID()
-    {
+    public String getID(){
         return this.customerID;
     }
     
-    public String setName(String customerName)
-    {
+    public String setName(String customerName){
         return this.customerName=customerName;
     }
      
@@ -79,6 +72,5 @@ public class Customer {
     public void show () {
         System.out.println(this.toString());
     }
-    
  
 }

@@ -17,8 +17,8 @@ import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 public class Member extends Customer{
     private int loyaltyPoints;
     
-    public Member(String customerName,String customerID,int loyaltyPoints) throws BadMemberRegistrationException 
-    {
+    public Member(String customerName,String customerID,int loyaltyPoints) throws BadMemberRegistrationException {
+    
         super(customerName,customerID);
         String error = null;
         if (loyaltyPoints <-1)
@@ -31,13 +31,11 @@ public class Member extends Customer{
         this.loyaltyPoints = loyaltyPoints;
     }
 
-    public int getLoyaltyPoints()
-    {
+    public int getLoyaltyPoints(){
         return this.loyaltyPoints;
     }
     
-    public void setLoyaltyPoints(int loyaltyPoints)
-    {
+    public void setLoyaltyPoints(int loyaltyPoints){
         this.loyaltyPoints=loyaltyPoints;
     }
     

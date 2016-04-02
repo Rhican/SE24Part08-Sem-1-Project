@@ -10,8 +10,8 @@ import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationExcept
  */
 public class NonMember extends Customer{
     
-    public NonMember(String customerName,String customerID) throws BadMemberRegistrationException
-    {
+    public NonMember(String customerName,String customerID) throws BadMemberRegistrationException{
+    
         super(customerName,customerID);
     }
     
