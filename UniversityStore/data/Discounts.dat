@@ -1,0 +1,11 @@
+MEMBER_FIRST,First purchase by member,ALWAYS,ALWAYS,95,M
+MEMBER_SUBSEQ, Subsequent purchase by member,ALWAYS,ALWAYS,10,M
+CENTENARY,Centenary Celebration in 2014,2014-01-01,10,75,A
+PRESIDENT_BDAY,University President's birthday,2014-02-01,7,20,A
+ORIENTATION_DAY,Orientation Day,2014-02-02,3,50,A
+TESTDISCOUNT1,Future Discount not valid,2017-02-02,100,50,A
+TESTDISCOUNT2,Past Discount over already,2015-02-02,100,50,A
+TESTDISCOUNT3,Past Discount still valid,2015-02-02,500,50,A
+TODAYDISCOUNT, today only,2016-03-27,1,20,A
+YESTERDAYDISCOUNT, Yesterday only,2016-03-26,1,20,A
+BIGDISCOUNT,Max discount,2016-01-05,200,80,M
