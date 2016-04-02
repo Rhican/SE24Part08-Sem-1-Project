@@ -2,9 +2,8 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
 import javax.swing.JPanel;
 
-import edu.nus.iss.SE24PT8.universityStore.UniversityStore.discountView;
 
-public class DiscountPanel extends JPanel implements discountView{
+public class DiscountPanel extends JPanel{
 
 	/**
 	 * Create the panel.
@@ -13,10 +12,10 @@ public class DiscountPanel extends JPanel implements discountView{
 
 	}
 
-	@Override
+	/*@Override
 	public JPanel getAddBtn() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
