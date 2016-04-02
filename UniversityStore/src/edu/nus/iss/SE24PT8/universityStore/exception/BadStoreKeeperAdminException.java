@@ -14,8 +14,7 @@ public class BadStoreKeeperAdminException extends Exception {
    public BadStoreKeeperAdminException(){
    }
    
-   public BadStoreKeeperAdminException(String message)
-   {
+   public BadStoreKeeperAdminException(String message){
        super(message);
    }
 }

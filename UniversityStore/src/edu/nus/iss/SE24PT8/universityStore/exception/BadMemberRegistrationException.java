@@ -11,13 +11,11 @@ package edu.nus.iss.SE24PT8.universityStore.exception;
  * @created date 26 March 2016
  */
 public class BadMemberRegistrationException extends Exception {
-    public BadMemberRegistrationException()
-    {
+    public BadMemberRegistrationException(){
         
     }
     
-    public BadMemberRegistrationException(String msg)
-    {
+    public BadMemberRegistrationException(String msg){
         super(msg);
     }
 }
