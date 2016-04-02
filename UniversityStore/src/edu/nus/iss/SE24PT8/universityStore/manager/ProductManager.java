@@ -259,7 +259,7 @@ public class ProductManager implements IManager{
      
      public Object[][] prepareProductTableModel() {
  		ArrayList<Product> list = getProductList();
- 		Object[][] tableData = new Object[list.size()][2];
+ 		Object[][] tableData = new Object[list.size()][3];
  		for (int i = 0; i < list.size(); i++) {
  			Product product = list.get(i);
  			Object[] rowData = new Object[3];

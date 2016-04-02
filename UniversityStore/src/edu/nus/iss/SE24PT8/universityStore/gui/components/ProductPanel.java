@@ -36,11 +36,11 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private Object[][] products;
 	private DefaultTableModel dataModel;
 
-	private final static String[] columnNames = { "ProdcutName", "Prodcut Desc" ,"Category Name" };
+	private final static String[] columnNames = { "ProdcutName", "Product Desc" ,"Category Name" };
 
 	public ProductPanel() {
 		super("Product");
-		SubjectManager.getInstance().addNotification("ProdcutPanel", "Prodcut", this);
+		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
 	}
 
 	public void refersh() {
@@ -101,13 +101,14 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	
 	@Override
 	public void update(String group, String topic, String data) {
-		if (group.equals("ProdcutPanel") && topic.equals("Prodcut")) {
+		if (group.equals("ProductPanel") && topic.equals("Product")) {
 			if (data.equalsIgnoreCase("Add")) {
 				refersh();
 			}
 		}
 
 		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
+		refersh();
 	}
 	
 	
