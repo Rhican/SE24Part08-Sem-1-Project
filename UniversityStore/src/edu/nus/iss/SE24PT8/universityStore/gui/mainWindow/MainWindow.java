@@ -9,6 +9,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
     private JPanel homeView = null;
     private ProductPanel productView = null;
     private CategoryPanel catView = null;
+    private VendorPanel vendorView = null;
     private CheckoutPanel checkoutView = null; 
     private static MainWindow instance;
 
@@ -227,6 +229,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jToggleButtonVendors.setText("Vendors");
+        jToggleButtonVendors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	jToggleButtonVendorsActionPerformed(evt);
+            }
+        });
 
         jToggleButtonDiscounts.setText("Discounts");
         jToggleButtonDiscounts.addActionListener(new java.awt.event.ActionListener() {
@@ -389,6 +396,14 @@ public class MainWindow extends javax.swing.JFrame {
     		catView = new CategoryPanel();
         }
         switchView(catView);
+        
+        
+    }
+    private void jToggleButtonVendorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
+    	if (vendorView == null) {
+    		vendorView = new VendorPanel();
+        }
+        switchView(vendorView);
         
         
     }//GEN-LAST:event_jToggleButtonCategoriesActionPerformed

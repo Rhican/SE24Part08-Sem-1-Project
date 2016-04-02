@@ -131,6 +131,11 @@ public class CategoryManager implements IManager{
         }// end of categories loop
         return vendorsNotAssigned;
     }
+
+	public void updateVendorList(ArrayList<Vendor> newVendorList, String catCode) {
+		getCategory(catCode).setVendorList(newVendorList);
+		
+	}
     
     public Object[][] prepareCategoryTableModel() {
 		ArrayList<Category> list = getCategories();

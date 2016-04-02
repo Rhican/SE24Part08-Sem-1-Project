@@ -57,6 +57,7 @@ public final class Constants {
     
     //Added by Mugunthan
     public static final String CONST_VENDOR_ERR_CATCODEMISSING = "Category code is missing";
+    public static final String CONST_VENDOR_ERR_NAMEMISSING = "Vendor name is missing";
     public static final String CONST_VENDOR_MSG_CREATION_SUCUESS ="Vendor added Successfully";
     public static final String CONST_VENDOR_MSG_UPDATE_SUCUESS = "VendorList updated Successfully";
     
