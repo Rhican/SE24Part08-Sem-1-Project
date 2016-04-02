@@ -5,8 +5,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Member;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadStoreKeeperAdminException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;

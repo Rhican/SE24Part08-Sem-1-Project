@@ -13,7 +13,11 @@ import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
-
+/**
+*
+* @author THIRI LWIN
+* @date 2016-April-02
+*/
 public class StoreKeeperEntryDialog extends BaseDialogBox{
 	
 	private static final long serialVersionUID = 1L;
