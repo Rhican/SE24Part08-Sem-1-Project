@@ -28,7 +28,7 @@ public class VendorPanel extends BaseModulePanel implements INotificable {
 	
 	public VendorPanel() {
 		super("Vendor");
-		SubjectManager.getInstance().addNotification("VeddorPanel", "Vendor", this);
+		SubjectManager.getInstance().addNotification("VendorPanel", "Vendor", this);
 	}
 	
 	public void refersh() {
@@ -51,16 +51,6 @@ public class VendorPanel extends BaseModulePanel implements INotificable {
 		return vendorPane;
 	}
 
-	@Override
-	public void update(String group, String topic, String data) {
-		if (group.equals("VendorPanel") && topic.equals("Vendor")) {
-			if (data.equalsIgnoreCase("Add")) {
-				refersh();
-			}
-		}
-
-		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);		
-	}
 
 	@Override
 	protected void performAddAction() {
@@ -78,5 +68,16 @@ public class VendorPanel extends BaseModulePanel implements INotificable {
 	@Override
 	protected void performModifyAction() {
 		throw new UnsupportedOperationException("Not supported yet.");		
+	}
+	
+	@Override
+	public void update(String group, String topic, String data) {
+		if (group.equals("VendorPanel") && topic.equals("Vendor")) {
+			if (data.equalsIgnoreCase("Add")) {
+				refersh();
+			}
+		}
+
+		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);		
 	}
 }

@@ -61,8 +61,8 @@ public class VendorManager implements IManager {
 			Vendor newVendor;
 			try {
 				newVendor = new Vendor(name, desc);
-				vendors.get(catCode).add(newVendor);
-				categoryMgr.updateVendorList(vendors.get(catCode), catCode);
+				vendors.get(catCode).add(newVendor); // Update vendor list
+				categoryMgr.updateVendorList(vendors.get(catCode), catCode); //Update category vendor list in object
 				DataAdapter.writeVendors(vendors.get(catCode), catCode);
 				return new ReturnObject(true, Constants.CONST_VENDOR_MSG_CREATION_SUCUESS, newVendor);
 			} catch (BadVendorException ex) {
