@@ -86,14 +86,4 @@ public class AddVendorDialog extends BaseDialogBox {
         	return false;
         }
     }
-
-    public ArrayList<ComboItem> getComboCatData(){
-    	ArrayList<Category> categories= Store.getInstance().getMgrCategory().getCategories();
-    	ArrayList<ComboItem> comboCatData = new ArrayList<>();
-    	for (Category category : categories) {
-    		comboCatData.add(new ComboItem(category , category.getCategoryName()));
-		}
-    	
-    	return comboCatData;
-    }
 }
