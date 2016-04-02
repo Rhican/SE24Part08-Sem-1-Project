@@ -5,6 +5,7 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
+import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.NonMember;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
@@ -117,8 +118,6 @@ public class MemberManager implements IManager {
         Member memberRegister=new Member(name,id.trim(),-1);
         memberlist.put(id, memberRegister);
         Save();
-       
-       
        
    }
    
@@ -362,7 +361,7 @@ public class MemberManager implements IManager {
    @Override
     public void saveData() {
         ArrayList<Member> members=new ArrayList<>();
-        Iterator iter=memberlist.values().iterator();
+        Iterator<Member> iter=memberlist.values().iterator();
          
         while(iter.hasNext()){
             members.add((Member)iter.next());
@@ -371,8 +370,22 @@ public class MemberManager implements IManager {
     }
    
    
-   
-   
-   
-   
+   public Object[][] prepareMemberTableModel() {
+		
+	   ArrayList<Member> members=new ArrayList<>();
+	   Iterator<Member> iter=memberlist.values().iterator();
+	      while(iter.hasNext()){
+	            members.add((Member)iter.next());
+	    }
+		
+		Object[][] tableData = new Object[members.size()][2];
+		for (int i = 0; i < members.size(); i++) {
+			Member member = members.get(i);
+			Object[] rowData = new Object[2];
+			rowData[0] = member.getCustomerName();
+			rowData[1] = member.getCustomerID();
+			tableData[i] = rowData;
+		}
+		return tableData;
+	}
 }
