@@ -28,6 +28,7 @@ public abstract class BaseModulePanel extends JPanel{
 	private JButton modifyButton;
 	
 	public BaseModulePanel(String title) {
+		super();
 		this.title = title;
 		initComponents();
 		
