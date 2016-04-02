@@ -31,16 +31,6 @@ public class Member extends Customer{
         this.loyaltyPoints = loyaltyPoints;
     }
 
-    public ReturnObject redeemPoints(int points){
-        
-        if(points>loyaltyPoints){
-            return new ReturnObject(false, "Points to be redeemed more than available", null);
-        }
-        
-        loyaltyPoints=loyaltyPoints-points;
-        return new ReturnObject(true, "Points deducted", this);
-    }
-    
     public int getLoyaltyPoints()
     {
         return this.loyaltyPoints;

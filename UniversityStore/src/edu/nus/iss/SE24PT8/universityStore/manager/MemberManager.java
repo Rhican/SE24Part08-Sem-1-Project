@@ -48,9 +48,9 @@ public class MemberManager implements IManager {
         if(members != null && members.size() > 0)
         {
             for(Member m:members){
-                if(m.getCustomerID() !=null)
+                if(m.getID() !=null)
                 {
-                   memberlist.put(m.getCustomerID().trim(), m);
+                   memberlist.put(m.getID().trim(), m);
                 }
             }
         }
@@ -173,7 +173,7 @@ public class MemberManager implements IManager {
                 {
                    throw new BadMemberRegistrationException(Constants.CONST_MEMBER_ERR_MEMBERNAMESPECIALCHAR);
                 }
-               m.setCustomerName(name);
+               m.setName(name);
                memberlist.put(id, m);
                Save();
            }
@@ -382,8 +382,8 @@ public class MemberManager implements IManager {
 		for (int i = 0; i < members.size(); i++) {
 			Member member = members.get(i);
 			Object[] rowData = new Object[2];
-			rowData[0] = member.getCustomerName();
-			rowData[1] = member.getCustomerID();
+			rowData[0] = member.getName();
+			rowData[1] = member.getID();
 			tableData[i] = rowData;
 		}
 		return tableData;

@@ -46,15 +46,15 @@ public class MemberTest {
     @Test
     public void testGetCustomerName()
     {
-        assertEquals("ThiriLwin",m1.getCustomerName());
-        assertEquals("Mi Site",m2.getCustomerName());
+        assertEquals("ThiriLwin",m1.getName());
+        assertEquals("Mi Site",m2.getName());
     }
       
     @Test
     public void testGetCustomerID()
     {
-        assertEquals("G6365444U",m1.getCustomerID());
-        assertEquals("G6365499U",m2.getCustomerID());
+        assertEquals("G6365444U",m1.getID());
+        assertEquals("G6365499U",m2.getID());
     }
     
    @Test

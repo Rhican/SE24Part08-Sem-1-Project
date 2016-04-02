@@ -42,17 +42,17 @@ public class Customer {
         this.customerID = customerID;
     }
     
-    public String getCustomerName()
+    public String getName()
     {
         return this.customerName;
     }
     
-    public String getCustomerID()
+    public String getID()
     {
         return this.customerID;
     }
     
-    public String setCustomerName(String customerName)
+    public String setName(String customerName)
     {
         return this.customerName=customerName;
     }
@@ -61,7 +61,7 @@ public class Customer {
     	if (customer instanceof Customer){
     		Customer p = (Customer)customer;
     	   	if (this.customerName.equals(p.customerName)
-    			&& this.getCustomerID().equals(p.getCustomerID()))
+    			&& this.getID().equals(p.getID()))
                             return true;
     	}
     	return false;

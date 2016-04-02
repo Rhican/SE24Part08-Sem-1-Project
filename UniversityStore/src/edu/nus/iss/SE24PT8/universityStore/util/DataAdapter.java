@@ -302,7 +302,7 @@ public class DataAdapter {
     }
 
     public static String convertMemberToString(Member object) {
-       return  object.getCustomerName() + "," + object.getCustomerID() + "," + object.getLoyaltyPoints();
+       return  object.getName() + "," + object.getID() + "," + object.getLoyaltyPoints();
     }
 
     public static void writeMembers(ArrayList<Member> objects) {
@@ -553,7 +553,7 @@ public class DataAdapter {
             sb.append(item.getProduct().getProductId());
             sb.append(comma);
             //3 :Member
-            sb.append(transaction.getMember().getCustomerID());
+            sb.append(transaction.getMember().getID());
             sb.append(comma);
             //4: quantity
             sb.append(item.getSaleQuantity());
@@ -619,7 +619,7 @@ public class DataAdapter {
         for(Transaction trans:transactions){
             
             System.out.println("----------------------------");
-            System.out.println("Transaction"+trans.getId()+comma+trans.getMember().getCustomerID()+comma+DF.format(trans.getDate()));
+            System.out.println("Transaction"+trans.getId()+comma+trans.getMember().getID()+comma+DF.format(trans.getDate()));
             System.out.println("   sale items:");
             for(SaleItem sale:trans.getSaleItems()){
                 System.out.println("        "+sale.getProductID()+comma+sale.getSaleQuantity());
