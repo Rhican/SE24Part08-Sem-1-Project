@@ -40,18 +40,18 @@ public class Transaction {
     
     //- Setters -------------------------------------------------------
     public boolean setDiscount(Discount discount) {
-        if (!isCloded()) this.discount = discount;
-        return !isCloded();
+        if (isClosed()) this.discount = discount;
+        return !isClosed();
     }
 
     public boolean setRedeemedPoint(int redeemedPoint) {
-        if (!isCloded()) this.redeemedPoint = redeemedPoint;
-        return !isCloded();
+        if (isClosed()) this.redeemedPoint = redeemedPoint;
+        return !isClosed();
     }
     
     public boolean setMember(String memberID) {
-        if (!isCloded()) this.memberID = memberID;
-        return !isCloded();
+        if (isClosed()) this.memberID = memberID;
+        return !isClosed();
     }
 
     public void insertSaleItemRecord(SaleItem saleItem) {
@@ -62,7 +62,7 @@ public class Transaction {
     }
     
     public ReturnObject addSaleItem(String productID, int count) {
-        if (!isCloded()) 
+        if (isClosed()) 
         {
             return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
@@ -88,7 +88,7 @@ public class Transaction {
     }
      
     public ReturnObject removeSaleItem(String productID, int count) {
-        if (!isCloded()) 
+        if (isClosed()) 
         {
             return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
@@ -109,7 +109,7 @@ public class Transaction {
     
     public ReturnObject changeQuantity(SaleItem saleItem, int count)
     {
-        if (!isCloded()) 
+        if (isClosed()) 
         {
             return new ReturnObject(false, "Exception occurred : Transaction is Closed", null);
         }
@@ -140,7 +140,7 @@ public class Transaction {
             updateProduct(saleItem);
         });
         
-        if (!isCloded()) {
+        if (isClosed()) {
             id = getNextID();
         }
         
@@ -148,7 +148,7 @@ public class Transaction {
     }
 
     public void setDate(Date date) {
-        if (!isCloded()) this.date = date;
+        if (isClosed()) this.date = date;
     }
     //- Getters -------------------------------------------------------
     public double getTotalAmount() {
@@ -166,6 +166,15 @@ public class Transaction {
 
     public int getRedeemedPoint() {
         return redeemedPoint;
+    }
+    
+    public double getRedeemedAmount() {
+        return computeRedeemAmount(redeemedPoint);
+    }
+
+    public SaleItem getSaleItem(String productID ) {
+        if (saleItems.containsKey(productID)) return saleItems.get(productID);
+        return null;
     }
 
     public final ArrayList<SaleItem> getSaleItems() {
@@ -187,7 +196,7 @@ public class Transaction {
     public Discount getDiscount() {
         return discount;
     }
-    public boolean isCloded()
+    public boolean isClosed()
     {
         return getId() != 0;
     }
