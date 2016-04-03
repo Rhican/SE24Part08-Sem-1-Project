@@ -35,6 +35,7 @@ import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
+import java.awt.Dimension;
 
 
 /**
@@ -66,6 +67,8 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
+    	setPreferredSize(new Dimension(950, 550));
+        
         setLookAndFeel("Nimbus");
 
         initComponents();

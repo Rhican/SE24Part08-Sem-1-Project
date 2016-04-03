@@ -131,17 +131,16 @@ public class Transaction {
     public boolean close() {
         if (!validate()) return false;
         
-        if (redeemedPoint > 0)
-        {
-        	MemberManager memberManager = MemberManager.getInstance();
-            try {
-	            memberManager.redeemPoints(memberID, redeemedPoint);
+        MemberManager memberManager = MemberManager.getInstance();
+        Member member = memberManager.getMember(memberID);
+        if (member != null)
+	    	try {
+	    		if (redeemedPoint > 0) memberManager.redeemPoints(memberID, redeemedPoint);
 	            memberManager.addLoyaltyPoints(memberID, computeRoyalityPoint());
 	        } catch (BadMemberRegistrationException ex) {
-	            //Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
 	            return false;
 	        }   
-        }
+	       
         
         saleItems.values().stream().forEach((saleItem) -> {
             updateProduct(saleItem);

@@ -33,6 +33,7 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
+import edu.nus.iss.SE24PT8.universityStore.externalDevice.Printer;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.TransactionManager;
@@ -52,6 +53,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	private CheckoutProductPanel productPanel = new CheckoutProductPanel();
 	private CheckoutMemberPanel memberPanel = new CheckoutMemberPanel();
 	private CheckoutPayDialog paymentDialog = new CheckoutPayDialog();
+	private Printer printer = new Printer();
 	private JPanel panelLeft;
 	private JButton btnPage;
 	private Transaction transaction = TransactionManager.getInstance().getNewTransaction();
@@ -158,6 +160,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	private void handlePaymentComplete() {
 		TransactionManager manager = TransactionManager.getInstance();
 		manager.closeTransaction(transaction);
+		printTransaction(transaction);
 		transaction = manager.getNewTransaction();
 		switchPanel("Product");
 		UpdateSaleItemTable();		
@@ -174,7 +177,24 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		productPanel.reset();
 	}
 	
-	
+	private void printTransaction(Transaction transaction) {
+		String data = "\n ------------------------------------------------------------" + 
+				"\n\t\t\t University Store  " + 
+				"\n\t\t\t Receipt \n "+ 
+				"\n From SE24PT8 " + 
+				"\n Date: " +  transaction.getDate().toString() +  "\n\n SaleItems: " ;
+				
+		for( SaleItem saleitem : transaction.getSaleItems()) {
+			data += " \t" + saleitem.getSaleQuantity() + " x " + saleitem.getProduct().getProductName() + "\t\t " + formatDollar(saleitem.getSubTotal());
+		}
+		data += "\n"; 	
+		data += "\n\t\t\t\t    Total Amount: " + formatDollar(transaction.getTotalAmount());
+		data += "\n\t\t\t\t   Redeem Amount: " + formatDollar(transaction.getRedeemedAmount());
+		data += "\n\t\t\t\t Discount Amount: " + formatDollar(transaction.getDiscountAmount());
+		data += "\n\t\t\t\t      Net Amount: " + formatDollar(transaction.getNetAmount());
+		data += "\n ------------------------------------------------------------"; 	
+		printer.print(data);
+	}
 	
 	private void UpdateSaleItemTable() {
 		final ArrayList<SaleItem> saleItems = transaction.getSaleItems();

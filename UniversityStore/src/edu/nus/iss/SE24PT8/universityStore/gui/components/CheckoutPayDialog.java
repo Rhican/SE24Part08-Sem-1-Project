@@ -52,7 +52,7 @@ public class CheckoutPayDialog extends JFrame {
 		payAmount = pay;
 		balanceAmount = totalAmount - payAmount;
 		if (textFieldBalance != null) textFieldBalance.setText(formatDecimal(balanceAmount));
-		if (btnOkay != null) btnOkay.setEnabled(balanceAmount <= 0);
+		if (btnOkay != null) btnOkay.setEnabled(balanceAmount <= 0.01f);
 	}
 	private String formatDecimal(double value) {
 		DecimalFormat df = new DecimalFormat("##0.00"); 
