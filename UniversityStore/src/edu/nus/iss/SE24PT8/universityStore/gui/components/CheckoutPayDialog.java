@@ -128,35 +128,29 @@ public class CheckoutPayDialog extends JFrame {
 				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Cancel");
 			}
 		});
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Back");
-			}
-		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblNewLabel_2)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(btnBack, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-							.addGap(18)
-							.addComponent(btnOkay))
+							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblNewLabel_2, Alignment.LEADING)
-								.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldTotal, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))))
+								.addComponent(textFieldTotal, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(90)
+							.addComponent(btnOkay)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -176,9 +170,8 @@ public class CheckoutPayDialog extends JFrame {
 						.addComponent(lblNewLabel_2, Alignment.TRAILING))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancel)
 						.addComponent(btnOkay)
-						.addComponent(btnBack))
+						.addComponent(btnCancel))
 					.addGap(28))
 		);
 		contentPane.setLayout(gl_contentPane);

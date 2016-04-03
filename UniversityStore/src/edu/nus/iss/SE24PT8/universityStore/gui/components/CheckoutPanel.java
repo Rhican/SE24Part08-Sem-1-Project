@@ -122,6 +122,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		transaction.addSaleItem(product, quantity);
 		UpdateSaleItemTable();
 		btnDelete.setEnabled(false);
+		productPanel.reset();
 		System.out.println("SaleItem: " + product.getProductId() + " Add " + quantity);
 	}
 
@@ -186,7 +187,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		paymentDialog.reset();
 	}
 	private void handlePaymentCancel() {
-		if (JOptionPane.showConfirmDialog(getRootPane(), "Are you sure to cancel transaction?", "WARNING",
+		if (JOptionPane.showConfirmDialog(getRootPane(), "Do you want to reset current checkout?", "WARNING",
 		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			transaction = TransactionManager.getInstance().getNewTransaction();
 			switchPanel("Product");
@@ -201,21 +202,22 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	}
 	
 	private void printTransaction(Transaction transaction) {
-		String data = "\n ------------------------------------------------------------" + 
+		String data = "\n ============================================================" + 
 				"\n\t\t\t University Store  " + 
-				"\n\t\t\t Receipt \n "+ 
+				"\n\t\t\t    Receipt # " + transaction.getId() + " \n "+ 
 				"\n From SE24PT8 " + 
-				"\n Date: " +  transaction.getDate().toString() +  "\n\n SaleItems: \n " ;
+				"\n Date: " +  transaction.getDate().toString() +  "\n\n " + transaction.getSaleItems().size() + " SaleItems: " +
+				"\n ------------------------------------------------------------ \n" ;
 				
 		for( SaleItem saleitem : transaction.getSaleItems()) {
 			data += " \t" + saleitem.getSaleQuantity() + " x " + saleitem.getProduct().getProductName() + "\t\t " + formatDollar(saleitem.getSubTotal()) + "\n";
 		}
-		data += "\n"; 	
+		data += " ------------------------------------------------------------ "; 	
 		data += "\n\t\t\t\t    Total Amount: " + formatDollar(transaction.getTotalAmount());
 		data += "\n\t\t\t\t   Redeem Amount: " + formatDollar(transaction.getRedeemedAmount());
 		data += "\n\t\t\t\t Discount Amount: " + formatDollar(transaction.getDiscountAmount());
 		data += "\n\t\t\t\t      Net Amount: " + formatDollar(transaction.getNetAmount());
-		data += "\n ------------------------------------------------------------"; 	
+		data += "\n ============================================================"; 	
 		printer.print(data);
 	}
 	
