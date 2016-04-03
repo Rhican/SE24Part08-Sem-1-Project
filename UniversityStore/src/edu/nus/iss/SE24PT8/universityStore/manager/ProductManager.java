@@ -15,6 +15,8 @@ import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author misitesawn
@@ -27,7 +29,8 @@ public class ProductManager implements IManager{
 
     private static CategoryManager categoryManager;
     
-    private  static String[] columnNames = { "ProdcutName", "BarCode " ,"Product Desc" ,"Category Name" ,"Price"  ,"Quantity" };
+    private  static String[] columnNames = { "ProdcutName", "BarCode " ,"Description" ,"Category Name" ,"Price"  ,"Quantity" };
+    private  static String[] inventoryCheckColumnNames = { "ProdcutName", "Description" ,"Category Name" ,"Price"  ,"Quantity" ,"Reorder Quantity", "Order Quantity" ,"Vendor" ,"Remark"};
 
     public ArrayList<Product> getProductList() {
         return productList;
@@ -151,6 +154,14 @@ public class ProductManager implements IManager{
         return returnObj;
     }
     
+	public ReturnObject orderProdcut(Product product, int orderQty) {
+		ReturnObject returnObj = new ReturnObject(true, "ok", null);
+		product.setQty(product.getQty() + orderQty);
+		saveData();
+		return returnObj;
+
+	}
+    
     /**
      * Get the number of products in a Category
      * @reuturn Product Count 
@@ -248,13 +259,6 @@ public class ProductManager implements IManager{
         return null;
     }
     
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * Return List of Product that have lower inventory quantity
@@ -306,20 +310,71 @@ public class ProductManager implements IManager{
      public String[] getProductTableHeader(){
     	 return columnNames;
      }
+     
+     
+     
+     //All Products
      public Object[][] prepareProductTableModel() {
  		ArrayList<Product> list = getProductList();
- 		Object[][] tableData = new Object[list.size()][3];
- 		for (int i = 0; i < list.size(); i++) {
- 			Product product = list.get(i);
- 			Object[] rowData = new Object[6];
- 			rowData[0] = product.getProductName();
- 			rowData[1]  = product.getBarcode();
- 			rowData[2] = product.getBriefDesp();
- 			rowData[3] = product.getCategory().getCategoryName();
- 			rowData[4] = product.getPrice();
- 			rowData[5] = product.getQty();
- 			tableData[i] = rowData;
- 		}
- 		return tableData;
+ 		return prepareProductTableModel(list);
  	}
+     
+     public Object[][] prepareProductTableModel(ArrayList<Product> prodcuts) {
+  		Object[][] tableData = new Object[prodcuts.size()][3];
+  		for (int i = 0; i < prodcuts.size(); i++) {
+  			Product product = prodcuts.get(i);
+  			Object[] rowData = new Object[6];
+  			rowData[0] = product.getProductName();
+  			rowData[1]  = product.getBarcode();
+  			rowData[2] = product.getBriefDesp();
+  			rowData[3] = product.getCategory().getCategoryName();
+  			rowData[4] = product.getPrice();
+  			rowData[5] = product.getQty();
+  			tableData[i] = rowData;
+  		}
+  		return tableData;
+  	}
+     
+     public Object[][] getLowInventoryProdcutTableModel() {
+    	 ArrayList<Product> prodcuts = getLowerInventoryProducts();
+   		Object[][] tableData = new Object[prodcuts.size()][3];
+   		for (int i = 0; i < prodcuts.size(); i++) {
+   			Product product = prodcuts.get(i);
+   			Object[] rowData = new Object[9];
+   			rowData[0] = product.getProductName();
+   			rowData[1]  = product.getBriefDesp();
+   			rowData[2] = product.getCategory().getCategoryName();
+   			rowData[3] = product.getPrice();
+   			rowData[4] = product.getQty();
+   			rowData[5] = product.getReorderQty();
+   			rowData[6] = product.getOrderQty();
+   			if ( product.getCategory().getVendorList().size() >=1 ){
+   				rowData[7] = product.getCategory().getVendorList().get(0);
+   				rowData[8] = "";
+   			}
+   			else {
+   				rowData[7] = "NA";
+   				rowData[8] = "Add Vendor for Prodcut Category First";
+   			}
+   			
+   			tableData[i] = rowData;
+   		}
+   		return tableData;
+   	}
+     
+
+	public String[] getInventoryCheckTableHeader() {
+		return inventoryCheckColumnNames;
+	}
+
+	public ReturnObject orderAllLowInventoryProdcut() {
+		ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+		if(  getLowerInventoryProducts().size() >=1) {
+			for (Product product : getLowerInventoryProducts()) {
+				product.setQty(product.getOrderQty() + product.getOrderQty());
+			}
+		}
+			
+		return returnObj;
+	}
 }
