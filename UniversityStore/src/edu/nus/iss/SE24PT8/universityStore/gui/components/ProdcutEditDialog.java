@@ -98,7 +98,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
         txtDescription.setText(prodcut.getBriefDesp());
         p.add (new JLabel ("Category"));
         p.add(comboCategory);
-        comboCategory.setSelectedItem(selectedComboIndex);
+        comboCategory.setSelectedItem(comboCategory.getItemAt(selectedComboIndex));
         p.add (new JLabel ("Price"));
         p.add(txtPrice);
         txtPrice.setText(String.valueOf(prodcut.getPrice()));

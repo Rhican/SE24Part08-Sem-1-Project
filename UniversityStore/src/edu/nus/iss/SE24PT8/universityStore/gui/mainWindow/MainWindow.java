@@ -5,6 +5,7 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
+import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckInventoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
@@ -20,10 +21,15 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.WindowConstants;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
@@ -46,7 +52,9 @@ public class MainWindow extends javax.swing.JFrame {
     private MemberPanel memberView = null;
     private StoreKeeperPanel storeKeeperView= null;
     private static MainWindow instance;
-
+    
+    private static CheckInventoryPanel inventoryView  = null;
+    
     /**
      * Creates new form MainWindow
      */
@@ -114,6 +122,7 @@ public class MainWindow extends javax.swing.JFrame {
         buttonGroup.add(jToggleButtonDiscounts);
         buttonGroup.add(jToggleButtonStoreKeepers);
         buttonGroup.add(jToggleButtonReport);
+        buttonGroup.add(jToggleButtonCheckInventory);
         buttonGroup.add(jToggleButtonLogOut);
     }
     
@@ -143,29 +152,30 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup = new javax.swing.ButtonGroup();
-        jPanelTop = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelTime = new javax.swing.JLabel();
-        jLabelStoreKeeperName = new javax.swing.JLabel();
-        jScrollPaneLeft = new javax.swing.JScrollPane();
-        jPanelLeft = new javax.swing.JPanel();
-        jToggleButtonCheckOut = new javax.swing.JToggleButton();
-        jToggleButtonMembers = new javax.swing.JToggleButton();
-        jToggleButtonProducts = new javax.swing.JToggleButton();
+        buttonGroup = new ButtonGroup();
+        jPanelTop = new JPanel();
+        jLabel1 = new JLabel();
+        jLabelTime = new JLabel();
+        jLabelStoreKeeperName = new JLabel();
+        jScrollPaneLeft = new JScrollPane();
+        jPanelLeft = new JPanel();
+        jToggleButtonCheckOut = new JToggleButton();
+        jToggleButtonMembers = new JToggleButton();
+        jToggleButtonProducts = new  JToggleButton();
+        jToggleButtonCheckInventory = new JToggleButton();
         jToggleButtonCategories = new javax.swing.JToggleButton();
         jToggleButtonVendors = new javax.swing.JToggleButton();
         jToggleButtonDiscounts = new javax.swing.JToggleButton();
         jToggleButtonStoreKeepers = new javax.swing.JToggleButton();
-        jToggleButtonReport = new javax.swing.JToggleButton();
-        jToggleButtonLogOut = new javax.swing.JToggleButton();
-        jPanelMain = new javax.swing.JPanel();
-        jScrollPaneMain = new javax.swing.JScrollPane();
-        jPanelDock = new javax.swing.JPanel();
-        jScrollPaneBottom = new javax.swing.JScrollPane();
-        jPanelStatus = new javax.swing.JPanel();
+        jToggleButtonReport = new JToggleButton();
+        jToggleButtonLogOut = new JToggleButton();
+        jPanelMain = new JPanel();
+        jScrollPaneMain = new JScrollPane();
+        jPanelDock = new JPanel();
+        jScrollPaneBottom = new JScrollPane();
+        jPanelStatus = new JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("UniversityStore POS");
         setAlwaysOnTop(true);
         setLocation(300, 200);
@@ -230,6 +240,15 @@ public class MainWindow extends javax.swing.JFrame {
                 jToggleButtonProductsActionPerformed(evt);
             }
         });
+        
+        
+        //check inventory
+        jToggleButtonCheckInventory.setText("CheckInventory");
+        jToggleButtonCheckInventory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonCheckInventoryActionPerformed(evt);
+            }
+        });
 
         jToggleButtonCategories.setText("Categories");
         jToggleButtonCategories.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +301,7 @@ public class MainWindow extends javax.swing.JFrame {
         				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         				.addComponent(jToggleButtonCheckOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         			.addContainerGap())
         );
@@ -304,12 +324,13 @@ public class MainWindow extends javax.swing.JFrame {
         			.addComponent(jToggleButtonStoreKeepers)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jToggleButtonReport)
+        			.addComponent(jToggleButtonCheckInventory)
         			.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
         			.addComponent(jToggleButtonLogOut)
         			.addGap(0))
         );
-        jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
-        jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
+        jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonCheckInventory, jToggleButtonLogOut});
+        jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonCheckInventory, jToggleButtonLogOut});
         jPanelLeft.setLayout(jPanelLeftLayout);
 
         jScrollPaneLeft.setViewportView(jPanelLeft);
@@ -381,7 +402,17 @@ public class MainWindow extends javax.swing.JFrame {
         switchView(checkoutView);
         SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Checkout");
     }//GEN-LAST:event_jToggleButtonCheckOutActionPerformed
-
+    
+    //check inventory
+    private void jToggleButtonCheckInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonProductsActionPerformed
+        if (inventoryView == null) {
+        	inventoryView = new CheckInventoryPanel();
+        }
+        switchView(inventoryView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "CheckInventory");
+    } 
+    
+    
     private void jToggleButtonProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonProductsActionPerformed
         if (productView == null) {
             productView = new ProductPanel();
@@ -494,6 +525,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonLogOut;
     private javax.swing.JToggleButton jToggleButtonMembers;
     private javax.swing.JToggleButton jToggleButtonProducts;
+    private javax.swing.JToggleButton jToggleButtonCheckInventory;
     private javax.swing.JToggleButton jToggleButtonReport;
     private javax.swing.JToggleButton jToggleButtonStoreKeepers;
     private javax.swing.JToggleButton jToggleButtonVendors;

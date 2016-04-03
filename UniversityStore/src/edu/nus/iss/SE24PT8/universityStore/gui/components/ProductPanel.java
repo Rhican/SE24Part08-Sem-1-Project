@@ -39,8 +39,8 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private Store manager = Store.getInstance();
 	private Object[][] products;
 	private DefaultTableModel dataModel;
-
-	private final static String[] columnNames = { "ProdcutName", "Product Desc" ,"Category Name" };
+	String[] columnNames = manager.getMgrProduct().getProductTableHeader();
+	
 	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
 
 	public ProductPanel() {
