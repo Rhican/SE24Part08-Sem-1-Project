@@ -1,26 +1,20 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
-import java.awt.Component;
 import java.awt.Dialog;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
@@ -30,12 +24,8 @@ import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
-public class ProdcutEntryDialog extends BaseDialogBox{
-
-private static final long serialVersionUID = 1L;
-	
-
-    private JTextField txtName;
+public class ProdcutEditDialog extends BaseDialogBox{
+	private JTextField txtName;
     private JTextField txtBarCode;
     private JTextField txtDescription;
     private JTextField txtPrice;
@@ -44,24 +34,18 @@ private static final long serialVersionUID = 1L;
     private JTextField txtOrderQty;
     private JComboBox<ComboItem> comboCategory;
     
-    private String entryFlag;
+    
+    private Product prodcut;
      
     private ProductManager prodMgr =  Store.getInstance().getMgrProduct();
     private ArrayList<Category> categories ;
 
-    public ProdcutEntryDialog () {
+    public ProdcutEditDialog (Product prodcut) {
     	
         super (MainWindow.getInstance(), "Add Product","add");
         super.setModalityType(Dialog.ModalityType.MODELESS);
+        this.prodcut = prodcut;
         
-        
-    }
-    
-    
-    
-    
-    public void setEntryFlag(String flag){
-    	this.entryFlag = flag;
     }
 
     protected JPanel createFormPanel  ()  {
@@ -94,16 +78,22 @@ private static final long serialVersionUID = 1L;
         
         p.add (new JLabel ("Prodcut Name"));
         p.add(txtName);
+        txtName.setText(prodcut.getProductName());
         p.add (new JLabel ("BarCode"));
         p.add(txtBarCode);
+        txtBarCode.setText(prodcut.getBarcode());
+        txtBarCode.setEditable(false);
         p.add (new JLabel ("Description"));
         p.add(txtDescription);
+        txtDescription.setText(prodcut.getBriefDesp());
         p.add (new JLabel ("Description"));
         p.add(comboCategory);
         p.add (new JLabel ("Price"));
         p.add(txtPrice);
+     //   txtPrice.setText((prodcut.getPrice()).toString(();)
         p.add (new JLabel ("Quantity"));
         p.add(txtQty);
+     //   txtQty.setText(prodcut.getQty());
         p.add (new JLabel ("Reorder Quantity"));
         p.add(txtReorderQty);
         p.add (new JLabel ("Order Quantity"));
@@ -115,7 +105,6 @@ private static final long serialVersionUID = 1L;
     
 
 	protected boolean performCreateUpdateAction() {
-		String productName = txtName.getText();
 		String briefDesp = txtDescription.getText();
 		int qty = 0;
 		double price = Double.parseDouble(txtPrice.getText());
@@ -123,29 +112,27 @@ private static final long serialVersionUID = 1L;
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());
 		int orderQty = Integer.parseInt(txtOrderQty.getText());
 
-		if (entryFlag == Constants.DISCOUNT_ENTRYFLAG_NEW && prodMgr.getProductByBarcode(barCode) != null) {
+		if (prodMgr.getProductByBarcode(barCode) != null) {
 			JOptionPane.showMessageDialog(rootPane, Constants.CONST_PRODUCT_ERR_BARCODEEXIST, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else {
-			try {
-				ReturnObject returnObj = null;
-				if (entryFlag == Constants.DISCOUNT_ENTRYFLAG_EDIT) {
-					returnObj = prodMgr.editProduct(barCode,briefDesp,qty,price,reorderQty,orderQty, "CLO");
-				} else {
-					returnObj = prodMgr.addNewProduct(productName, briefDesp, qty, price, barCode, reorderQty, orderQty,
-							"CLO");
-				}
+		} else
 
-				if (returnObj != null && returnObj.isSuccess()) {
-					SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
-				}
+		{
+			ReturnObject returnObj =null;
+			try {
+				returnObj = prodMgr.editProduct(barCode, briefDesp, qty, price, reorderQty, orderQty, "CLO");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
 
+			if (returnObj != null && returnObj.isSuccess()) {
+				SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
+			}
+		}
+		
+		
 		return true;
 	}
     
@@ -158,27 +145,4 @@ private static final long serialVersionUID = 1L;
     	
     	return comboCatData;
     }
-    
-    public JTextField getProdcutNameTextField(){
-    	return txtName;
-    }
-    public JTextField getBarCodeTextField(){
-    	return txtBarCode;
-    }
-    public JTextField getDescriptionTextField(){
-    	return txtDescription;
-    }
-    public JComboBox<ComboItem> getComboCategory(){
-    	return comboCategory;
-    }
-    public JTextField getQtyTextField(){
-    	return txtQty;
-    }
-    public JTextField getReorderTextField(){
-    	return txtReorderQty;
-    }
-    public JTextField getOrderTextField(){
-    	return txtOrderQty;
-    }
-    
 }

@@ -9,11 +9,14 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.domain.Product;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.AddCategoryDialog;
@@ -21,6 +24,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.category.ModifyCategor
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 /**
@@ -37,7 +41,9 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private DefaultTableModel dataModel;
 
 	private final static String[] columnNames = { "ProdcutName", "Product Desc" ,"Category Name" };
-
+	
+	
+	
 	public ProductPanel() {
 		super("Product");
 		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
@@ -65,18 +71,30 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	
 	protected void performAddAction (){
 		ProdcutEntryDialog d = new ProdcutEntryDialog();
+		d.setEntryFlag(Constants.PRODCUT_ENTRYFLAG_NEW);
 		d.pack();
 		d.setVisible(true);
 		refersh();
 	}
 	
-	protected void performModifyAction (){
+	protected void performModifyAction () {
 		if (productTable.getSelectedRow() != -1) {
-            String code = productTable.getValueAt(productTable.getSelectedRow(), 0).toString();
-            Category cat = manager.getMgrCategory().getCategory(code);
-    		ModifyCategoryDialog d = new ModifyCategoryDialog(cat);
-    		d.pack();
-    		d.setVisible(true);
+            int selectedRow = productTable.getSelectedRow();
+            Product product = manager.getMgrProduct().getProductList().get(selectedRow);
+            	 
+            if( product == null){
+            	try {
+					throw new Exception("Error in loading prodcut information");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+           
+            ProdcutEditDialog editProdcutDialog = new ProdcutEditDialog(product);
+            editProdcutDialog.pack();
+           
+            editProdcutDialog.setVisible(true);
         }
 		refersh();
 	}
@@ -112,4 +130,7 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	}
 	
 	
+	
 }
+	
+	

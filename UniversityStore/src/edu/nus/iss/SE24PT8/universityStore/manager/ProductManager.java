@@ -5,8 +5,10 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
+import edu.nus.iss.SE24PT8.universityStore.Store;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
@@ -103,6 +105,48 @@ public class ProductManager implements IManager{
 		saveData();
 		return returnObj;
 
+    }
+    
+    
+    /**
+     * @param prodcutID
+     * @param briefDescp
+     * @param qty
+     * @param price
+     * @param barCode
+     * @param reorderQty
+     * @param orderQty
+     * @param categoryCode
+     * @return
+     * 
+     *Assumption: ProdcutName and BarCode cannot be modified
+     * @throws Exception 
+     */
+    public ReturnObject editProduct(String barCode,String briefDescp, int qty, double price,int reorderQty, int orderQty, String categoryCode) throws Exception{
+    	Product product = Store.getInstance().getMgrProduct().getProductByBarcode(barCode);
+    	ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+    	if ( product == null){
+    		throw new BadProductException("Can not retrive prodcut information.");
+    	}
+    	
+        Category category;
+		category = categoryManager.getCategory(categoryCode);
+
+		if (category == null) {
+			throw new Exception("Category Eror during operation!");
+		}
+
+		product.setQty(qty);
+		product.setBriefDesp(briefDescp);
+		product.setPrice(price);
+		product.setReorderQty(reorderQty);
+		product.setReorderQty(reorderQty);
+		product.setOrderQty(orderQty);
+		product.setCategory(category);
+		
+
+		saveData();
+        return returnObj;
     }
     
     /**
