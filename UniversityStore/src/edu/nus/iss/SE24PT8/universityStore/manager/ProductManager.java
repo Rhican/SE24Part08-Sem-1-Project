@@ -27,7 +27,7 @@ public class ProductManager implements IManager{
 
     private static CategoryManager categoryManager;
     
-    private  static String[] columnNames = { "ProdcutName", "BarCode " ,"Product Desc" ,"Category Name" ,"Price"  ,"Quantity" };
+    private  static String[] columnNames = { "Product Id", "ProdcutName", "BarCode " ,"Product Desc" ,"Category Name" ,"Price"  ,"Quantity" };
 
     public ArrayList<Product> getProductList() {
         return productList;
@@ -311,13 +311,14 @@ public class ProductManager implements IManager{
  		Object[][] tableData = new Object[list.size()][3];
  		for (int i = 0; i < list.size(); i++) {
  			Product product = list.get(i);
- 			Object[] rowData = new Object[6];
- 			rowData[0] = product.getProductName();
- 			rowData[1]  = product.getBarcode();
- 			rowData[2] = product.getBriefDesp();
- 			rowData[3] = product.getCategory().getCategoryName();
- 			rowData[4] = product.getPrice();
- 			rowData[5] = product.getQty();
+ 			Object[] rowData = new Object[7];
+ 			rowData[0] = product.getProductId();
+ 			rowData[1] = product.getProductName();
+ 			rowData[2]  = product.getBarcode();
+ 			rowData[3] = product.getBriefDesp();
+ 			rowData[4] = product.getCategory().getCategoryName();
+ 			rowData[5] = product.getPrice();
+ 			rowData[6] = product.getQty();
  			tableData[i] = rowData;
  		}
  		return tableData;
