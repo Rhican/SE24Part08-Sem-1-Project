@@ -75,6 +75,15 @@ public class ProdcutEditDialog extends BaseDialogBox{
 			comboCategory.addItem(item);
 		}
     	
+    	int selectedComboIndex  = 1;
+    	
+    	for ( int i  = 1; i < comboCategory.getItemCount();i++){
+    		if( comboCategory.getItemAt(i).getLabel() == prodcut.getCategory().getCategoryCode()){
+				selectedComboIndex = i;
+			}
+    	}
+    	
+    	
         p.setLayout (new GridLayout (0, 2));
         
         p.add (new JLabel ("Prodcut Name"));
@@ -87,18 +96,21 @@ public class ProdcutEditDialog extends BaseDialogBox{
         p.add (new JLabel ("Description"));
         p.add(txtDescription);
         txtDescription.setText(prodcut.getBriefDesp());
-        p.add (new JLabel ("Description"));
+        p.add (new JLabel ("Category"));
         p.add(comboCategory);
+        comboCategory.setSelectedItem(selectedComboIndex);
         p.add (new JLabel ("Price"));
         p.add(txtPrice);
-     //   txtPrice.setText((prodcut.getPrice()).toString(();)
+        txtPrice.setText(String.valueOf(prodcut.getPrice()));
         p.add (new JLabel ("Quantity"));
         p.add(txtQty);
-     //   txtQty.setText(prodcut.getQty());
+        txtQty.setText(String.valueOf(prodcut.getQty()));
         p.add (new JLabel ("Reorder Quantity"));
         p.add(txtReorderQty);
+        txtReorderQty.setText(String.valueOf(prodcut.getReorderQty()));
         p.add (new JLabel ("Order Quantity"));
         p.add(txtOrderQty);
+        txtOrderQty.setText(String.valueOf(prodcut.getOrderQty()));
         
 
         return p;
@@ -112,17 +124,13 @@ public class ProdcutEditDialog extends BaseDialogBox{
 		String barCode = txtBarCode.getText();
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());
 		int orderQty = Integer.parseInt(txtOrderQty.getText());
-
-		/*if (prodMgr.getProductByBarcode(barCode) != null) {
-			JOptionPane.showMessageDialog(rootPane, Constants.CONST_PRODUCT_ERR_BARCODEEXIST, "Error",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		} else*/
-
+		
+		ComboItem selectedCombo = (ComboItem) comboCategory.getSelectedItem();
+		String categoryCode = selectedCombo.getLabel();
 		
 			ReturnObject returnObj =null;
 			try {
-				returnObj = prodMgr.editProduct(barCode, briefDesp, qty, price, reorderQty, orderQty, "CLO");
+				returnObj = prodMgr.editProduct(barCode, briefDesp, qty, price, reorderQty, orderQty,categoryCode);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
