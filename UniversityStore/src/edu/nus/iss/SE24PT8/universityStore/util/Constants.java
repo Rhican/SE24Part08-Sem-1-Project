@@ -63,5 +63,12 @@ public final class Constants {
     
     public static final Color STORE_APP_TITLE_COLOR = new java.awt.Color(0, 64, 128);
     public static final Font STORE_APP_TITLE_FONT= new java.awt.Font("Segoe UI", 1, 20);
+    
+    public static final String PRODCUT_ENTRYFLAG_NEW = "NEW_ENTRY";
+    public static final String PRODUCT_ENTRYFLAG_EDIT = "EDIT_ENTRY";
+    public static final String DISCOUNT_ENTRYFLAG_NEW = "NEW_ENTRY";
+    public static final String DISCOUNT_ENTRYFLAG_EDIT = "EDIT_ENTRY";
+    
+    
 
 }
