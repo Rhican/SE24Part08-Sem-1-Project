@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.management.MXBean;
+
 /**
  *
  * @author Mugunthan
@@ -44,9 +46,9 @@ public class VendorManager implements IManager {
 	}
 
 	public ArrayList<Vendor> getVendorsListByCategory(String catCode) {
-		ArrayList<Vendor> vendorsList = null;
+		ArrayList<Vendor> vendorsList = new ArrayList<Vendor>();
 		if (catCode != null && !catCode.trim().equals("")) {
-			vendorsList = vendors.get(categoryMgr.getCategory(catCode));
+			vendorsList = vendors.get(catCode);
 		}
 
 		return vendorsList;
@@ -58,20 +60,38 @@ public class VendorManager implements IManager {
 
 		Category cat = categoryMgr.getCategory(catCode);
 		if (cat != null) {
-			Vendor newVendor;
-			try {
-				newVendor = new Vendor(name, desc);
-				vendors.get(catCode).add(newVendor); // Update vendor list
-				categoryMgr.updateVendorList(vendors.get(catCode), catCode); //Update category vendor list in object
-				DataAdapter.writeVendors(vendors.get(catCode), catCode);
-				return new ReturnObject(true, Constants.CONST_VENDOR_MSG_CREATION_SUCUESS, newVendor);
-			} catch (BadVendorException ex) {
-				return new ReturnObject(false, ex.getMessage(), null);
+			if(isVendorExist(cat , name)){
+				return new ReturnObject(true, Constants.CONST_VENDOR_ERR_EXIST, cat);
+			} else {
+				Vendor newVendor;
+				try {
+					newVendor = new Vendor(name, desc);
+					vendors.get(catCode).add(newVendor); // Update vendor list
+					categoryMgr.updateVendorList(vendors.get(catCode), catCode); //Update category vendor list in object
+					DataAdapter.writeVendors(vendors.get(catCode), catCode);
+					return new ReturnObject(true, Constants.CONST_VENDOR_MSG_CREATION_SUCUESS, newVendor);
+				} catch (BadVendorException ex) {
+					return new ReturnObject(false, ex.getMessage(), null);
+				}				
 			}
 		} else {
 			return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, null);
 		}
 
+	}
+	
+	private boolean isVendorExist(Category cat, String name) {
+		boolean isExist = false;
+		for(Vendor v : cat.getVendorList()){
+			if(v.getVendorName().equals(name))
+				isExist = true;
+		}
+		return isExist;
+	}
+
+	public void updateVendorList(String catCode, ArrayList<Vendor> vendorList){
+		ArrayList<Vendor> oldList = vendors.get(catCode);
+		oldList = vendorList;
 	}
 
 	// This method may used to change the vendor preference
@@ -117,18 +137,20 @@ public class VendorManager implements IManager {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	public Object[][] prepareListToTableModel() {
-		int count = 0;
-		Object[][] tableData = new Object[getTotalVendorCount()][2];
-		ArrayList<Category> categories = categoryMgr.getCategories();
-		for (Category category : categories) {
-			ArrayList<Vendor> list = category.getVendorList();
-			for (Vendor vendor : list){
-				Object[] rowData = new Object[2];
-				rowData[0] = vendor.getVendorName();
-				rowData[1] = category.getCategoryName();
-				tableData[count] = rowData;
-				count++;
+	public Object[][] prepareListToTableModel(String catCode) {
+		Object[][] tableData = new Object[0][0];
+		int maxLengh = 50;
+		ArrayList<Vendor> vendorList = categoryMgr.getCategory(catCode).getVendorList();
+		if (vendorList != null && vendorList.size() > 0){
+			tableData = new Object[vendorList.size()][2];
+			for (int i = 0; i < vendorList.size(); i++) {
+			Object[] rowData = new Object[2];
+			rowData[0] = vendorList.get(i).getVendorName();
+			if (vendorList.get(i).getVendorDescription().length() < maxLengh)
+				maxLengh = vendorList.get(i).getVendorDescription().length();
+			rowData[1] = vendorList.get(i).getVendorDescription().substring(0, maxLengh);
+			tableData[i] = rowData;
+				
 			}
 		}
 		return tableData;

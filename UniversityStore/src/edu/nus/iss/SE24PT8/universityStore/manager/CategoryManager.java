@@ -68,6 +68,7 @@ public class CategoryManager implements IManager{
         if (oldCategory != null ) {
             oldCategory.setCategoryName(cat.getCategoryName());
             DataAdapter.writeCategories(categories);
+            DataAdapter.writeVendors(cat.getVendorList(), cat.getCategoryCode());
             return new ReturnObject(true, Constants.CONST_CAT_MSG_UPDATE_SUCUESS, oldCategory);
         } else {
             return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, oldCategory);

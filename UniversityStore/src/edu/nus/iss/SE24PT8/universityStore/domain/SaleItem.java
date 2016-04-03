@@ -5,13 +5,9 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
+import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
+
 /**
- *
- * @author Zehua
- */
-/**
- * Remark - Item No removed, the item no will be the item index inside the
- * transaction
  *
  * @author Zehua
  */
@@ -19,27 +15,25 @@ public class SaleItem  {
 
     private int saleQuantity = 0;
     private Product product;
-    private String  productID;
     
     
     public String getProductID(){
-        return productID;
+        return product.getProductId();
     }
     
     public SaleItem(Product product, int quantity){
         this.product=product;
         this.saleQuantity=quantity;
-        this.productID=product.getProductId();
     }
     
     public void setProductID(String productID){
-        this.productID=productID;
+    	this.product = ProductManager.getInstance().getProductByID(productID);
     }
     
 
     public SaleItem(String productID, int quantity) {
         /// TODO: Get Product
-        //this.product = 
+        this.product = ProductManager.getInstance().getProductByID(productID);
         this.saleQuantity = quantity;
     }
 
@@ -71,13 +65,6 @@ public class SaleItem  {
     {
         return product.getPrice() * saleQuantity;
     }
-    
-    
-    //-----------------------------------------------------------
-    private boolean isProductExist(String productID) {
-        // TODO
-        return false;
-    }
-    
+        
  
 }

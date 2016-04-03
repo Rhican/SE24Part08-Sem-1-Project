@@ -12,6 +12,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.StoreKeeperPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.report.ReportPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import java.text.SimpleDateFormat;
@@ -34,6 +35,7 @@ import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
+import java.awt.Dimension;
 
 
 /**
@@ -49,16 +51,24 @@ public class MainWindow extends javax.swing.JFrame {
     private CategoryPanel catView = null;
     private VendorPanel vendorView = null;
     private CheckoutPanel checkoutView = null; 
+    private ReportPanel reportView = null;
     private MemberPanel memberView = null;
     private StoreKeeperPanel storeKeeperView= null;
     private static MainWindow instance;
     
     private static CheckInventoryPanel inventoryView  = null;
+   
+    
+    public void setStoreKeeperName(String name){
+    	jLabelStoreKeeperName.setText("Login" + name);
+    }
     
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
+    	setPreferredSize(new Dimension(980, 580));
+        
         setLookAndFeel("Nimbus");
 
         initComponents();
@@ -66,7 +76,7 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
-        jToggleButtonHomeActionPerformed(null);
+        jToggleButtonCheckOutActionPerformed(null);
         
         SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
         
@@ -189,32 +199,41 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabelStoreKeeperName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelStoreKeeperName.setText("StoreKeeper Name");
+        
+        JLabel lblUser = new JLabel("User:");
 
         javax.swing.GroupLayout jPanelTopLayout = new javax.swing.GroupLayout(jPanelTop);
-        jPanelTop.setLayout(jPanelTopLayout);
         jPanelTopLayout.setHorizontalGroup(
-            jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTime)
-                    .addComponent(jLabelStoreKeeperName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+        	jPanelTopLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanelTopLayout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(jPanelTopLayout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jLabelTime)
+        				.addGroup(jPanelTopLayout.createSequentialGroup()
+        					.addComponent(lblUser)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jLabelStoreKeeperName)))
+        			.addPreferredGap(ComponentPlacement.RELATED, 527, Short.MAX_VALUE)
+        			.addComponent(jLabel1)
+        			.addContainerGap())
         );
         jPanelTopLayout.setVerticalGroup(
-            jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanelTopLayout.createSequentialGroup()
-                        .addComponent(jLabelTime)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelStoreKeeperName)))
-                .addContainerGap())
+        	jPanelTopLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanelTopLayout.createSequentialGroup()
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addGroup(jPanelTopLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(jPanelTopLayout.createSequentialGroup()
+        					.addGroup(jPanelTopLayout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jLabel1)
+        						.addComponent(jLabelTime))
+        					.addGap(19))
+        				.addGroup(Alignment.TRAILING, jPanelTopLayout.createSequentialGroup()
+        					.addGroup(jPanelTopLayout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabelStoreKeeperName)
+        						.addComponent(lblUser))
+        					.addContainerGap())))
         );
+        jPanelTop.setLayout(jPanelTopLayout);
 
         jScrollPaneLeft.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPaneLeft.setMinimumSize(new java.awt.Dimension(23, 300));
@@ -243,7 +262,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         
         //check inventory
-        jToggleButtonCheckInventory.setText("CheckInventory");
+        jToggleButtonCheckInventory.setText("Inventory");
         jToggleButtonCheckInventory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonCheckInventoryActionPerformed(evt);
@@ -277,8 +296,12 @@ public class MainWindow extends javax.swing.JFrame {
         	jToggleButtonStoreKeepersActionPerformed(evt);
         }
         });
-
-        jToggleButtonReport.setText("Report");
+		jToggleButtonReport.setText("Report");
+        jToggleButtonReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonReportsActionPerformed(evt);
+            }
+        });
 
         jToggleButtonLogOut.setText("Log Out");
         jToggleButtonLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -291,24 +314,24 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelLeftLayout.setHorizontalGroup(
         	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanelLeftLayout.createSequentialGroup()
-        			.addGap(10)
-        			.addGroup(jPanelLeftLayout.createParallelGroup(Alignment.LEADING, false)
-        				.addComponent(jToggleButtonReport, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonProducts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonCategories, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonVendors, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonMembers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonCheckOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addContainerGap()
+        			.addGroup(jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jToggleButtonCheckOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonMembers, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonProducts, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonCategories, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonVendors, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonReport, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
         			.addContainerGap())
         );
         jPanelLeftLayout.setVerticalGroup(
-        	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanelLeftLayout.createSequentialGroup()
-        			.addGap(29)
+        	jPanelLeftLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, jPanelLeftLayout.createSequentialGroup()
+        			.addContainerGap()
         			.addComponent(jToggleButtonCheckOut)
         			.addGap(7)
         			.addComponent(jToggleButtonMembers)
@@ -324,13 +347,14 @@ public class MainWindow extends javax.swing.JFrame {
         			.addComponent(jToggleButtonStoreKeepers)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jToggleButtonReport)
+        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jToggleButtonCheckInventory)
-        			.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
         			.addComponent(jToggleButtonLogOut)
-        			.addGap(0))
+        			.addContainerGap())
         );
-        jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonCheckInventory, jToggleButtonLogOut});
-        jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonCheckInventory, jToggleButtonLogOut});
+        jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
+        jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
         jPanelLeft.setLayout(jPanelLeftLayout);
 
         jScrollPaneLeft.setViewportView(jPanelLeft);
@@ -424,9 +448,18 @@ public class MainWindow extends javax.swing.JFrame {
     private void jToggleButtonDiscountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonDiscountsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButtonDiscountsActionPerformed
-
+    
+    private void jToggleButtonReportsActionPerformed(java.awt.event.ActionEvent evt) {
+    	if (reportView == null) {
+    		reportView = new ReportPanel();
+        }
+        switchView(reportView);
+    }
+    
     private void jToggleButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogOutActionPerformed
-        // TODO add your handling code here:
+    	Login loginFrame=new Login(false);
+    	loginFrame.setVisible(true);
+    	dispose();
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
 
     private void jToggleButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonHomeActionPerformed
@@ -473,12 +506,14 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+   
+   // public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+    /*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -498,13 +533,14 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+    /*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 getInstance().setVisible(true);
             }
         });
     }
-
+*/
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
@@ -529,5 +565,4 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonReport;
     private javax.swing.JToggleButton jToggleButtonStoreKeepers;
     private javax.swing.JToggleButton jToggleButtonVendors;
-    // End of variables declaration//GEN-END:variables
 }
