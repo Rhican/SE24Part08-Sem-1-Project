@@ -17,6 +17,8 @@ import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
 import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
+import edu.nus.iss.SE24PT8.universityStore.manager.TransactionManager;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -457,8 +459,7 @@ public class DataAdapter {
        
      
      */
-    private static Transaction convertTokenstoTransaction(ArrayList<String> tokens) {
-        String token0_TransactionID = "";
+    private static Transaction convertTokenstoTransaction(ArrayList<ArrayList<String>> saleItems) {
         String token1_ProductID = "";
         String token2_CustomerID = "";
         String token3_Quantity = "";
@@ -466,75 +467,58 @@ public class DataAdapter {
         Date date = null;
         int quantity = 0;
 
-        Customer customer = null;
-        try {
-            token0_TransactionID = tokens.get(0);
-            token1_ProductID = tokens.get(1);
-            token2_CustomerID = tokens.get(2);
-            token3_Quantity = tokens.get(3);
-            token4_Date = tokens.get(4);
-
-            date = DF.parse(token4_Date);
-            quantity = new Integer(token3_Quantity).intValue();
-
-            //Construct Transaction Object 
-            
-            
-             Transaction transaction=new Transaction();
-             //transaction.setTransactionID(token0_TransactionID);
-             transaction.setDate(date);
-             transaction.setMember(token2_CustomerID);
-        
-             /*
-             if(token2_CustomerID.equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC)){
-             customer=new NonMember(Constants.CONST_CUST_TYPE_PUBLIC,Constants.CONST_CUST_TYPE_PUBLIC);
-             }else{
-             customer=new Member(token2_CustomerID,token2_CustomerID,0);
-             }
-             
-             //transaction.setCustomer(customer);
-            */
-             
-             SaleItem sale=new SaleItem(token1_ProductID,quantity);
-            
-             Product product=new Product();
-             product.setProductId(token1_ProductID);
-             sale.setProductID(token1_ProductID);
-         
-             transaction.insertSaleItemRecord(sale);
-             transaction.close();
-             return transaction;
-         
-            
-        } catch (Exception e) {
-            System.out.println("Error getting tokens for Transaction Object");
-            return null;
+        Transaction transaction=new Transaction();
+        boolean isFirst = true;
+        for(ArrayList<String> saleItem : saleItems) {
+	        try {
+	            token1_ProductID = saleItem.get(1);
+	            token2_CustomerID = saleItem.get(2);
+	            token3_Quantity = saleItem.get(3);
+	            token4_Date = saleItem.get(4);
+	            if (isFirst) {
+	            	date = DF.parse(token4_Date);
+	            	transaction.setDate(date);
+	            	transaction.setMember(token2_CustomerID);
+	            }	            
+	            quantity = new Integer(token3_Quantity).intValue();
+	            transaction.addSaleItem(token1_ProductID, quantity);
+			    isFirst = false;	         
+	            
+	        } catch (Exception e) {
+	            System.out.println("Error getting tokens for Transaction Object");
+	            return null;
+	        }
         }
+        transaction.close();
+        return transaction;
 
     }
 
      
      public static ArrayList<Transaction> loadTransactions(){
-        ArrayList<Transaction> objectList=new ArrayList<>();
-        HashMap<Long,Transaction> transactions=new HashMap<>();
-        Transaction existingTransaction;
         ArrayList<ArrayList<String>> dataLines = FileOperations.readFileTokenized(FILENAME_TRANSACTIONS);
-        for(ArrayList<String> tokens:dataLines){
-            Transaction transaction=convertTokenstoTransaction(tokens);
-            //check if transaction is already in the list
-            existingTransaction=null;
-            existingTransaction=transactions.get(transaction.getId());
-
-                if(existingTransaction==null){
-                    transactions.put(transaction.getId(), transaction);
-                }else{
-                    existingTransaction.insertSaleItemRecord(transaction.getSaleItems().get(0));
-                }//end of else
+        ArrayList<Transaction> result = new ArrayList<Transaction>(); 
+        for(int start = 0 ; start < dataLines.size(); start ++)
+        {
+        	ArrayList<ArrayList<String>> transactionSaleItems = new ArrayList<ArrayList<String>>();
+        	ArrayList<String> firstSaleItem = dataLines.get(start);
+        	transactionSaleItems.add(firstSaleItem);
+        	String idString = firstSaleItem.get(0).trim();
+        	for(int end = start + 1; end <dataLines.size(); end ++)
+        	{
+        		ArrayList<String> saleItem = dataLines.get(end);
+        		if (saleItem.get(0).trim().equals(idString)){
+        			transactionSaleItems.add(saleItem);
+        			start++;
+        		}
+        	}
+        	Transaction transaction = convertTokenstoTransaction(transactionSaleItems);
+        	result.add(transaction);
+        	if (!idString.equals(String.valueOf(transaction.getId()))) {
+        		System.out.println("Warning: Transaction ID Incorrect, expected: " + transaction.getId() + " but " + idString);
+        	}
         }//end of For loop
-
-
-        objectList.addAll(transactions.values());
-        return objectList;
+        return result;
      }
     
     
@@ -553,7 +537,7 @@ public class DataAdapter {
             sb.append(item.getProduct().getProductId());
             sb.append(comma);
             //3 :Member
-            sb.append(transaction.getMember().getID());
+            sb.append(transaction.getMemberID());
             sb.append(comma);
             //4: quantity
             sb.append(item.getSaleQuantity());
@@ -567,7 +551,7 @@ public class DataAdapter {
          return lines;
     }
 
-    public static void writeTransactions(Transaction trans) {
+    public static void appendTransaction(Transaction trans) {
         ArrayList<String> dataLines = new ArrayList<>();
         dataLines=convertTransactionToString(trans);
         FileOperations.writeFile(dataLines, FILENAME_TRANSACTIONS, true);
@@ -619,7 +603,11 @@ public class DataAdapter {
         for(Transaction trans:transactions){
             
             System.out.println("----------------------------");
-            System.out.println("Transaction"+trans.getId()+comma+trans.getMember().getID()+comma+DF.format(trans.getDate()));
+            if (trans.getMember() != null)
+            	System.out.println("Transaction"+trans.getId()+comma+trans.getMemberID()+comma+DF.format(trans.getDate()));
+            else
+            	System.out.println("Transaction"+trans.getId()+comma+ comma+DF.format(trans.getDate()));
+            
             System.out.println("   sale items:");
             for(SaleItem sale:trans.getSaleItems()){
                 System.out.println("        "+sale.getProductID()+comma+sale.getSaleQuantity());
