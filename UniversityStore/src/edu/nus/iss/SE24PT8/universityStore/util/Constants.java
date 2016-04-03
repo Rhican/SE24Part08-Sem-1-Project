@@ -61,6 +61,10 @@ public final class Constants {
     public static final String CONST_VENDOR_MSG_CREATION_SUCUESS ="Vendor added Successfully";
     public static final String CONST_VENDOR_MSG_UPDATE_SUCUESS = "VendorList updated Successfully";
     
+    //Added by Mugu
+    public static final String ADD_OPERATION = "add";
+    public static final String MODIFY_OPERATION = "modify";
+    public static final String DELETE_OPERATION = "delete";
     public static final Color STORE_APP_TITLE_COLOR = new java.awt.Color(0, 64, 128);
     public static final Font STORE_APP_TITLE_FONT= new java.awt.Font("Segoe UI", 1, 20);
 

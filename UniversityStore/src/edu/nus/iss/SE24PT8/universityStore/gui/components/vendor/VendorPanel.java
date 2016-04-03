@@ -10,6 +10,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.category.AddCategoryDi
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
 /**
 *
@@ -25,9 +26,10 @@ public class VendorPanel extends BaseModulePanel implements INotificable {
 	private DefaultTableModel dataModel;
 	
 	private final static String[] columnNames = {"Vendor Name", "Category"};
+	private final static String[] allowedOperations = {Constants.ADD_OPERATION};
 	
 	public VendorPanel() {
-		super("Vendor");
+		super("Vendor", allowedOperations);
 		SubjectManager.getInstance().addNotification("VendorPanel", "Vendor", this);
 	}
 	
