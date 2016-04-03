@@ -72,17 +72,22 @@ public class ReportPanel extends JPanel implements INotificable {
 			Group group1 = thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(titleLabel,
 					GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
 					GroupLayout.PREFERRED_SIZE);
+			Group reportGroup = thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(reportTypeLabel,
+					GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
+					GroupLayout.PREFERRED_SIZE).addComponent(reportTypes);
 
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup().addContainerGap().addGroup(group1)
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(reportTypeLabel).addComponent(reportTypes).addComponent(reportPane, 0, 440, Short.MAX_VALUE));
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(reportGroup).addGap(20).addComponent(reportPane, 0, 440, Short.MAX_VALUE));
 
 			Group group3 = thisLayout.createSequentialGroup().addGap(102).addComponent(titleLabel,
-					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152).addComponent(reportTypeLabel).addComponent(reportTypes);
+					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152);
 			Group group4 = thisLayout.createSequentialGroup();
+			Group hReportGroup = thisLayout.createSequentialGroup().addComponent(reportTypeLabel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
+					.addGap(25).addComponent(reportTypes, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE);
 			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
 					.addComponent(reportPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 500,
 							GroupLayout.PREFERRED_SIZE)
-					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
+					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, hReportGroup).addGroup(GroupLayout.Alignment.CENTER, group4));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,7 +103,7 @@ public class ReportPanel extends JPanel implements INotificable {
 			dataModel.setDataVector(categories, columnNames);
 			reportPane.setViewportView(new BaseTable(dataModel));			
 		} else if (reportType.equals(PRODUCT_LIST)){
-			String[] columnNames = { "ProdcutName", "Product Desc" ,"Category Name" };
+			String[] columnNames = { "Product Id", "Prodcut Name", "BarCode " ,"Product Desc" ,"Category Name" ,"Price" ,"Quantity" };
 			Object[][] products = manager.getMgrProduct().prepareProductTableModel();
 			dataModel = new DefaultTableModel(products, columnNames);
 			dataModel.setDataVector(products, columnNames);
@@ -107,7 +112,11 @@ public class ReportPanel extends JPanel implements INotificable {
 		} else if (reportType.equals(TXN_LIST)){
 			
 		} else if (reportType.equals(MEMBER_LIST)){
-			
+			String[] columnNames = {"MemberName","MemberID"};
+			Object[][] members = manager.getMgrMember().prepareMemberTableModel();
+			dataModel = new DefaultTableModel(members, columnNames);
+			dataModel.setDataVector(members, columnNames);
+			reportPane.setViewportView(new BaseTable(dataModel));			
 		}
 	}
 	
