@@ -52,7 +52,7 @@ public class MemberManagerTest {
         }
         
         Member m=memberManager.getMember("G6365499U");
-        assertEquals(m.getCustomerName(),"Mi Site");
+        assertEquals(m.getName(),"Mi Site");
      }
      
      @Test
@@ -106,7 +106,7 @@ public class MemberManagerTest {
           memberManager.addMember("SecondMember", "B123456");
           }
           Member m=memberManager.getMember("B123456");
-          assertEquals(m.getCustomerName(),"SecondMember");
+          assertEquals(m.getName(),"SecondMember");
      }
   
      @Test

@@ -34,7 +34,7 @@ public class MemberUpdateDialog extends BaseDialogBox{
 		JPanel p=new JPanel();
 		p.setLayout(new GridLayout(0,2));
 		p.add(new JLabel("MemberID"));
-		p.add(new JLabel(member.getCustomerID()));
+		p.add(new JLabel(member.getID()));
 		p.add(new JLabel("MemberName"));
 		membernameField=new JTextField(20);
 		p.add(membernameField);
@@ -43,7 +43,7 @@ public class MemberUpdateDialog extends BaseDialogBox{
    
 	protected boolean performCreateUpdateAction(){
 		String memberName=membernameField.getText();
-		String memberID=member.getCustomerID();
+		String memberID=member.getID();
         try {
         	 Store.getInstance().getMgrMember().editMemberName(memberName,memberID);
         	 JOptionPane.showMessageDialog(new JFrame(),

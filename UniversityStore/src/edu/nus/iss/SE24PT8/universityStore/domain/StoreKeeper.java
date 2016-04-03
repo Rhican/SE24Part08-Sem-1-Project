@@ -23,8 +23,7 @@ public class StoreKeeper implements Comparable<StoreKeeper>  {
    public String getstoreKeeperName(){
        return this.storeKeeperName;
    }
-   public String getPassword()
-   {
+   public String getPassword(){
        return this.password;
    }
     

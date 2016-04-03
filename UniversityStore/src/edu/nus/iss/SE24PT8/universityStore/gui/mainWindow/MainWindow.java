@@ -9,6 +9,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.StoreKeeperPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -43,6 +44,7 @@ public class MainWindow extends javax.swing.JFrame {
     private VendorPanel vendorView = null;
     private CheckoutPanel checkoutView = null; 
     private MemberPanel memberView = null;
+    private StoreKeeperPanel storeKeeperView= null;
     private static MainWindow instance;
 
     /**
@@ -251,6 +253,11 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jToggleButtonStoreKeepers.setText("Store Keepers");
+        jToggleButtonStoreKeepers.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        	jToggleButtonStoreKeepersActionPerformed(evt);
+        }
+        });
 
         jToggleButtonReport.setText("Report");
 
@@ -423,6 +430,13 @@ public class MainWindow extends javax.swing.JFrame {
         switchView(memberView);
         
         
+    }
+    
+    private void jToggleButtonStoreKeepersActionPerformed(java.awt.event.ActionEvent evt) {
+    	if (storeKeeperView == null) {
+    		storeKeeperView = new StoreKeeperPanel();
+        }
+        switchView(storeKeeperView);
     }
     
     /**

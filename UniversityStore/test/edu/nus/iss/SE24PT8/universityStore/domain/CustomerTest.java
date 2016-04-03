@@ -40,23 +40,23 @@ public class CustomerTest extends TestCase {
 
     @Test
     public void testGetCustomerName(){
-        assertEquals("Ang Lee",cus1.getCustomerName());
-        assertEquals("Yan Martel",cus2.getCustomerName());
+        assertEquals("Ang Lee",cus1.getName());
+        assertEquals("Yan Martel",cus2.getName());
     }
     
     @Test
     public void testGetPassword(){
-       assertEquals("R64565FG4",cus1.getCustomerID());
-       assertEquals("F42563743156",cus2.getCustomerID());
+       assertEquals("R64565FG4",cus1.getID());
+       assertEquals("F42563743156",cus2.getID());
     }
    
     @Test
     public void testCustomer()
     {
-        assertEquals("Ang Lee",cus1.getCustomerName());
-        assertEquals("R64565FG4",cus1.getCustomerID());
-        assertEquals("Yan Martel",cus2.getCustomerName());
-        assertEquals("F42563743156",cus2.getCustomerID());
+        assertEquals("Ang Lee",cus1.getName());
+        assertEquals("R64565FG4",cus1.getID());
+        assertEquals("Yan Martel",cus2.getName());
+        assertEquals("F42563743156",cus2.getID());
         assertSame(cus1,cus1);
         assertSame(cus2,cus2);
         

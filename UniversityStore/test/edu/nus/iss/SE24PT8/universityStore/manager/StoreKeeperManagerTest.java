@@ -2,6 +2,8 @@
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadStoreKeeperAdminException;
+
 import java.util.ArrayList;
 import junit.framework.TestCase;
 import org.junit.After;
@@ -51,15 +53,15 @@ public class StoreKeeperManagerTest extends TestCase {
      
      
      @Test
-     public void testcheckPassword()
+     public void testcheckPassword() throws BadStoreKeeperAdminException
      {
-          StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
+        StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
          assertFalse(!storeKeeperManager.checkPassword("Stacy", "Dean56s"));
          assertTrue(storeKeeperManager.checkPassword("Johny", "123456"));
      }
      
      @Test
-     public void testInstance()
+     public void testInstance() throws BadStoreKeeperAdminException
      {
         StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
         assertFalse(StoreKeeperManager.getInstance().getStoreKeeper() == null);
@@ -79,4 +81,32 @@ public class StoreKeeperManagerTest extends TestCase {
          assertTrue(StoreKeeperManager.getInstance().checkPassword("Johny", "123456"));
          
      }
+     
+     @Test
+     public void testAddStoreKeeper() throws BadStoreKeeperAdminException
+     {
+         StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
+         if(storeKeeperManager.getStoreKeeper("THIRI")==null)
+         {
+             storeKeeperManager.AddStoreKeeper("THIRI", "12345");
+             assertTrue(storeKeeperManager.checkPassword("THIRI", "12345"));
+         }
+     }
+     
+     @Test
+     public void testRemoveStoreKeeper() throws BadStoreKeeperAdminException
+     {
+         StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
+         if(storeKeeperManager.getStoreKeeper("THIRI")==null)
+         {
+             storeKeeperManager.AddStoreKeeper("THIRI", "12345");
+             assertTrue(storeKeeperManager.checkPassword("THIRI", "12345"));
+             storeKeeperManager.DeleteStoreKeeper("THIRI");
+         }
+         else
+         {
+               storeKeeperManager.DeleteStoreKeeper("THIRI");
+         }
+     }
 }
+
