@@ -2,6 +2,7 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -94,6 +95,9 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			if (data.equalsIgnoreCase("Done")){
 				handlePaymentComplete();
 			}
+			else if (data.equalsIgnoreCase("Back")){
+				handlePaymentAbort();
+			}
 			else if (data.equalsIgnoreCase("Cancel")){
 				handlePaymentCancel();
 			}
@@ -159,22 +163,41 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	}
 	private void handlePaymentComplete() {
 		TransactionManager manager = TransactionManager.getInstance();
-		manager.closeTransaction(transaction);
-		printTransaction(transaction);
-		transaction = manager.getNewTransaction();
-		switchPanel("Product");
-		UpdateSaleItemTable();		
+		if ( manager.closeTransaction(transaction) )
+		{
+			printTransaction(transaction);
+			JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" +  transaction.getId(), "Success", JOptionPane.INFORMATION_MESSAGE);
+			transaction = manager.getNewTransaction();
+			switchPanel("Product");
+			UpdateSaleItemTable();		
+			paymentDialog.reset();
+			memberPanel.reset();
+			productPanel.reset();
+			
+		}
+		else {
+			JOptionPane.showMessageDialog(getRootPane(),
+		   			 "Fail to Save transaction",
+						"Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+	}
+	private void handlePaymentAbort() {
 		paymentDialog.reset();
-		memberPanel.reset();
-		productPanel.reset();
 	}
 	private void handlePaymentCancel() {
-		transaction = TransactionManager.getInstance().getNewTransaction();
-		switchPanel("Product");
-		UpdateSaleItemTable();		
-		paymentDialog.reset();
-		memberPanel.reset();
-		productPanel.reset();
+		if (JOptionPane.showConfirmDialog(getRootPane(), "Are you sure to cancel transaction?", "WARNING",
+		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			transaction = TransactionManager.getInstance().getNewTransaction();
+			switchPanel("Product");
+			UpdateSaleItemTable();		
+			paymentDialog.reset();
+			memberPanel.reset();
+			productPanel.reset();
+		} else {
+			paymentDialog.reset();
+		}
+		
 	}
 	
 	private void printTransaction(Transaction transaction) {

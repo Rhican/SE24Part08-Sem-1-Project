@@ -36,8 +36,12 @@ public class TransactionManager {
      *
      */
     
-    public void closeTransaction(Transaction transaction) {
-    	if (transaction.close() ) DataAdapter.appendTransaction(transaction);
+    public boolean closeTransaction(Transaction transaction) {
+    	if (transaction.close() ) {
+    		DataAdapter.appendTransaction(transaction);
+    		return true;
+    	}
+    	return false;
     }
     
     public Transaction getTransaction(long id) {

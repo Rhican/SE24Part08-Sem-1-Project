@@ -64,7 +64,7 @@ public class CheckoutPayDialog extends JFrame {
 	public CheckoutPayDialog() {
 		setAlwaysOnTop(true);
 		setTitle("Payment");
-		setBounds(100, 100, 286, 208);
+		setBounds(100, 100, 286, 205);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -114,7 +114,7 @@ public class CheckoutPayDialog extends JFrame {
 		textFieldBalance.setFont(new Font("Tahoma", Font.BOLD, 13));
 		textFieldBalance.setColumns(10);
 		
-		btnOkay = new JButton("Okay");
+		btnOkay = new JButton("Confirm");
 		btnOkay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Done");
@@ -128,6 +128,13 @@ public class CheckoutPayDialog extends JFrame {
 				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Cancel");
 			}
 		});
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Back");
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -135,10 +142,11 @@ public class CheckoutPayDialog extends JFrame {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnCancel)
-							.addPreferredGap(ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-							.addComponent(btnOkay)
-							.addContainerGap())
+							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnBack, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(btnOkay))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -146,10 +154,10 @@ public class CheckoutPayDialog extends JFrame {
 								.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldTotal, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
-							.addContainerGap())))
+								.addComponent(textFieldTotal, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -169,7 +177,8 @@ public class CheckoutPayDialog extends JFrame {
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
-						.addComponent(btnOkay))
+						.addComponent(btnOkay)
+						.addComponent(btnBack))
 					.addGap(28))
 		);
 		contentPane.setLayout(gl_contentPane);

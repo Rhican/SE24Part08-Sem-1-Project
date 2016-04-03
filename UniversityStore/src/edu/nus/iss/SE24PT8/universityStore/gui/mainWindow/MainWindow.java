@@ -236,7 +236,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelTop.setLayout(jPanelTopLayout);
 
         jScrollPaneLeft.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPaneLeft.setMinimumSize(new java.awt.Dimension(23, 300));
+        jScrollPaneLeft.setMinimumSize(new Dimension(23, 200));
 
         jToggleButtonCheckOut.setText("Checkout");
         jToggleButtonCheckOut.addActionListener(new java.awt.event.ActionListener() {
@@ -324,13 +324,13 @@ public class MainWindow extends javax.swing.JFrame {
         				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         				.addComponent(jToggleButtonReport, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+        				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonLogOut, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
         			.addContainerGap())
         );
         jPanelLeftLayout.setVerticalGroup(
-        	jPanelLeftLayout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(Alignment.LEADING, jPanelLeftLayout.createSequentialGroup()
+        	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanelLeftLayout.createSequentialGroup()
         			.addContainerGap()
         			.addComponent(jToggleButtonCheckOut)
         			.addGap(7)
@@ -349,9 +349,9 @@ public class MainWindow extends javax.swing.JFrame {
         			.addComponent(jToggleButtonReport)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jToggleButtonCheckInventory)
-        			.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+        			.addGap(39)
         			.addComponent(jToggleButtonLogOut)
-        			.addContainerGap())
+        			.addContainerGap(86, Short.MAX_VALUE))
         );
         jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
         jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
@@ -389,31 +389,31 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPaneBottom.setViewportView(jPanelStatus);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneBottom, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPaneLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(5)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jPanelTop, GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+        				.addComponent(jScrollPaneBottom, GroupLayout.DEFAULT_SIZE, 949, Short.MAX_VALUE)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(jScrollPaneLeft, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jPanelMain, GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneBottom, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(jPanelTop, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jScrollPaneLeft, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+        				.addComponent(jPanelMain, GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jScrollPaneBottom, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
         );
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
