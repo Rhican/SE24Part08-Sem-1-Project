@@ -7,6 +7,7 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
@@ -41,6 +42,7 @@ public class MainWindow extends javax.swing.JFrame {
     private CategoryPanel catView = null;
     private VendorPanel vendorView = null;
     private CheckoutPanel checkoutView = null; 
+    private MemberPanel memberView = null;
     private static MainWindow instance;
 
     /**
@@ -213,6 +215,12 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jToggleButtonMembers.setText("Members");
+        jToggleButtonMembers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonMembersActionPerformed(evt);
+            }
+        });
+
 
         jToggleButtonProducts.setText("Products");
         jToggleButtonProducts.addActionListener(new java.awt.event.ActionListener() {
@@ -408,6 +416,15 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jToggleButtonCategoriesActionPerformed
 
+    private void jToggleButtonMembersActionPerformed(java.awt.event.ActionEvent evt) {
+    	if (memberView == null) {
+    		memberView = new MemberPanel();
+        }
+        switchView(memberView);
+        
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
