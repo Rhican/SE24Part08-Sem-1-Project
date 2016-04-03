@@ -56,6 +56,11 @@ public class MainWindow extends javax.swing.JFrame {
     private static MainWindow instance;
     
     private static CheckInventoryPanel inventoryView  = null;
+   
+    
+    public void setStoreKeeperName(String name){
+    	jLabelStoreKeeperName.setText(name);
+    }
     
     /**
      * Creates new form MainWindow
@@ -68,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
-        jToggleButtonHomeActionPerformed(null);
+        jToggleButtonCheckOutActionPerformed(null);
         
         SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
         
@@ -439,7 +444,9 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void jToggleButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogOutActionPerformed
-        // TODO add your handling code here:
+    	Login loginFrame=new Login(false);
+    	loginFrame.setVisible(true);
+    	dispose();
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
 
     private void jToggleButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonHomeActionPerformed
@@ -486,12 +493,14 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+   
+   // public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+    /*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -511,13 +520,14 @@ public class MainWindow extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+    /*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 getInstance().setVisible(true);
             }
         });
     }
-
+*/
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
