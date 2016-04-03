@@ -5,10 +5,10 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
-import edu.nus.iss.SE24PT8.universityStore.Store;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
+import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
@@ -29,8 +29,8 @@ public class ProductManager implements IManager{
 
     private static CategoryManager categoryManager;
     
-    private  static String[] columnNames = { "ProdcutName", "BarCode " ,"Description" ,"Category Name" ,"Price"  ,"Quantity" };
     private  static String[] inventoryCheckColumnNames = { "ProdcutName", "Description" ,"Category Name" ,"Price"  ,"Quantity" ,"Reorder Quantity", "Order Quantity" ,"Vendor" ,"Remark"};
+    private  static String[] columnNames = { "Product Id", "ProdcutName", "BarCode " ,"Product Desc" ,"Category Name" ,"Price"  ,"Quantity" };
 
     public ArrayList<Product> getProductList() {
         return productList;
@@ -317,7 +317,9 @@ public class ProductManager implements IManager{
      public Object[][] prepareProductTableModel() {
  		ArrayList<Product> list = getProductList();
  		return prepareProductTableModel(list);
- 	}
+
+     }
+     
      
      public Object[][] prepareProductTableModel(ArrayList<Product> prodcuts) {
   		Object[][] tableData = new Object[prodcuts.size()][3];
