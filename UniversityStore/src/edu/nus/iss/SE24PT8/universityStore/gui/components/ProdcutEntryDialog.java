@@ -68,21 +68,21 @@ private static final long serialVersionUID = 1L;
     	JPanel p = new JPanel ();
     	
     	NumberFormat intFormat = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(intFormat);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
+        NumberFormatter intFormatter = new NumberFormatter(intFormat);
+        intFormatter.setValueClass(Integer.class);
+        intFormatter.setMinimum(0);
         
-     /*   NumberFormat doubleformat = NumberFormat.getInstance();
-        NumberFormatter doubleFormatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);*/
+        NumberFormat doubleformat = NumberFormat.getInstance();
+        NumberFormatter doubleFormatter = new NumberFormatter(doubleformat);
+        intFormatter.setValueClass(Double.class);
+        intFormatter.setMinimum(0.0);
     	
     	txtName  = new JTextField();
         txtBarCode  = new JTextField();
     	txtDescription  = new JTextField();
-    	txtPrice = new JTextField();
-    	txtQty = new JFormattedTextField(formatter);
-    	txtReorderQty = new JFormattedTextField(formatter);
+    	txtPrice = new JFormattedTextField(doubleFormatter);
+    	txtQty = new JFormattedTextField(intFormatter);
+    	txtReorderQty = new JFormattedTextField(intFormatter);
     	txtOrderQty = new JFormattedTextField();
     	
     	comboCategory = new JComboBox(getComboCatData().toArray());
@@ -122,6 +122,9 @@ private static final long serialVersionUID = 1L;
 		String barCode = txtBarCode.getText();
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());
 		int orderQty = Integer.parseInt(txtOrderQty.getText());
+		
+		ComboItem comboItem  =  (ComboItem) comboCategory.getSelectedItem();
+		Category category = (Category) comboItem.getValue();
 
 		if (entryFlag == Constants.DISCOUNT_ENTRYFLAG_NEW && prodMgr.getProductByBarcode(barCode) != null) {
 			JOptionPane.showMessageDialog(rootPane, Constants.CONST_PRODUCT_ERR_BARCODEEXIST, "Error",
@@ -134,7 +137,7 @@ private static final long serialVersionUID = 1L;
 					returnObj = prodMgr.editProduct(barCode,briefDesp,qty,price,reorderQty,orderQty, "CLO");
 				} else {
 					returnObj = prodMgr.addNewProduct(productName, briefDesp, qty, price, barCode, reorderQty, orderQty,
-							"CLO");
+							category.getCategoryCode());
 				}
 
 				if (returnObj != null && returnObj.isSuccess()) {

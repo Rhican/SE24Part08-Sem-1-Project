@@ -42,9 +42,10 @@ public class ProdcutEditDialog extends BaseDialogBox{
 
     public ProdcutEditDialog (Product prodcut) {
     	
-        super (MainWindow.getInstance(), "Add Product","add");
+        super (MainWindow.getInstance(), "Modify Product","modify");
         super.setModalityType(Dialog.ModalityType.MODELESS);
         this.prodcut = prodcut;
+        add ("Center" , createFormPanel());
         
     }
 
@@ -112,13 +113,13 @@ public class ProdcutEditDialog extends BaseDialogBox{
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());
 		int orderQty = Integer.parseInt(txtOrderQty.getText());
 
-		if (prodMgr.getProductByBarcode(barCode) != null) {
+		/*if (prodMgr.getProductByBarcode(barCode) != null) {
 			JOptionPane.showMessageDialog(rootPane, Constants.CONST_PRODUCT_ERR_BARCODEEXIST, "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else
+		} else*/
 
-		{
+		
 			ReturnObject returnObj =null;
 			try {
 				returnObj = prodMgr.editProduct(barCode, briefDesp, qty, price, reorderQty, orderQty, "CLO");
@@ -130,7 +131,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
 			if (returnObj != null && returnObj.isSuccess()) {
 				SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
 			}
-		}
+		
 		
 		
 		return true;
