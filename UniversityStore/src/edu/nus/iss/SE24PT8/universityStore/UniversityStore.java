@@ -6,7 +6,7 @@
 
 package edu.nus.iss.SE24PT8.universityStore;
 
-import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
+import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.Login;
 
 /**
  *
@@ -18,9 +18,9 @@ public class UniversityStore {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO Log in before main window
-        MainWindow main = new MainWindow();
-        main.setVisible(true);
+        
+        Login login = new Login(true);
+        login.setVisible(true);
     }
     
 }
