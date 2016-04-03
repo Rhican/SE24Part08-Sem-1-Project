@@ -41,11 +41,10 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private DefaultTableModel dataModel;
 
 	private final static String[] columnNames = { "ProdcutName", "Product Desc" ,"Category Name" };
-	
-	
-	
+	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
+
 	public ProductPanel() {
-		super("Product");
+		super("Product",allowedOperations);
 		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
 	}
 

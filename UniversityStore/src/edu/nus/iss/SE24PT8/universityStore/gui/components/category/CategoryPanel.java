@@ -16,6 +16,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 /**
@@ -32,9 +33,10 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
 	private DefaultTableModel dataModel;
 
 	private final static String[] columnNames = { "Category Code", "Category Name" };
+	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
 
 	public CategoryPanel() {
-		super("Category");
+		super("Category", allowedOperations);
 		SubjectManager.getInstance().addNotification("CategoryPanel", "Category", this);
 	}
 
