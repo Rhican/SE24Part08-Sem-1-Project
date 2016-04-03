@@ -59,7 +59,7 @@ public class MainWindow extends javax.swing.JFrame {
    
     
     public void setStoreKeeperName(String name){
-    	jLabelStoreKeeperName.setText(name);
+    	jLabelStoreKeeperName.setText("Login" + name);
     }
     
     /**
