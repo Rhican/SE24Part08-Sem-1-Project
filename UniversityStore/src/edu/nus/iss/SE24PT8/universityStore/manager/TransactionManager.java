@@ -37,8 +37,7 @@ public class TransactionManager {
      */
     
     public void closeTransaction(Transaction transaction) {
-    	transaction.close();
-        DataAdapter.appendTransaction(transaction);
+    	if (transaction.close() ) DataAdapter.appendTransaction(transaction);
     }
     
     public Transaction getTransaction(long id) {

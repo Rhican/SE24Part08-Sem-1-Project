@@ -231,7 +231,7 @@ public class Transaction {
             return false;
         }
         // 2. Check if member loyalty point is bigger than redeeming point
-        if (getMember() != null && redeemedPoint > getMember().getLoyaltyPoints()) return false;
+        if (redeemedPoint > 0 && getMember() != null && redeemedPoint > getMember().getLoyaltyPoints()) return false;
         
         return true;        
     }
