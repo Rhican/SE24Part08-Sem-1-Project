@@ -27,10 +27,20 @@ public class TransactionManager {
     }
         
     public TransactionManager() {
-        //transactions = new ArrayList();
         transactions=DataAdapter.loadTransactions();
     }
 
+    /**
+     * Write To File
+     * Must call after add, update, delete product item
+     *
+     */
+    
+    public void closeTransaction(Transaction transaction) {
+    	transaction.close();
+        DataAdapter.appendTransaction(transaction);
+    }
+    
     public Transaction getTransaction(long id) {
         for (Transaction transaction : transactions) {
             if (transaction.getId() == id) return transaction;

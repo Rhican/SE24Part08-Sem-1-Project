@@ -11,12 +11,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
-import org.eclipse.wb.swing.FocusTraversalOnArray;
+//import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
-import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 
 import java.awt.Component;
@@ -48,24 +47,12 @@ public class CheckoutProductPanel extends JPanel {
 	private Product product = null;
 	private int quantity = 0;
 
-	{// Data insertions, for testing,to be removed
-		CategoryManager.getInstance().addCategory("Cat1", "Category 1");
-		CategoryManager.getInstance().addCategory("Cat2", "Category 2");
-		CategoryManager.getInstance().addCategory("Cat3", "Category 3");
-
-		try {
-			ProductManager.getInstance().addNewProduct("Product1", "Product 1", 100, 2.0, "BC0001", 50, 20,"Cat1" );
-			ProductManager.getInstance().addNewProduct("Product2", "Product 2", 100, 2.0, "BC0002", 50, 20,"Cat2" );
-			ProductManager.getInstance().addNewProduct("Product3", "Product 3", 100, 2.0, "BC0003", 50, 20,"Cat3" );
-			ProductManager.getInstance().addNewProduct("Product4", "Product 4", 100, 2.0, "BC0004", 50, 20,"Cat1" );
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
 	
+	public void reset() {
+		product = null;
+		quantity = 1;
+		resetUI();
+	}
 	public Product getProduct() {
 		return product;
 	}
@@ -77,12 +64,11 @@ public class CheckoutProductPanel extends JPanel {
 	public void setSaleItem(SaleItem saleItem) {
 		if (saleItem == null || saleItem.getProduct() == null)
 		{
-			reset();
+			resetUI();
 		}
 		else
 		{
-			//this.quantity = saleItem.getSaleQuantity();
-			displayProductDetail(saleItem.getProduct(), this.quantity);
+			displayProductDetail(saleItem.getProduct(), saleItem.getSaleQuantity());
 			textFieldQuantity.setText(Integer.toString(this.quantity));
 			textFieldID.setEditable(false);
 			textFieldBarcode.setEditable(false);
@@ -133,7 +119,8 @@ public class CheckoutProductPanel extends JPanel {
 		return false;
 	}
 
-	private void reset() {
+	private void resetUI() {
+		
 		// Reset GUI product fields
 		textFieldBarcode.setText("");
 		textFieldID.setText("");
@@ -262,17 +249,17 @@ public class CheckoutProductPanel extends JPanel {
 		buttonCancel = new JButton("Cancel");
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				reset();
+				resetUI();
 			}
 		});
 
 		
-		buttonAdd = new JButton("Add");
+		buttonAdd = new JButton("Save");
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				quantity = Integer.parseInt(textFieldQuantity.getText());
 				SubjectManager.getInstance().Update("CheckOutPanel", "SaleItem", "Add");
-				reset();
+				resetUI();
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -360,14 +347,12 @@ public class CheckoutProductPanel extends JPanel {
 				GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
 				Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		panel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { textFieldID, textFieldBarcode,
+		/*panel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { textFieldID, textFieldBarcode,
 				textFieldQuantity, buttonAdd, buttonCancel, textFieldName, textFieldPrice, textFieldSubTotal,
-				labelMaxQuantity, label, lblBarcode, label_1, label_3, label_4, label_5 }));
+				labelMaxQuantity, label, lblBarcode, label_1, label_3, label_4, label_5 }));*/
 		setFocusCycleRoot(true);
 		setLayout(groupLayout);
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { textFieldID, textFieldBarcode,
-				textFieldQuantity, buttonAdd, buttonCancel, panel, label_1, label, lblBarcode, label_5, label_4,
-				label_3, textFieldName, textFieldSubTotal, textFieldPrice, labelMaxQuantity }));
+		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{textFieldID, textFieldBarcode, textFieldQuantity, buttonAdd, buttonCancel, panel, label_1, label, lblBarcode, label_5, label_4, label_3, textFieldName, textFieldSubTotal, textFieldPrice, labelMaxQuantity}));
 
 	}
 

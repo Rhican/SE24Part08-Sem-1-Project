@@ -28,8 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
@@ -50,70 +50,132 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	private JTextField textFieldNetAmount;
 	private JTextField textFieldTotalAmount;
 	private CheckoutProductPanel productPanel = new CheckoutProductPanel();
-	private CheckoutMemberPanel member = new CheckoutMemberPanel();
+	private CheckoutMemberPanel memberPanel = new CheckoutMemberPanel();
+	private CheckoutPayDialog paymentDialog = new CheckoutPayDialog();
 	private JPanel panelLeft;
-	private JButton btnSave;
+	private JButton btnPage;
 	private Transaction transaction = TransactionManager.getInstance().getNewTransaction();
+	private JButton btnDelete;
+	private JButton btnPay;
 
 	private void switchPanel(String panel) {
 		panelLeft.setVisible(false);
 		if (panel.equalsIgnoreCase("Product")) {
-			panelLeft.remove(member);
+			panelLeft.remove(memberPanel);
 			panelLeft.add(productPanel);
-			btnSave.setText("Save");
+			btnPage.setText("Next");
 		} else if (panel.equalsIgnoreCase("Member")) {
 			panelLeft.remove(productPanel);
-			panelLeft.add(member);
-			btnSave.setText("Pay");
+			panelLeft.add(memberPanel);
+			btnPage.setText("Previous");
 		}
+		UpdatePaymentButton();
 		panelLeft.setVisible(true);
 	}
 
 	@Override
 	public void update(String group, String topic, String data) {
 		if (group.equals("CheckOutPanel") && topic.equals("SaleItem")) {
-			if (data.equalsIgnoreCase("Add"))
-				handleAddSaleItem();
-			else if (data.equalsIgnoreCase("Edit"))
-				handleEditSaleItem();
-			else if (data.equalsIgnoreCase("Remove"))
-				handleRemoveSaleItem();
+			if (data.equalsIgnoreCase("Add")) handleAddSaleItem();
 		}
+		else if (group.equals("CheckOutPanel") && topic.equals("Member")) {
+			if (data.equalsIgnoreCase("Update")){
+				handleUpdateMember();
+			}
+		}
+		else if (group.equals("CheckOutPanel") && topic.equals("Discount")) {
+			if (data.equalsIgnoreCase("Update")){
+				handleUpdateDiscount();
+			}
+		}
+		else if (group.equals("CheckOutPanel") && topic.equals("Payment")) {
+			if (data.equalsIgnoreCase("Done")){
+				handlePaymentComplete();
+			}
+			else if (data.equalsIgnoreCase("Cancel")){
+				handlePaymentCancel();
+			}
+		}
+		
+	}
+
+	private void handleUpdateMember() {
+		Member member = memberPanel.getMemeber();
+		transaction.setMember(member.getID());
+		transaction.setRedeemedPoint(memberPanel.getRedeemPoint());
+		UpdateTransationSummary();
+	}
+	private void handleUpdateDiscount() {
+		transaction.setDiscount(memberPanel.getDiscount());
+		UpdateTransationSummary();
 	}
 
 	private void handleAddSaleItem() {
-		Product product = this.productPanel.getProduct();
+		Product product = productPanel.getProduct();
 		int quantity = productPanel.getQuanity();
 		transaction.addSaleItem(product, quantity);
 		UpdateSaleItemTable();
+		btnDelete.setEnabled(false);
 		System.out.println("SaleItem: " + product.getProductId() + " Add " + quantity);
 	}
 
-	private void handleEditSaleItem() {
-		Product product = this.productPanel.getProduct();
-		int quantity = productPanel.getQuanity();
-		for (SaleItem saleitem : transaction.getSaleItems()) {
-			if (saleitem.getProductID() == product.getProductId()) {
-				saleitem.changeQuantity(quantity);
-				UpdateSaleItemTable();
-				break;
+	private void handleSaleItemSelect() {
+		int rowIndex = tableSaleItems.getSelectedRow();
+		if (rowIndex < 0 ) {
+			btnDelete.setEnabled(false);
+			return;
+		}
+		String id = tableSaleItems.getModel().getValueAt(rowIndex, 0).toString();
+		if (!id.isEmpty())
+		{
+			SaleItem saleItem = transaction.getSaleItem(id);
+			if (saleItem != null)
+			{
+				this.productPanel.setSaleItem(saleItem);
+				btnDelete.setEnabled(true);
+				return;
 			}
 		}
-		System.out.println("SaleItem: " + product.getProductId() + " Edit " + quantity);
+		else
+		{
+			btnDelete.setEnabled(false);
+		}		
 	}
-
-	private void handleRemoveSaleItem() {
-		Product product = this.productPanel.getProduct();
-		for (SaleItem saleitem : transaction.getSaleItems()) {
-			if (saleitem.getProductID() == product.getProductId()) {
-				transaction.removeSaleItem(saleitem);
-				UpdateSaleItemTable();
-				break;
-			}
+	private void handleDeleteSaleItem() {
+		int rowIndex = tableSaleItems.getSelectedRow();
+		if (rowIndex < 0 ) {
+			btnDelete.setEnabled(false);
+			return;
 		}
-		System.out.println("SaleItem: " + product.getProductId() + " Remove ");
+		String id = tableSaleItems.getModel().getValueAt(rowIndex, 0).toString();
+		if (!id.isEmpty())
+		{
+			SaleItem saleItem = transaction.getSaleItem(id);
+			transaction.removeSaleItem(saleItem);
+			UpdateSaleItemTable();
+		}
 	}
-
+	private void handlePaymentComplete() {
+		TransactionManager manager = TransactionManager.getInstance();
+		manager.closeTransaction(transaction);
+		transaction = manager.getNewTransaction();
+		switchPanel("Product");
+		UpdateSaleItemTable();		
+		paymentDialog.reset();
+		memberPanel.reset();
+		productPanel.reset();
+	}
+	private void handlePaymentCancel() {
+		transaction = TransactionManager.getInstance().getNewTransaction();
+		switchPanel("Product");
+		UpdateSaleItemTable();		
+		paymentDialog.reset();
+		memberPanel.reset();
+		productPanel.reset();
+	}
+	
+	
+	
 	private void UpdateSaleItemTable() {
 		final ArrayList<SaleItem> saleItems = transaction.getSaleItems();
 		// TODO: can enable column sorting.
@@ -129,20 +191,17 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			}
 
 			for (SaleItem saleItem : saleItems) {
-				Object[] row = new Object[4];
-				/*JButton button = new JButton("Delete");
-				button.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						
-					}
-				});*/
+				Object[] row = new Object[5];
 				Product product = saleItem.getProduct();
 				row[0] = product.getProductId();
 				row[1] = product.getProductName();
-				row[2] = saleItem.getSaleQuantity();
-				row[3] = formatDollar(saleItem.getSubTotal());
+				row[2] = formatDollar(product.getPrice());
+				row[3] = saleItem.getSaleQuantity();
+				row[4] = formatDollar(saleItem.getSubTotal());
 				dataModel.addRow(row);
 			}
+
+			if (saleItems.size() > 0) this.btnPage.setEnabled(true);
 		}
 		tableSaleItems.setVisible(true); // Show when it is updated
 
@@ -153,7 +212,13 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		textFieldTotalAmount.setText(formatDollar(transaction.getTotalAmount()));
 		textFieldRedeemPoint.setText(formatDollar(transaction.getRedeemedAmount())); 		
 		textFieldDiscountAmount.setText(formatDollar(transaction.getDiscountAmount()));
-		textFieldNetAmount.setText(formatDollar(transaction.getNetAmount())); 		
+		textFieldNetAmount.setText(formatDollar(transaction.getNetAmount())); 	
+		UpdatePaymentButton();
+	}
+	
+	private void UpdatePaymentButton()
+	{
+		btnPay.setEnabled(transaction.getSaleItems().size() > 0 && !btnPage.getText().equalsIgnoreCase("Next")  );
 	}
 
 	private String formatDollar(double value) {
@@ -161,20 +226,8 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		return "$ " + df.format(value); 
 	}
 	
-	private void handleSaleItemSelect() {
-		int rowIndex = tableSaleItems.getSelectedRow();
-		if (rowIndex < 0 ) return;
-		String id = tableSaleItems.getModel().getValueAt(rowIndex, 0).toString();
-		if (!id.isEmpty())
-		{
-			SaleItem saleItem = transaction.getSaleItem(id);
-			if (saleItem != null)
-			{
-				this.productPanel.setSaleItem(saleItem);
-			}
-		}
-		
-	}
+	
+	
 	/**
 	 * Create the panel.
 	 */
@@ -187,25 +240,27 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout
-				.setHorizontalGroup(
-						groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-										.addComponent(panelLeft, GroupLayout.PREFERRED_SIZE, 249,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(panel, GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
-										.addGap(0)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(panelLeft, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 312,
-										Short.MAX_VALUE)
-						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
-						.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)).addGap(12)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panelLeft, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(0))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+						.addComponent(panelLeft, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE))
+					.addGap(12))
+		);
 		panelLeft.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JScrollPane scrollPane_2 = new JScrollPane();
@@ -213,17 +268,6 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		scrollPane_2.setRequestFocusEnabled(false);
 		scrollPane_2.setFocusTraversalKeysEnabled(false);
 		scrollPane_2.setFocusable(false);
-
-		btnSave = new JButton("Save");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (btnSave.getText().equalsIgnoreCase("Save"))
-					switchPanel("Member");
-				else
-					switchPanel("Product");
-
-			}
-		});
 
 		JLabel lblDiscount = new JLabel("Discount:");
 
@@ -259,61 +303,95 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		textFieldTotalAmount.setBackground(SystemColor.menu);
 		textFieldTotalAmount.setEditable(false);
 		textFieldTotalAmount.setColumns(10);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handleDeleteSaleItem();
+			}
+		});
+		btnDelete.setEnabled(false);
+		
+		btnPay = new JButton("Pay");
+		btnPay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				paymentDialog.show(transaction.getNetAmount());
+			}
+		});
+		btnPay.setEnabled(false);
+		
+				btnPage = new JButton("Next");
+				btnPage.setEnabled(false);
+				btnPage.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						if (btnPage.getText().equalsIgnoreCase("Next"))
+							switchPanel("Member");
+						else
+							switchPanel("Product");
+
+					}
+				});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane_2, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING,
-								gl_panel.createSequentialGroup()
-										.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 64,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
-										.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_panel.createSequentialGroup().addComponent(lblNewLabel_3)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(textFieldNetAmount, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-												.addGroup(gl_panel.createSequentialGroup().addComponent(lblDiscount)
-														.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(
-																textFieldDiscountAmount, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(Alignment.TRAILING,
-								gl_panel.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panel.createSequentialGroup().addComponent(lblRedeemPoint)
-												.addPreferredGap(ComponentPlacement.UNRELATED)
-												.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.TRAILING,
-								gl_panel.createSequentialGroup().addComponent(lblTotal)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(textFieldTotalAmount, GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
-				gl_panel.createSequentialGroup()
-						.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldTotalAmount, GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblTotal))
-				.addGap(8)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldDiscountAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
+							.addComponent(lblDiscount)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textFieldDiscountAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(lblRedeemPoint)
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 169, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnDelete)
+							.addPreferredGap(ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+							.addComponent(lblTotal)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textFieldTotalAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnPage, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnPay, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+							.addComponent(lblNewLabel_3)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(textFieldNetAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldTotalAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTotal)
+						.addComponent(btnDelete))
+					.addGap(8)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldDiscountAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDiscount))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(lblRedeemPoint).addComponent(
-						textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-						GroupLayout.PREFERRED_SIZE)).addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSave).addComponent(textFieldNetAmount, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_3)).addContainerGap()));
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblRedeemPoint)
+						.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldNetAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_3)
+						.addComponent(btnPage)
+						.addComponent(btnPay))
+					.addContainerGap())
+		);
 
 		tableSaleItems = new JTable();
 		tableSaleItems.addPropertyChangeListener(new PropertyChangeListener() {
@@ -326,24 +404,25 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		tableSaleItems.setModel(
 				new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"ID", "Name", "Quantity", "Sub Total"
+				"ID", "Name", "Price", "Quantity", "Sub Total"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
+				false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		tableSaleItems.getColumnModel().getColumn(0).setMaxWidth(400);
+		tableSaleItems.getColumnModel().getColumn(0).setMaxWidth(100);
 		tableSaleItems.getColumnModel().getColumn(1).setMinWidth(50);
 		tableSaleItems.getColumnModel().getColumn(1).setMaxWidth(800);
-		tableSaleItems.getColumnModel().getColumn(2).setMaxWidth(100);
-		tableSaleItems.getColumnModel().getColumn(3).setMaxWidth(120);
+		tableSaleItems.getColumnModel().getColumn(2).setMaxWidth(200);
+		tableSaleItems.getColumnModel().getColumn(3).setMaxWidth(300);
+		tableSaleItems.getColumnModel().getColumn(4).setMaxWidth(300);
 		tableSaleItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableSaleItems.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		    @Override
@@ -355,14 +434,13 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		});
 
 		panel.setLayout(gl_panel);
-		panel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[] { btnSave, textFieldTotalAmount,
-				textFieldDiscountAmount, textFieldRedeemPoint, textFieldNetAmount, scrollPane_2, tableSaleItems,
-				lblNewLabel_3, lblDiscount, lblRedeemPoint, separator, lblTotal }));
 		setLayout(groupLayout);
 				
 		
 		SubjectManager.getInstance().addNotification("CheckOutPanel", "SaleItem", this);
+		SubjectManager.getInstance().addNotification("CheckOutPanel", "Member", this);
+		SubjectManager.getInstance().addNotification("CheckOutPanel", "Discount", this);
+		SubjectManager.getInstance().addNotification("CheckOutPanel", "Payment", this);
 		switchPanel("Product");
 	}
-
 }

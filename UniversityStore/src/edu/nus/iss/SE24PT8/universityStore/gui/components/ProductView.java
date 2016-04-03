@@ -13,8 +13,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import edu.nus.iss.SE24PT8.universityStore.Store;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 
 import javax.swing.JTextPane;
@@ -24,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 
 public class ProductView extends JPanel{
+	public ProductView() {
+	}
 	private JTextField txtProdcutName;
 	private JTextField txtBarCode;
 	private JTextField txtQty;

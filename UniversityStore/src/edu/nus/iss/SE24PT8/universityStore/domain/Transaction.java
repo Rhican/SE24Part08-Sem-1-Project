@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class Transaction {
     private static long transactionIDCount = 0;
+    private static final String PUBLIC = "PUBLIC";
     private long id;
     private String memberID;
     private Date date;
@@ -40,17 +41,20 @@ public class Transaction {
     
     //- Setters -------------------------------------------------------
     public boolean setDiscount(Discount discount) {
-        if (isClosed()) this.discount = discount;
+        if (!isClosed()) this.discount = discount;
         return !isClosed();
     }
 
     public boolean setRedeemedPoint(int redeemedPoint) {
-        if (isClosed()) this.redeemedPoint = redeemedPoint;
+        if (!isClosed()) this.redeemedPoint = redeemedPoint;
         return !isClosed();
     }
     
     public boolean setMember(String memberID) {
-        if (isClosed()) this.memberID = memberID;
+        if (!isClosed()) {
+        	if (memberID == PUBLIC) this.memberID = "";
+        	else this.memberID = memberID;
+        }
         return !isClosed();
     }
 
@@ -125,22 +129,25 @@ public class Transaction {
     }
     
     public boolean close() {
-        if (validate()) return false;
+        if (!validate()) return false;
         
-        MemberManager memberManager = MemberManager.getInstance();
-        try {
-            memberManager.redeemPoints(memberID, redeemedPoint);
-            memberManager.addLoyaltyPoints(memberID, computeRoyalityPoint());
-        } catch (BadMemberRegistrationException ex) {
-            //Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }    
+        if (redeemedPoint > 0)
+        {
+        	MemberManager memberManager = MemberManager.getInstance();
+            try {
+	            memberManager.redeemPoints(memberID, redeemedPoint);
+	            memberManager.addLoyaltyPoints(memberID, computeRoyalityPoint());
+	        } catch (BadMemberRegistrationException ex) {
+	            //Logger.getLogger(Transaction.class.getName()).log(Level.SEVERE, null, ex);
+	            return false;
+	        }   
+        }
         
         saleItems.values().stream().forEach((saleItem) -> {
             updateProduct(saleItem);
         });
         
-        if (isClosed()) {
+        if (!isClosed()) {
             id = getNextID();
         }
         
@@ -192,6 +199,12 @@ public class Transaction {
     public Member getMember() {
         return MemberManager.getInstance().getMember(memberID);
     }
+    
+    public String getMemberID() {
+    	if (memberID.isEmpty()) return PUBLIC;
+    	return memberID;
+    }
+
 
     public Discount getDiscount() {
         return discount;
@@ -218,7 +231,7 @@ public class Transaction {
             return false;
         }
         // 2. Check if member loyalty point is bigger than redeeming point
-        if (redeemedPoint > getMember().getLoyaltyPoints()) return false;
+        if (getMember() != null && redeemedPoint > getMember().getLoyaltyPoints()) return false;
         
         return true;        
     }

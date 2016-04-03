@@ -5,10 +5,10 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
-import edu.nus.iss.SE24PT8.universityStore.Store;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
+import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
