@@ -314,10 +314,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelLeftLayout.setHorizontalGroup(
         	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanelLeftLayout.createSequentialGroup()
-        			.addGap(10)
-        			.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-        			.addGap(10))
-        		.addGroup(jPanelLeftLayout.createSequentialGroup()
         			.addContainerGap()
         			.addGroup(jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
         				.addComponent(jToggleButtonCheckOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
@@ -328,12 +324,13 @@ public class MainWindow extends javax.swing.JFrame {
         				.addComponent(jToggleButtonDiscounts, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         				.addComponent(jToggleButtonStoreKeepers, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
         				.addComponent(jToggleButtonReport, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-        				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        				.addComponent(jToggleButtonCheckInventory, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(jToggleButtonLogOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
         			.addContainerGap())
         );
         jPanelLeftLayout.setVerticalGroup(
-        	jPanelLeftLayout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(Alignment.TRAILING, jPanelLeftLayout.createSequentialGroup()
+        	jPanelLeftLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, jPanelLeftLayout.createSequentialGroup()
         			.addContainerGap()
         			.addComponent(jToggleButtonCheckOut)
         			.addGap(7)
@@ -352,9 +349,9 @@ public class MainWindow extends javax.swing.JFrame {
         			.addComponent(jToggleButtonReport)
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(jToggleButtonCheckInventory)
-        			.addPreferredGap(ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
         			.addComponent(jToggleButtonLogOut)
-        			.addGap(0))
+        			.addContainerGap())
         );
         jPanelLeftLayout.linkSize(SwingConstants.VERTICAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});
         jPanelLeftLayout.linkSize(SwingConstants.HORIZONTAL, new Component[] {jToggleButtonCheckOut, jToggleButtonMembers, jToggleButtonProducts, jToggleButtonCheckInventory, jToggleButtonCategories, jToggleButtonVendors, jToggleButtonDiscounts, jToggleButtonStoreKeepers, jToggleButtonReport, jToggleButtonLogOut});

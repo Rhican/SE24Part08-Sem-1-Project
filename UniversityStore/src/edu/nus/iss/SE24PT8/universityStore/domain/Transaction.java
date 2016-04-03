@@ -101,10 +101,7 @@ public class Transaction {
         }
         if (saleItems.containsKey(productID)) {
             SaleItem item = saleItems.get(productID);
-            item.changeQuantity(-count);
-            if (item.getSaleQuantity() == 0) {
-                saleItems.remove(productID);
-            }
+            saleItems.remove(productID);
         } else {
             return new ReturnObject(true, "Sale Item is not exists", this);
         }

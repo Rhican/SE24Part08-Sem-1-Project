@@ -99,6 +99,17 @@ public class CheckoutMemberPanel extends JPanel {
 		JLabel lblRedeemPoint = new JLabel("Redeem:");
 		
 		textFieldID = new JTextField();
+		textFieldID.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					SearchForMemeber(textFieldID.getText());
+				}
+				else {
+					super.keyReleased(e);
+				}
+			}
+		});
 		textFieldID.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -144,6 +155,9 @@ public class CheckoutMemberPanel extends JPanel {
 					break;
 				case KeyEvent.VK_DOWN:
 					point--;
+					break;
+				case KeyEvent.VK_ENTER:
+					SubjectManager.getInstance().Update("CheckOutPanel", "Member", "Update");
 					break;
 				default:
 					super.keyReleased(e);					

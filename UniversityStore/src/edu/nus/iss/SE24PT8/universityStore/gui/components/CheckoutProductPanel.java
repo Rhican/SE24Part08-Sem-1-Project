@@ -152,6 +152,17 @@ public class CheckoutProductPanel extends JPanel {
 		JLabel label_5 = new JLabel("Sub-total:");
 
 		textFieldBarcode = new JTextField();
+		textFieldBarcode.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					getProductByBarcode(textFieldBarcode.getText());
+				}
+				else {
+					super.keyReleased(e);
+				}
+			}
+		});
 		textFieldBarcode.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -161,6 +172,17 @@ public class CheckoutProductPanel extends JPanel {
 		textFieldBarcode.setColumns(10);
 
 		textFieldID = new JTextField();
+		textFieldID.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					getProductByID(textFieldID.getText());
+				}
+				else {
+					super.keyReleased(e);
+				}	
+			}
+		});
 		textFieldID.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -200,11 +222,14 @@ public class CheckoutProductPanel extends JPanel {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:					
 					quantity++;
-					textFieldQuantity.setText(Integer.toString(quantity));
 					break;
 				case KeyEvent.VK_DOWN:
 					quantity--;
 					break;
+				case KeyEvent.VK_ENTER:
+					buttonAdd.requestFocus();
+					return;
+					
 				default:
 					super.keyReleased(e);					
 					return;
