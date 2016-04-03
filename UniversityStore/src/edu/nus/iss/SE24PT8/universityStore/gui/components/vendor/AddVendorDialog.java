@@ -36,7 +36,7 @@ public class AddVendorDialog extends BaseDialogBox {
     }
 
     protected JPanel createFormPanel  ()  {
-    	manager = Store.getInstance();;
+    	manager = Store.getInstance();
     	JPanel p = new JPanel ();
     	categoryField = new JComboBox<Item<String>>();
         p.setLayout (new GridLayout (0, 2));

@@ -12,6 +12,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.StoreKeeperPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.report.ReportPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import java.text.SimpleDateFormat;
@@ -49,6 +50,7 @@ public class MainWindow extends javax.swing.JFrame {
     private CategoryPanel catView = null;
     private VendorPanel vendorView = null;
     private CheckoutPanel checkoutView = null; 
+    private ReportPanel reportView = null;
     private MemberPanel memberView = null;
     private StoreKeeperPanel storeKeeperView= null;
     private static MainWindow instance;
@@ -66,7 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
-        jToggleButtonCheckOutActionPerformed(null);
+        jToggleButtonHomeActionPerformed(null);
         
         SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
         
@@ -277,8 +279,12 @@ public class MainWindow extends javax.swing.JFrame {
         	jToggleButtonStoreKeepersActionPerformed(evt);
         }
         });
-
-        jToggleButtonReport.setText("Report");
+		jToggleButtonReport.setText("Report");
+        jToggleButtonReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonReportsActionPerformed(evt);
+            }
+        });
 
         jToggleButtonLogOut.setText("Log Out");
         jToggleButtonLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -424,7 +430,14 @@ public class MainWindow extends javax.swing.JFrame {
     private void jToggleButtonDiscountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonDiscountsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButtonDiscountsActionPerformed
-
+    
+    private void jToggleButtonReportsActionPerformed(java.awt.event.ActionEvent evt) {
+    	if (reportView == null) {
+    		reportView = new ReportPanel();
+        }
+        switchView(reportView);
+    }
+    
     private void jToggleButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogOutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
