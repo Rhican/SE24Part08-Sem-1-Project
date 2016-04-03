@@ -7,6 +7,7 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -42,5 +43,21 @@ public class TransactionManager {
         transactions.add(newTransaction);
         return newTransaction;
     }  
+    
+    public final ArrayList<Transaction> getAllTransactions() {
+    	return transactions;
+    }
+    
+    public final ArrayList<Transaction> getAllTransactions(Date start, Date end) {
+    	ArrayList<Transaction> transactionsFiltered = new ArrayList<Transaction>();
+    	for(Transaction transaction : transactions) {
+    		if (transaction.getDate().after(start) && transaction.getDate().before(end) )
+    		{
+    			transactionsFiltered.add(transaction);
+    		}
+    	}
+    	return transactionsFiltered;
+    }
+    
     
 }
