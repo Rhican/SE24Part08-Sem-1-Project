@@ -7,16 +7,20 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
 import javax.swing.JOptionPane;
 
-import edu.nus.iss.SE24PT8.universityStore.AppConfig;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
-import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -51,7 +55,7 @@ public class Login extends javax.swing.JFrame {
 	}
 	
     public Login() {
-    	setPreferredSize(new Dimension(330, 200));
+    	setPreferredSize(new Dimension(980, 550));
     	
         initComponents();
         
@@ -67,47 +71,57 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
     	jPanelTop = new javax.swing.JPanel();
-        jLogoutMessage = new javax.swing.JLabel();
-        jLogoutMessage.setText("You have successfully logged out.");
-        new javax.swing.JLabel();
+    	jPanel1 = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
+        lblTitle = new javax.swing.JLabel();
+        lblTitle.setVerticalAlignment(SwingConstants.BOTTOM);
         LoginPanel = new javax.swing.JPanel();
         StoreKeeperLabel = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
-        txtUserPassword = new JPasswordField();
+        txtUserPassword = new javax.swing.JTextField();
         Login = new javax.swing.JButton();
+        jLogoutMessage = new javax.swing.JLabel();
+        footerPanel = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("University Souvenir Store - Login");
+        setTitle("University Souvenir Store Application");
         setAlwaysOnTop(true);
-        setLocation(300, 200);
-
+        //setLocation(300, 200);
+        Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int iCoordX = (objDimension.width - 980) / 2;
+        int iCoordY = (objDimension.height - 550) / 2;
+        setLocation(iCoordX, iCoordY); 
+        
         jPanelTop.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLogoutMessage.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jPanelTop.setVisible(true);
         
-        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        StoreKeeperLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        StoreKeeperLabel.setForeground(new java.awt.Color(0, 51, 255));
-        StoreKeeperLabel.setText("Staff ID:");
-        StoreKeeperLabel.setToolTipText("");
-
-        PasswordLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        PasswordLabel.setForeground(new java.awt.Color(0, 51, 255));
-        PasswordLabel.setText("Password:");
-
-        Login.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        Login.setForeground(new java.awt.Color(0, 51, 255));
-        Login.setText("Login");
-        
         Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginActionPerformed(evt);
             }
         });
 
+        StoreKeeperLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        StoreKeeperLabel.setForeground(new java.awt.Color(0, 153, 255));
+        StoreKeeperLabel.setText("StoreKeeperName");
+       // StoreKeeperLabel.setToolTipText("");
+
+        PasswordLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        PasswordLabel.setForeground(new java.awt.Color(0, 153, 255));
+        PasswordLabel.setText("Password");
+       // PasswordLabel.setToolTipText("");
+
+        Login.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Login.setText("Login");
+        Login.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLogoutMessage.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLogoutMessage.setForeground(new java.awt.Color(255, 51, 51));
+        jLogoutMessage.setText("jLogoutMessage");
+        LoginPanel.setVisible(true);
+        footerPanel.setVisible(true);
         
         txtUserName.addKeyListener(new KeyAdapter(){
           public void keyPressed(KeyEvent e)
@@ -129,73 +143,156 @@ public class Login extends javax.swing.JFrame {
             }
           });
         
-        jLogoutMessage.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLogoutMessage.setForeground(new java.awt.Color(255, 51, 102));
-        //jLogoutMessage.setText("logoutStatus");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblTitle.setFont(new java.awt.Font("Trebuchet MS", 0, 18)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(0, 102, 255));
+        lblTitle.setText("Login to the University Souvenir Store Application ");
+
+        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
+        titlePanelLayout.setHorizontalGroup(
+        	titlePanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
+        			.addContainerGap(282, Short.MAX_VALUE)
+        			.addComponent(lblTitle)
+        			.addGap(217))
+        );
+        titlePanelLayout.setVerticalGroup(
+        	titlePanelLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
+        			.addContainerGap(22, Short.MAX_VALUE)
+        			.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap())
+        );
+        titlePanel.setLayout(titlePanelLayout);
+
 
         javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
         LoginPanelLayout.setHorizontalGroup(
-        	LoginPanelLayout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(LoginPanelLayout.createSequentialGroup()
-        			.addGroup(LoginPanelLayout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(LoginPanelLayout.createSequentialGroup()
-        					.addContainerGap()
-        					.addComponent(Login, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
-        				.addGroup(LoginPanelLayout.createParallelGroup(Alignment.LEADING)
-        					.addComponent(jLogoutMessage, GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-        					.addGroup(LoginPanelLayout.createSequentialGroup()
-        						.addContainerGap()
-        						.addGroup(LoginPanelLayout.createParallelGroup(Alignment.LEADING)
-        							.addComponent(StoreKeeperLabel)
-        							.addComponent(PasswordLabel))
-        						.addGap(18)
-        						.addGroup(LoginPanelLayout.createParallelGroup(Alignment.LEADING)
-        							.addComponent(txtUserPassword)
-        							.addComponent(txtUserName, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)))))
-        			.addContainerGap())
-        );
-        LoginPanelLayout.setVerticalGroup(
         	LoginPanelLayout.createParallelGroup(Alignment.LEADING)
         		.addGroup(LoginPanelLayout.createSequentialGroup()
+        			.addGap(308)
+        			.addGroup(LoginPanelLayout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(LoginPanelLayout.createSequentialGroup()
+        					.addComponent(jLogoutMessage)
+        					.addContainerGap())
+        				.addGroup(LoginPanelLayout.createSequentialGroup()
+        					.addGroup(LoginPanelLayout.createParallelGroup(Alignment.TRAILING)
+        						.addGroup(LoginPanelLayout.createSequentialGroup()
+        							.addComponent(PasswordLabel)
+        							.addGap(65))
+        						.addGroup(LoginPanelLayout.createSequentialGroup()
+        							.addComponent(StoreKeeperLabel)
+        							.addPreferredGap(ComponentPlacement.RELATED)))
+        					.addGroup(LoginPanelLayout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(Login, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(txtUserPassword, GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+        						.addGroup(LoginPanelLayout.createSequentialGroup()
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(txtUserName, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)))
+        					.addContainerGap(269, GroupLayout.PREFERRED_SIZE))))
+        );
+        LoginPanelLayout.setVerticalGroup(
+        	LoginPanelLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(LoginPanelLayout.createSequentialGroup()
         			.addContainerGap()
-        			.addComponent(jLogoutMessage, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(jLogoutMessage)
+        			.addGap(18)
         			.addGroup(LoginPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(StoreKeeperLabel)
         				.addComponent(txtUserName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addGap(14)
+        			.addGap(19)
         			.addGroup(LoginPanelLayout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(PasswordLabel)
         				.addComponent(txtUserPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addPreferredGap(ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        			.addComponent(Login, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap())
+        			.addGap(12)
+        			.addComponent(Login, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+        			.addGap(178))
         );
         LoginPanel.setLayout(LoginPanelLayout);
+
+
+        javax.swing.GroupLayout footerPanelLayout = new javax.swing.GroupLayout(footerPanel);
+        footerPanel.setLayout(footerPanelLayout);
+        footerPanelLayout.setHorizontalGroup(
+            footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(footerPanelLayout.createSequentialGroup()
+                .addGap(0, 663, Short.MAX_VALUE)
+                .addContainerGap(268, Short.MAX_VALUE))
+        );
+        footerPanelLayout.setVerticalGroup(
+            footerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerPanelLayout.createSequentialGroup()
+                .addGap(0, 13, Short.MAX_VALUE)
+                )
+        );
+        
+        JPanel footerpanel = new JPanel();
+        
+        JLabel lblSeParttimeTeam = new JLabel();
+        lblSeParttimeTeam.setText("Developed by SE24 PartTime Team8");
+        lblSeParttimeTeam.setForeground(new Color(0, 102, 255));
+        lblSeParttimeTeam.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+        GroupLayout gl_footerpanel = new GroupLayout(footerpanel);
+        gl_footerpanel.setHorizontalGroup(
+        	gl_footerpanel.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, gl_footerpanel.createSequentialGroup()
+        			.addGap(355)
+        			.addComponent(lblSeParttimeTeam, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(354, Short.MAX_VALUE))
+        );
+        gl_footerpanel.setVerticalGroup(
+        	gl_footerpanel.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(gl_footerpanel.createSequentialGroup()
+        			.addContainerGap(22, Short.MAX_VALUE)
+        			.addComponent(lblSeParttimeTeam, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap())
+        );
+        footerpanel.setLayout(gl_footerpanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap()
-        			.addComponent(LoginPanel, GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-        			.addContainerGap())
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        						.addComponent(LoginPanel, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
+        						.addComponent(titlePanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        					.addGap(34)
+        					.addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(footerpanel, GroupLayout.PREFERRED_SIZE, 906, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addComponent(LoginPanel, GroupLayout.PREFERRED_SIZE, 151, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(31, Short.MAX_VALUE))
+        			.addGap(35)
+        			.addComponent(titlePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addGap(18)
+        			.addComponent(LoginPanel, GroupLayout.PREFERRED_SIZE, 211, GroupLayout.PREFERRED_SIZE)
+        			.addGap(79)
+        			.addComponent(footerpanel, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+        			.addGap(529)
+        			.addComponent(footerPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
-        
-        if ( AppConfig.DEBUG_MODE_ON ){
-        	txtUserPassword.setText("test");
-        	txtUserName.setText("test");
-        }
-        
+
         pack();
-    }// </editor-fold>                          
+    }// </editor-fold>                           
 
     private void Login(){
     	String storeKeeperName = txtUserName.getText();
@@ -228,8 +325,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel LoginPanel;
     private javax.swing.JLabel PasswordLabel;
     private javax.swing.JLabel StoreKeeperLabel;
-    private javax.swing.JTextField txtUserName;
-    private JPasswordField txtUserPassword;
+    private javax.swing.JPanel footerPanel;
     private javax.swing.JLabel jLogoutMessage;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JPanel titlePanel;
+    private javax.swing.JTextField txtUserName;
+    private javax.swing.JTextField txtUserPassword;
     private javax.swing.JPanel jPanelTop;
 }
