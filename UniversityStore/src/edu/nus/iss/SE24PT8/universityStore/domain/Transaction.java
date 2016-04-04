@@ -150,6 +150,12 @@ public class Transaction {
         
         return true;
     }
+    
+    public void save() {
+    	if (!isClosed()) {
+            id = getNextID();
+        }
+    }
 
     public void setDate(Date date) {
         if (isClosed()) this.date = date;
