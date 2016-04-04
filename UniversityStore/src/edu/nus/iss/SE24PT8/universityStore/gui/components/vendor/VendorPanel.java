@@ -51,6 +51,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 	public VendorPanel() {
 		super();
 		SubjectManager.getInstance().addNotification("VendorPanel", "Vendor", this);
+		SubjectManager.getInstance().addNotification("CategoryPanel", "Category", this); // Category change, vendor's category list must update too
 		initComponents();
 	}
 	
@@ -143,6 +144,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 
 	}
 	private void populateCategories() {
+		categories.removeAll();
 		ArrayList<Category> catList = manager.getMgrCategory().getCategories();
 		for(Category cat : catList){
 			Item<String> item = new Item<String>(cat.getCategoryCode(), cat.getCategoryName());
@@ -188,7 +190,11 @@ public class VendorPanel extends JPanel  implements INotificable {
 				refersh();
 			}
 		}
-
-		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);		
+		else if (group.equals("CategoryPanel") && topic.equals("Category")) {
+			if (data.equalsIgnoreCase("Add")) {
+				populateCategories();
+				refersh();
+			}
+		}
 	}
 }
