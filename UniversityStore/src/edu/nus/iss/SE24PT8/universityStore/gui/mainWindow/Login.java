@@ -7,6 +7,7 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
 import javax.swing.JOptionPane;
 
+import edu.nus.iss.SE24PT8.universityStore.AppConfig;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import javax.swing.GroupLayout.Alignment;
@@ -187,7 +188,12 @@ public class Login extends javax.swing.JFrame {
         			.addContainerGap(31, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
-
+        
+        if ( AppConfig.DEBUG_MODE_ON ){
+        	txtUserPassword.setText("test");
+        	txtUserName.setText("test");
+        }
+        
         pack();
     }// </editor-fold>                          
 
