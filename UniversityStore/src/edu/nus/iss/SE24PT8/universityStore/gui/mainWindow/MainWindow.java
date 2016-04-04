@@ -5,12 +5,12 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
-import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckInventoryPanel;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.StoreKeeperPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout.CheckInventoryPanel;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout.CheckoutPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.category.CategoryPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.report.ReportPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.vendor.VendorPanel;
@@ -46,7 +46,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     private Timer timer = null;
     private JPanel currentView = null;
-    private JPanel homeView = null;
     private ProductPanel productView = null;
     private CategoryPanel catView = null;
     private VendorPanel vendorView = null;
@@ -76,6 +75,7 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
+        jToggleButtonCheckOut.setSelected(true);
         jToggleButtonCheckOutActionPerformed(null);
         
         SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
@@ -462,14 +462,6 @@ public class MainWindow extends javax.swing.JFrame {
     	dispose();
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
 
-    private void jToggleButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonHomeActionPerformed
-        if (homeView == null) {
-            homeView = new Home();
-        }
-        switchView(homeView);
-        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Home");
-    }//GEN-LAST:event_jToggleButtonHomeActionPerformed
-
     private void jToggleButtonCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
     	if (catView == null) {
     		catView = new CategoryPanel();
@@ -503,46 +495,7 @@ public class MainWindow extends javax.swing.JFrame {
         switchView(storeKeeperView);
     }
     
-    /**
-     * @param args the command line arguments
-     */
-   
-   // public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-    /*
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-    /*
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                getInstance().setVisible(true);
-            }
-        });
-    }
-*/
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
+  	// Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelStoreKeeperName;

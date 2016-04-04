@@ -1,4 +1,4 @@
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;

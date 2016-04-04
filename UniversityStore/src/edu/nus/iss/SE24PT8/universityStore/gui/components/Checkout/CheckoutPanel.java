@@ -1,4 +1,4 @@
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -22,8 +22,11 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
@@ -37,6 +40,7 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
 import edu.nus.iss.SE24PT8.universityStore.externalDevice.Printer;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
+import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.TransactionManager;
 
 import java.awt.Component;
@@ -168,6 +172,8 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		{
 			printTransaction(transaction);
 			JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" +  transaction.getId(), "Success", JOptionPane.INFORMATION_MESSAGE);
+			checkForLowInventoryProduct(transaction);
+			
 			transaction = manager.getNewTransaction();
 			switchPanel("Product");
 			UpdateSaleItemTable();		
@@ -183,6 +189,21 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		}
 		
 	}
+	private void checkForLowInventoryProduct(Transaction transaction) {
+		ArrayList<Product> productList = new ArrayList<Product>();
+		for(SaleItem saleitem : transaction.getSaleItems()) {
+			productList.add(saleitem.getProduct());
+		}
+		ArrayList<Product> lowInventoryProducts = ProductManager.getInstance().getLowerInventoryProducts(productList);
+		if (lowInventoryProducts.size() > 0) {
+			String productString = "";
+			for(Product product : lowInventoryProducts) {
+				productString += product.getProductId() + ", " + product.getProductName() + ", " + " [" + product.getQty() + "]\n";
+			}
+			JOptionPane.showMessageDialog(getRootPane(), "Inventory Low Alert! \n" +  productString, "Inventory", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
 	private void handlePaymentAbort() {
 		paymentDialog.reset();
 	}
@@ -219,6 +240,21 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		data += "\n\t\t\t\t      Net Amount: " + formatDollar(transaction.getNetAmount());
 		data += "\n ============================================================"; 	
 		printer.print(data);
+		
+		//testing for transaction report. will be removed
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		String dateInString = "01-01-2016 00:01:01";
+		Date dateStart;
+		try {
+			dateStart = sdf.parse(dateInString);
+			Vector<String> columns = new Vector<String>();
+			TransactionManager.getInstance().getTransactionReport(dateStart, today, columns);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		// end testing..
 	}
 	
 	private void UpdateSaleItemTable() {

@@ -1,4 +1,4 @@
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.ProdcutEntryDialog;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
