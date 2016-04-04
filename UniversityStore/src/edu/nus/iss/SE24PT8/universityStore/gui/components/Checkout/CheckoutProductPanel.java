@@ -107,6 +107,7 @@ public class CheckoutProductPanel extends JPanel {
 		labelMaxQuantity.setText("/ " + maxQuantity);
 		double subTotal = product.getPrice();
 		textFieldSubTotal.setText(Double.toString(subTotal));
+		textFieldQuantity.requestFocus();
 	}
 	
 	private boolean updateProductFound(Product product) {
@@ -135,6 +136,7 @@ public class CheckoutProductPanel extends JPanel {
 		textFieldSubTotal.setText("");
 		textFieldID.setEditable(true);
 		textFieldBarcode.setEditable(true);
+		textFieldID.requestFocus();
 	}
 	/**
 	 * Create the panel.
