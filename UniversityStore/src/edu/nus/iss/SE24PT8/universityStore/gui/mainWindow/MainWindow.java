@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
-
+import edu.nus.iss.SE24PT8.universityStore.gui.components.DiscountPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
@@ -36,6 +36,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -46,9 +47,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private Timer timer = null;
     private JPanel currentView = null;
+    private JPanel homeView = null;
     private ProductPanel productView = null;
     private CategoryPanel catView = null;
     private VendorPanel vendorView = null;
+    private DiscountPanel discountView = null;
     private CheckoutPanel checkoutView = null; 
     private ReportPanel reportView = null;
     private MemberPanel memberView = null;
@@ -448,9 +451,6 @@ public class MainWindow extends javax.swing.JFrame {
         SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Product");
     }//GEN-LAST:event_jToggleButtonProductsActionPerformed
 
-    private void jToggleButtonDiscountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonDiscountsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButtonDiscountsActionPerformed
     
     private void jToggleButtonReportsActionPerformed(java.awt.event.ActionEvent evt) {
     	if (reportView == null) {
@@ -462,8 +462,17 @@ public class MainWindow extends javax.swing.JFrame {
     private void jToggleButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogOutActionPerformed
     	SubjectManager.getInstance().Update("Top", "MainWindow", "LogOut");
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
+/*
+    private void jToggleButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonHomeActionPerformed
+        if (homeView == null) {
+            homeView = new Home();
+        }
+        switchView(homeView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Home");
+    }*///GEN-LAST:event_jToggleButtonHomeActionPerformed
 
-    private void jToggleButtonCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
+    private void jToggleButtonCategoriesActionPerformed(ActionEvent evt) {
+
     	if (catView == null) {
     		catView = new CategoryPanel();
         }
@@ -471,16 +480,23 @@ public class MainWindow extends javax.swing.JFrame {
         
         
     }
-    private void jToggleButtonVendorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed
+    private void jToggleButtonVendorsActionPerformed(ActionEvent evt) {
     	if (vendorView == null) {
     		vendorView = new VendorPanel();
         }
         switchView(vendorView);
+    }
+       
+	private void jToggleButtonDiscountsActionPerformed(ActionEvent evt) {
+		if (discountView == null) {
+			discountView = new DiscountPanel();
+		}
+	switchView(discountView);
         
         
     }//GEN-LAST:event_jToggleButtonCategoriesActionPerformed
 
-    private void jToggleButtonMembersActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jToggleButtonMembersActionPerformed(ActionEvent evt) {
     	if (memberView == null) {
     		memberView = new MemberPanel();
         }
@@ -489,7 +505,7 @@ public class MainWindow extends javax.swing.JFrame {
         
     }
     
-    private void jToggleButtonStoreKeepersActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jToggleButtonStoreKeepersActionPerformed(ActionEvent evt) {
     	if (storeKeeperView == null) {
     		storeKeeperView = new StoreKeeperPanel();
         }
