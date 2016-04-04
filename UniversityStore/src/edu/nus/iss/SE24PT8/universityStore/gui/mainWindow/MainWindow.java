@@ -57,15 +57,21 @@ public class MainWindow extends javax.swing.JFrame {
     
     private static CheckInventoryPanel inventoryView  = null;
    
+    public void ShowMainWindow(String storeKeeperName ){
+    	jLabelStoreKeeperName.setText(storeKeeperName);
+    	jToggleButtonCheckOut.setSelected(true);
+        jToggleButtonCheckOutActionPerformed(null);
+    	this.setVisible(true);
+    }
     
-    public void setStoreKeeperName(String name){
-    	jLabelStoreKeeperName.setText("Login" + name);
+    public void HideMainWindow() {
+    	setVisible(false);
     }
     
     /**
      * Creates new form MainWindow
      */
-    public MainWindow() {
+    private MainWindow() {
     	setPreferredSize(new Dimension(980, 550));
         
         setLookAndFeel("Nimbus");
@@ -75,11 +81,8 @@ public class MainWindow extends javax.swing.JFrame {
         setButtonGroupForLeftMenu(); 
         
         initialiseTimer();
-        jToggleButtonCheckOut.setSelected(true);
-        jToggleButtonCheckOutActionPerformed(null);
-        
-        SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");
-        
+                
+        SubjectManager.getInstance().addSubject("MainWindow", "MenuClicked");        
     }
 
     public static MainWindow getInstance() {
@@ -186,21 +189,21 @@ public class MainWindow extends javax.swing.JFrame {
         jPanelStatus = new JPanel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("University Store ");
+        setTitle("University Souvenir Store Application");
         setAlwaysOnTop(true);
         setLocation(300, 200);
 
         jPanelTop.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("University Store POS");
+        jLabel1.setText("University Souvenir Store");
 
         jLabelTime.setText("09 April, 2016  09:10:21 AM");
 
         jLabelStoreKeeperName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelStoreKeeperName.setText("StoreKeeper Name");
         
-        JLabel lblUser = new JLabel("User:");
+        JLabel lblUser = new JLabel("Welcome ");
 
         javax.swing.GroupLayout jPanelTopLayout = new javax.swing.GroupLayout(jPanelTop);
         jPanelTopLayout.setHorizontalGroup(
@@ -457,9 +460,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void jToggleButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonLogOutActionPerformed
-    	Login loginFrame=new Login(false);
-    	loginFrame.setVisible(true);
-    	dispose();
+    	SubjectManager.getInstance().Update("Top", "MainWindow", "LogOut");
     }//GEN-LAST:event_jToggleButtonLogOutActionPerformed
 
     private void jToggleButtonCategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCategoriesActionPerformed

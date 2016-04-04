@@ -7,6 +7,7 @@ package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 
 import javax.swing.JOptionPane;
 
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -21,14 +22,37 @@ import java.awt.Dimension;
  */
 public class Login extends javax.swing.JFrame {
 
+	private String userID = "";
     /**
      * Creates new form Login
      */
-	private Store manager=Store.getInstance();
-    public Login(Boolean loginstatus) {
-    	setPreferredSize(new Dimension(280, 200));
+	
+	public void ShowLogIn(Boolean isLoggedOut) {
+		if (isLoggedOut) {
+			userID = "";
+			jLogoutMessage.setText("You have successfully logged out.");
+		}
+		else {
+			jLogoutMessage.setText("");
+		}
+		
+		setVisible(true);
+	}
+	
+	public void HideLogIn() {
+		setVisible(false);
+	}
+	
+	public String getID() {
+		return userID;
+	}
+	
+    public Login() {
+    	setPreferredSize(new Dimension(330, 200));
     	
-        initComponents(loginstatus);
+        initComponents();
+        
+        ShowLogIn(false);
     }
 
     /**
@@ -38,10 +62,11 @@ public class Login extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents(Boolean loginstatus) {
+    private void initComponents() {
     	jPanelTop = new javax.swing.JPanel();
         jLogoutMessage = new javax.swing.JLabel();
-        logoutStatus=new javax.swing.JLabel();
+        jLogoutMessage.setText("You have successfully logged out.");
+        new javax.swing.JLabel();
         LoginPanel = new javax.swing.JPanel();
         StoreKeeperLabel = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
@@ -50,7 +75,7 @@ public class Login extends javax.swing.JFrame {
         Login = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("UniversityStore POS");
+        setTitle("University Souvenir Store - Login");
         setAlwaysOnTop(true);
         setLocation(300, 200);
 
@@ -58,13 +83,7 @@ public class Login extends javax.swing.JFrame {
         jLogoutMessage.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jPanelTop.setVisible(true);
         
-        //StoreKeeperLabel.setText("StoreKeeperName");
-        //PasswordLabel.setText("Password");
-        if(!loginstatus)
-        {
-        	logoutStatus.setText("You have successfully logout from screen!");
-        }
-       
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         StoreKeeperLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -154,12 +173,10 @@ public class Login extends javax.swing.JFrame {
 		String password=txtUserPassword.getText();
 		try
 		{
-			if(manager.getMgrStoreKeeper().checkPassword(storeKeeperName, password))
+			if(Store.getInstance().getMgrStoreKeeper().checkPassword(storeKeeperName, password))
 			{
-				MainWindow mainWindow=new MainWindow();
-				mainWindow.setStoreKeeperName(storeKeeperName);
-				mainWindow.setVisible(true);
-				dispose();
+				userID = storeKeeperName;
+				SubjectManager.getInstance().Update("Top", "Login", "Success");
 			}
 			else{
 				JOptionPane.showMessageDialog(getRootPane(),"Login Failed!","Error", JOptionPane.ERROR_MESSAGE);
@@ -172,7 +189,6 @@ public class Login extends javax.swing.JFrame {
 			txtUserPassword.setText("");
 			txtUserName.requestFocus();
 		}
-		System.out.println("Test");
     }                                     
 
     // Variables declaration - do not modify                     
@@ -184,6 +200,4 @@ public class Login extends javax.swing.JFrame {
     private JPasswordField txtUserPassword;
     private javax.swing.JLabel jLogoutMessage;
     private javax.swing.JPanel jPanelTop;
-    private javax.swing.JLabel logoutStatus;
-    // End of variables declaration                   
 }
