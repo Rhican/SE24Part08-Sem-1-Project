@@ -83,7 +83,14 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	@Override
 	public void update(String group, String topic, String data) {
 		if (group.equals("CheckOutPanel") && topic.equals("SaleItem")) {
-			if (data.equalsIgnoreCase("Add")) handleAddSaleItem();
+			if (data.equalsIgnoreCase("Add")){
+				handleAddSaleItem();
+			}
+		}
+		if (group.equals("CheckOutPanel") && topic.equals("SaleItem")) {
+			if (data.equalsIgnoreCase("Found")){
+				handleFoundProduct();
+			}
 		}
 		else if (group.equals("CheckOutPanel") && topic.equals("Member")) {
 			if (data.equalsIgnoreCase("Update")){
@@ -127,7 +134,13 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		UpdateSaleItemTable();
 		btnDelete.setEnabled(false);
 		productPanel.reset();
-		System.out.println("SaleItem: " + product.getProductId() + " Add " + quantity);
+	}
+	private void handleFoundProduct() {
+		Product product = productPanel.getProduct();
+		if (product == null) return;
+		SaleItem saleItem =  transaction.getSaleItem(product.getProductId());
+		if (saleItem == null) return;
+		productPanel.setSaleItem(saleItem);
 	}
 
 	private void handleSaleItemSelect() {
@@ -142,7 +155,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			SaleItem saleItem = transaction.getSaleItem(id);
 			if (saleItem != null)
 			{
-				this.productPanel.setSaleItem(saleItem);
+				productPanel.setSaleItem(saleItem);
 				btnDelete.setEnabled(true);
 				return;
 			}
@@ -164,6 +177,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			SaleItem saleItem = transaction.getSaleItem(id);
 			transaction.removeSaleItem(saleItem);
 			UpdateSaleItemTable();
+			productPanel.reset();
 		}
 	}
 	private void handlePaymentComplete() {

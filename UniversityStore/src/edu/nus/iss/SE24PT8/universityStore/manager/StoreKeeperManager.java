@@ -45,7 +45,7 @@ public class StoreKeeperManager implements IManager{
         Iterator<StoreKeeper> i=storeKeeper.iterator();
         while(i.hasNext()){
            StoreKeeper storeKeeper=i.next();
-           if(storeKeeper.getstoreKeeperName().equals(storeKeeperName))
+           if(storeKeeper.getstoreKeeperName().equalsIgnoreCase(storeKeeperName))
            {
                if(storeKeeper.getPassword().equals(password))
                {
