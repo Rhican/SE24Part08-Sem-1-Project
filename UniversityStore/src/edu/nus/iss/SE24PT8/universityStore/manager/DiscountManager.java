@@ -58,19 +58,19 @@ public class DiscountManager implements IManager {
      *
      * @param memberDiscount
      */
-   public void addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
+   public ReturnObject addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
 
         Discount discount;
-        
+        ReturnObject returnObj  = new ReturnObject(true, "ok", null);
         
         if (isPeriodAlways) {
             period = 0;
         }
 
         if (getDiscountByCode(discountCode) != null) {
-
-           throw new BadDiscountException(Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
-
+        	returnObj  = new ReturnObject(false, Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST,Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
+           //throw new BadDiscountException(Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
+        	return returnObj;
         }
 
         if (applicableFor.trim().equalsIgnoreCase(Constants.CONST_CUST_TYPE_MEMBER)) {
@@ -91,6 +91,7 @@ public class DiscountManager implements IManager {
         
         discountList.add(discount);
         saveData();
+        return returnObj;
 
     }
 

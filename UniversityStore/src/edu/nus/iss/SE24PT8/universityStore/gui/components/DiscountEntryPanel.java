@@ -199,8 +199,14 @@ public class DiscountEntryPanel extends BaseDialogBox{
 		}
         
          try {
-			Store.getInstance().getMgrDiscount().addNewiDscount(code, des, percent, startDate, period, isStartDateAlways, isPeriodAlways, applicableFor);
-			
+			ReturnObject returnObj = Store.getInstance().getMgrDiscount().addNewiDscount(code, des, percent, startDate, period, isStartDateAlways, isPeriodAlways, applicableFor);
+			if (returnObj.isSuccess()){
+				return true;
+			}else{
+				JOptionPane.showMessageDialog(rootPane,
+						returnObj.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+			}
 		} catch (BadDiscountException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
