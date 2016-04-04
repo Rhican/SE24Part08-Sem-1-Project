@@ -45,7 +45,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 	private JButton modifyButton;
 	private JComboBox<Item<String>> categories;
 	
-	private final static String[] columnNames = {"Vendor Name", "Category"};
+	private final static String[] columnNames = {"Vendor Name", "Vendor Description"};
 	private final static String[] allowedOperations = {Constants.ADD_OPERATION};
 	
 	public VendorPanel() {
@@ -65,7 +65,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 			titleLabel.setForeground(Constants.STORE_APP_TITLE_COLOR);
 			titleLabel.setFont(Constants.STORE_APP_TITLE_FONT);
 			JLabel catLabel = new JLabel();
-			catLabel.setText("Categories");
+			catLabel.setText("Category");
 			categories = new JComboBox<Item<String>>();
 			categories.addActionListener (new ActionListener () {
 			    public void actionPerformed(ActionEvent e) {
@@ -117,11 +117,11 @@ public class VendorPanel extends JPanel  implements INotificable {
 				group2.addComponent(deleteButton).addGap(105, 105, 105);
 
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup().addContainerGap().addGroup(group1)
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGap(20).addGroup(catGroup)
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGap(20).addGroup(catGroup).addGap(20)
 					.addComponent(vendorPane, 0, 440, Short.MAX_VALUE).addGap(20).addGroup(group2));
 
-			Group group3 = thisLayout.createSequentialGroup().addGap(102).addComponent(titleLabel,
-					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152);
+			Group group3 = thisLayout.createSequentialGroup().addGap(340).addComponent(titleLabel,
+					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(200);
 			if (Arrays.asList(allowedOperations).contains(Constants.ADD_OPERATION))
 				group3.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE);
 			Group group4 = thisLayout.createSequentialGroup();
@@ -133,7 +133,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 			Group hCatGroup = thisLayout.createSequentialGroup().addComponent(catLabel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(25).addComponent(categories, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE);
 			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
-					.addComponent(vendorPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 500,
+					.addComponent(vendorPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 780,
 							GroupLayout.PREFERRED_SIZE).addGroup(GroupLayout.Alignment.CENTER, hCatGroup)
 					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
 
