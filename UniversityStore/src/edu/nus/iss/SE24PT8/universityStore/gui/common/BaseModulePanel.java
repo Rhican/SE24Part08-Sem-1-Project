@@ -43,7 +43,7 @@ public abstract class BaseModulePanel extends JPanel {
 			GroupLayout thisLayout = new GroupLayout((JComponent) this);
 			this.setLayout(thisLayout);
 			setLocation(500, 500);
-			this.setPreferredSize(new java.awt.Dimension(500, 491));
+			this.setPreferredSize(new java.awt.Dimension(780, 491));
 			titleLabel = new JLabel();
 			titleLabel.setText(title + " List");
 			titleLabel.setVerifyInputWhenFocusTarget(false);
@@ -104,7 +104,7 @@ public abstract class BaseModulePanel extends JPanel {
 			if (Arrays.asList(allowedOperations).contains(Constants.DELETE_OPERATION))
 				group4.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE);
 			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
-					.addComponent(dataPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 500,
+					.addComponent(dataPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 700,
 							GroupLayout.PREFERRED_SIZE)
 					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
 

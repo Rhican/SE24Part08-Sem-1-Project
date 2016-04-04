@@ -58,8 +58,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 		try {
 			GroupLayout thisLayout = new GroupLayout((JComponent) this);
 			this.setLayout(thisLayout);
-			setLocation(500, 500);
-			this.setPreferredSize(new java.awt.Dimension(500, 491));
+			this.setPreferredSize(new java.awt.Dimension(780, 491));
 			titleLabel = new JLabel();
 			titleLabel.setText("Vendor List");
 			titleLabel.setVerifyInputWhenFocusTarget(false);
