@@ -1,4 +1,4 @@
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -203,15 +203,16 @@ public class CheckoutMemberPanel extends JPanel {
 						.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
 					.addGap(4)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(textFieldRedeemPoint, 94, 94, 94)
 								.addComponent(textFieldDiscount, 94, 94, 94))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textFieldName, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-						.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
+						.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+						.addComponent(textFieldName))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -223,7 +224,6 @@ public class CheckoutMemberPanel extends JPanel {
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGap(14)
@@ -247,16 +247,16 @@ public class CheckoutMemberPanel extends JPanel {
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-					.addGap(1))
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+					.addGap(3))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(5)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 153, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
 					.addGap(6))
 		);
 		setLayout(groupLayout);

@@ -71,7 +71,7 @@ public class StoreKeeperPanel extends BaseModulePanel implements INotificable {
 	protected void performDeleteAction(){
 		
 		if(storeKeeperList.getSelectedRow()!= -1){
-			String storeKeeperName=storeKeeperList.getValueAt(storeKeeperList.getSelectedRow(), 1).toString();
+			String storeKeeperName=storeKeeperList.getValueAt(storeKeeperList.getSelectedRow(), 0).toString();
 			 try {
 	        	 Store.getInstance().getMgrStoreKeeper().DeleteStoreKeeper(storeKeeperName);
 	        	 JOptionPane.showMessageDialog(getRootPane(),

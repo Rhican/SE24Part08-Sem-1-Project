@@ -6,20 +6,52 @@
 
 package edu.nus.iss.SE24PT8.universityStore;
 
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
+import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.Login;
+import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
+import edu.nus.iss.SE24PT8.universityStore.main.Store;
 
 /**
  *
  * @author SE24PT8
  */
-public class UniversityStore {
+public class UniversityStore implements INotificable {
 
+	private Store manager = Store.getInstance(); // Initialise managers;
+	private Login login = null;
+	private MainWindow mainWindow = null;
+	
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Login login = new Login(true);
-        login.setVisible(true);
+    	UniversityStore store = new UniversityStore();
     }
+
+    public UniversityStore() {
+    	login = new Login();
+    	mainWindow = MainWindow.getInstance();
+    	
+    	SubjectManager.getInstance().addNotification("Top", "MainWindow", this);
+		SubjectManager.getInstance().addNotification("Top", "Login", this);
+    }
+    
+	@Override
+	public void update(String group, String topic, String data) {
+		if (group.equals("Top") && topic.equals("MainWindow")) {
+			if (data.equalsIgnoreCase("LogOut")){
+				login.ShowLogIn(true);
+				mainWindow.HideMainWindow();
+			}
+		}
+		else if (group.equals("Top") && topic.equals("Login")) {
+			if (data.equalsIgnoreCase("Success")){
+				mainWindow.ShowMainWindow(login.getID());
+				login.HideLogIn();
+			}
+		}
+		
+	}
     
 }

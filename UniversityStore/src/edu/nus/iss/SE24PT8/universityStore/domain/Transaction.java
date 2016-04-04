@@ -6,6 +6,7 @@
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.MemberManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ public class Transaction {
         this.id = 0;
         this.date = new Date();
         this.memberID = "PUBLIC";
-        this.discount=null;
+        this.discount= DiscountManager.getInstance().getMaxDiscount(date, null);
         this.redeemedPoint = 0;
-        this.saleItems = new HashMap();
+        this.saleItems = new HashMap<String, SaleItem>();
     }
     
     //- Setters -------------------------------------------------------

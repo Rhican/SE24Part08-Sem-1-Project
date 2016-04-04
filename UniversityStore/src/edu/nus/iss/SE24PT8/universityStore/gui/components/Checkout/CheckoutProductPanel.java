@@ -1,4 +1,4 @@
-package edu.nus.iss.SE24PT8.universityStore.gui.components;
+package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -248,7 +248,7 @@ public class CheckoutProductPanel extends JPanel {
 		textFieldQuantity.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String text = textFieldQuantity.getText();
-				if (text.isEmpty()) return;
+				if (text.isEmpty() || product == null) return;
 				int quantity = Integer.parseInt(text);
 				int max = product.getQty();
 				if (quantity > max) {
