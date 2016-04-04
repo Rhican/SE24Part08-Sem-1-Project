@@ -117,9 +117,9 @@ public class ReportPanel extends JPanel implements INotificable {
 					GroupLayout.PREFERRED_SIZE);
 
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup().addContainerGap().addGroup(group1)
-					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(reportGroup).addGap(20).addGroup(dateGroup).addGap(20).addComponent(reportPane, 0, 440, Short.MAX_VALUE));
+					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGroup(reportGroup).addGap(10).addGroup(dateGroup).addGap(10).addComponent(reportPane, 0, 440, Short.MAX_VALUE));
 
-			Group group3 = thisLayout.createSequentialGroup().addGap(102).addComponent(titleLabel,
+			Group group3 = thisLayout.createSequentialGroup().addGap(350).addComponent(titleLabel,
 					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152);
 			Group group4 = thisLayout.createSequentialGroup();
 			Group hReportGroup = thisLayout.createSequentialGroup().addComponent(reportTypeLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)

@@ -93,8 +93,8 @@ public abstract class BaseModulePanel extends JPanel {
 					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 					.addComponent(dataPane, 0, 440, Short.MAX_VALUE).addGap(20).addGroup(group2));
 
-			Group group3 = thisLayout.createSequentialGroup().addGap(102).addComponent(titleLabel,
-					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152);
+			Group group3 = thisLayout.createSequentialGroup().addGap(350).addComponent(titleLabel,
+					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(200);
 			if (Arrays.asList(allowedOperations).contains(Constants.ADD_OPERATION))
 				group3.addComponent(addButton, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE);
 			Group group4 = thisLayout.createSequentialGroup();
@@ -104,7 +104,7 @@ public abstract class BaseModulePanel extends JPanel {
 			if (Arrays.asList(allowedOperations).contains(Constants.DELETE_OPERATION))
 				group4.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE);
 			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
-					.addComponent(dataPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 700,
+					.addComponent(dataPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 780,
 							GroupLayout.PREFERRED_SIZE)
 					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
 
