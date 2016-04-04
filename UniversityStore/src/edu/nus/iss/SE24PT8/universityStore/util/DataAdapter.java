@@ -489,7 +489,7 @@ public class DataAdapter {
 	            return null;
 	        }
         }
-        transaction.close();
+        transaction.save();
         return transaction;
 
     }

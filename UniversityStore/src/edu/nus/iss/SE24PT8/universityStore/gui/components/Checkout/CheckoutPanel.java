@@ -254,7 +254,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		String data = "\n ============================================================" + 
 				"\n\t\t\t University Store  " + 
 				"\n\t\t\t    Receipt # " + transaction.getId() + " \n "+ 
-				"\n From SE24PT8 " + 
+				"\n From: SE24PT8 " + 
 				"\n Date: " +  transaction.getDate().toString() +  "\n\n " + transaction.getSaleItems().size() + " SaleItems: " +
 				"\n ------------------------------------------------------------ \n" ;
 				
