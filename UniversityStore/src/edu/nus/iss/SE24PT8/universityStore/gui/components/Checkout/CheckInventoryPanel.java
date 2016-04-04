@@ -94,7 +94,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 					performOrderItem();
 				}
 			});
-			btnOrderAll = new JButton("Order Item");
+			btnOrderAll = new JButton("Order All");
 			btnOrderAll.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					performOrderAllItem();
@@ -118,15 +118,15 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 				.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
 				.addComponent(dataPane, 0, 440, Short.MAX_VALUE).addGap(20).addGroup(group2));
 
-		Group group3 = thisLayout.createSequentialGroup().addGap(102).addComponent(titleLabel,
+		Group group3 = thisLayout.createSequentialGroup().addGap(350).addComponent(titleLabel,
 				GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(152);
 		
 		Group group4 = thisLayout.createSequentialGroup();
 		
-		group4.addComponent(btnOrderItem, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE).addGap(25)
-		.addComponent(btnOrderAll, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE).addGap(25);
+		group4.addComponent(btnOrderItem, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE).addGap(30)
+		.addComponent(btnOrderAll, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE).addGap(25);
 		thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
-				.addComponent(dataPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 500,
+				.addComponent(dataPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 780,
 						GroupLayout.PREFERRED_SIZE)
 				.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
 		
