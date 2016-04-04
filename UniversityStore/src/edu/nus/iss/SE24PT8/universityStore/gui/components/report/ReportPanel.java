@@ -198,7 +198,7 @@ public class ReportPanel extends JPanel implements INotificable {
 	private void addReportTypes() {
 		Item<String> report1 = new Item<String>(CAT_LIST, "All Categories");
 		Item<String> report2 = new Item<String>(PRODUCT_LIST, "All Products");
-		Item<String> report3 = new Item<String>(TXN_LIST, "Transcations");
+		Item<String> report3 = new Item<String>(TXN_LIST, "Transactions");
 		Item<String> report4 = new Item<String>(MEMBER_LIST, "All Members");
 		reportTypes.addItem(report1);
 		reportTypes.addItem(report2);		
