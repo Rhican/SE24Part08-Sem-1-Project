@@ -70,10 +70,12 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		if (panel.equalsIgnoreCase("Product")) {
 			panelLeft.remove(memberPanel);
 			panelLeft.add(productPanel);
+			productPanel.focusID();
 			btnPage.setText("Next");
 		} else if (panel.equalsIgnoreCase("Member")) {
 			panelLeft.remove(productPanel);
 			panelLeft.add(memberPanel);
+			memberPanel.focusID();
 			btnPage.setText("Previous");
 		}
 		UpdatePaymentButton();
@@ -180,6 +182,18 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			productPanel.reset();
 		}
 	}
+	
+	private void checkAndGoToPayment() {
+		if (memberPanel.getMemeber() == null) {
+			if (JOptionPane.showConfirmDialog(getRootPane(), "Do you have a member ID?", "Alert",
+			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				switchPanel("Member");
+				return;
+			}
+		}
+		paymentDialog.show(transaction.getNetAmount());
+	}
+	
 	private void handlePaymentComplete() {
 		TransactionManager manager = TransactionManager.getInstance();
 		if ( manager.closeTransaction(transaction) )
@@ -254,21 +268,6 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		data += "\n\t\t\t\t      Net Amount: " + formatDollar(transaction.getNetAmount());
 		data += "\n ============================================================"; 	
 		printer.print(data);
-		
-		//testing for transaction report. will be removed
-		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		String dateInString = "01-01-2016 00:01:01";
-		Date dateStart;
-		try {
-			dateStart = sdf.parse(dateInString);
-			Vector<String> columns = new Vector<String>();
-			TransactionManager.getInstance().getTransactionReport(dateStart, today, columns);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		// end testing..
 	}
 	
 	private void UpdateSaleItemTable() {
@@ -410,7 +409,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		btnPay = new JButton("Pay");
 		btnPay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				paymentDialog.show(transaction.getNetAmount());
+				checkAndGoToPayment();
 			}
 		});
 		btnPay.setEnabled(false);
@@ -538,4 +537,6 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		SubjectManager.getInstance().addNotification("CheckOutPanel", "Payment", this);
 		switchPanel("Product");
 	}
+
+	
 }

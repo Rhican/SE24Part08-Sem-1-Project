@@ -53,6 +53,10 @@ public class CheckoutProductPanel extends JPanel {
 		quantity = 1;
 		resetUI();
 	}
+	public void focusID() {
+		textFieldID.requestFocus();
+	}
+	
 	public Product getProduct() {
 		return product;
 	}
@@ -136,7 +140,7 @@ public class CheckoutProductPanel extends JPanel {
 		textFieldSubTotal.setText("");
 		textFieldID.setEditable(true);
 		textFieldBarcode.setEditable(true);
-		textFieldID.requestFocus();
+		focusID();
 	}
 	/**
 	 * Create the panel.

@@ -42,6 +42,10 @@ public class CheckoutMemberPanel extends JPanel {
 		member = null;
 		textFieldID.setText("");
 		SearchForMemeber("");
+		focusID();
+	}
+	public void focusID() {
+		textFieldID.requestFocus();
 	}
 	
 	private void SearchForMemeber(String memberID) {
@@ -203,7 +207,7 @@ public class CheckoutMemberPanel extends JPanel {
 						.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
 					.addGap(4)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addComponent(textFieldRedeemPoint, 94, 94, 94)
