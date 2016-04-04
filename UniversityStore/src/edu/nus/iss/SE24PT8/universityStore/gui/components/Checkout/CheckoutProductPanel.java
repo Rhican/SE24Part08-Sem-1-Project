@@ -290,6 +290,19 @@ public class CheckoutProductPanel extends JPanel {
 
 		
 		buttonAdd = new JButton("Save");
+		buttonAdd.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					quantity = Integer.parseInt(textFieldQuantity.getText());
+					SubjectManager.getInstance().Update("CheckOutPanel", "SaleItem", "Add");
+					resetUI();
+					return;
+				}
+				super.keyReleased(e);					
+				return;
+			}
+		});
 		buttonAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				quantity = Integer.parseInt(textFieldQuantity.getText());
@@ -298,84 +311,98 @@ public class CheckoutProductPanel extends JPanel {
 			}
 		});
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
-				.createSequentialGroup().addGap(10)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel.createSequentialGroup()
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel.createSequentialGroup()
-										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-												.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 54,
-														GroupLayout.PREFERRED_SIZE)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
 										.addComponent(label)
 										.addGroup(gl_panel.createSequentialGroup()
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblBarcode,
-														GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)))
-										.addGap(4))
-								.addGroup(
-										gl_panel.createSequentialGroup()
-												.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-														.addComponent(label_5, GroupLayout.DEFAULT_SIZE, 55,
-																Short.MAX_VALUE)
-												.addComponent(label_4, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-												.addComponent(label_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 55,
-														Short.MAX_VALUE))
-												.addPreferredGap(ComponentPlacement.RELATED)))
-						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING).addGroup(gl_panel
-								.createSequentialGroup()
-								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-										.addComponent(textFieldBarcode, Alignment.LEADING)
-										.addComponent(textFieldName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 123,
-												Short.MAX_VALUE)
-										.addComponent(textFieldID, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 123,
-												Short.MAX_VALUE))
-								.addContainerGap())
-								.addGroup(gl_panel.createSequentialGroup().addGroup(gl_panel
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(textFieldSubTotal, GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-										.addComponent(textFieldPrice, GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-										.addComponent(textFieldQuantity, GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(labelMaxQuantity, GroupLayout.PREFERRED_SIZE, 38,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(25))
-								.addGroup(gl_panel.createSequentialGroup().addGap(57)
-										.addComponent(buttonAdd, GroupLayout.PREFERRED_SIZE, 66,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())))
-						.addComponent(buttonCancel))));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup().addGap(14).addComponent(label))
-						.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(textFieldID,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addGap(11)
-				.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldBarcode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(lblBarcode, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)))
+									.addGap(4))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(label_5, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+										.addComponent(label_4, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+										.addComponent(label_3, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)))
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+										.addComponent(textFieldBarcode, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+										.addComponent(textFieldName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+										.addComponent(textFieldID, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE))
+									.addContainerGap())
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(textFieldSubTotal, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+										.addComponent(textFieldPrice, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+										.addComponent(textFieldQuantity, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(labelMaxQuantity, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+									.addGap(25))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(57)
+									.addComponent(buttonAdd, GroupLayout.PREFERRED_SIZE, 66, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())))
+						.addComponent(buttonCancel)))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(14)
+							.addComponent(label))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldBarcode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblBarcode))
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup().addGap(18).addComponent(label_1))
-						.addGroup(gl_panel.createSequentialGroup().addGap(11).addComponent(textFieldName,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup().addGap(11)
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(textFieldQuantity, GroupLayout.PREFERRED_SIZE,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(labelMaxQuantity))))
-						.addGroup(gl_panel.createSequentialGroup().addGap(14).addComponent(label_3)))
-				.addGap(11)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(textFieldPrice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(label_4)))
-				.addGap(11)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(textFieldSubTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panel.createSequentialGroup().addGap(3).addComponent(label_5))).addGap(18)
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING).addComponent(buttonCancel)
-						.addComponent(buttonAdd)).addGap(13)));
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(18)
+							.addComponent(label_1))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(11)
+							.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(11)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGap(3)
+									.addComponent(labelMaxQuantity))))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(14)
+							.addComponent(label_3)))
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(textFieldPrice, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(3)
+							.addComponent(label_4)))
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(textFieldSubTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(3)
+							.addComponent(label_5)))
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonCancel)
+						.addComponent(buttonAdd))
+					.addGap(13))
+		);
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(panel,
