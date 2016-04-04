@@ -108,6 +108,14 @@ public class MemberManager implements IManager {
            throw new BadMemberRegistrationException(Constants.CONST_MEMBER_ERR_MEMBERIDSPECIALCHAR);
         }
         
+        Pattern numericP=Pattern.compile("[0-9]",Pattern.CASE_INSENSITIVE);
+        Matcher numericm=numericP.matcher(id);
+        boolean numericb=numericm.find();
+        if(!numericb)
+        {
+        	throw new BadMemberRegistrationException(Constants.CONST_MEMBER_ERR_NUMERIC);
+        }
+        
         Matcher m2 = p.matcher(name);
         boolean b2 = m2.find();
         if (b2)

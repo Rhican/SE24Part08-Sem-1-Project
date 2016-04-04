@@ -14,6 +14,8 @@ import javax.swing.GroupLayout;
 import javax.swing.JPasswordField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -105,6 +107,27 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        
+        txtUserName.addKeyListener(new KeyAdapter(){
+          public void keyPressed(KeyEvent e)
+          {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+            {
+            	Login();
+            }
+          }
+        });
+        
+        txtUserPassword.addKeyListener(new KeyAdapter(){
+            public void keyPressed(KeyEvent e)
+            {
+              if (e.getKeyCode() == KeyEvent.VK_ENTER)
+              {
+              	Login();
+              }
+            }
+          });
+        
         jLogoutMessage.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLogoutMessage.setForeground(new java.awt.Color(255, 51, 102));
         //jLogoutMessage.setText("logoutStatus");
@@ -168,7 +191,7 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                          
 
-    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void Login(){
     	String storeKeeperName = txtUserName.getText();
 		String password=txtUserPassword.getText();
 		try
@@ -189,6 +212,9 @@ public class Login extends javax.swing.JFrame {
 			txtUserPassword.setText("");
 			txtUserName.requestFocus();
 		}
+    }
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {    
+    	Login();
     }                                     
 
     // Variables declaration - do not modify                     

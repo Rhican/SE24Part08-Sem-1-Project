@@ -34,8 +34,8 @@ public final class Constants {
     public static final String CONST_MEMBER_ERR_NOPOINT="Redeem Point not avaiable!";
     public static final String CONST_MEMBER_ERR_INSUFFICIENTPOINT="Redeem Point not available!";
     public static final String CONST_MEMBER_ERR_POINT="Point should be between 1 to 5000";
-
-    public static final String CONST_PRODUCT_ERR_BARCODEEXIST = "Bar code for the prodcut is already exist!";
+    public static final String CONST_MEMBER_ERR_NUMERIC="MemberID should contain at least one numeric value";
+    public static final String CONST_PRODUCT_ERR_BARCODEEXIST = "Bar code for the prodcut is already exist";
 
 
     public static final String CONST_STOREKEEPER_ERR_LOGIN="Invalid UserName/Password!";
