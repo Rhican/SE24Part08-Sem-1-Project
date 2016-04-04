@@ -68,7 +68,9 @@ public class CheckoutProductPanel extends JPanel {
 		}
 		else
 		{
-			displayProductDetail(saleItem.getProduct(), saleItem.getSaleQuantity());
+			this.product = saleItem.getProduct();
+			this.quantity = saleItem.getSaleQuantity();
+			displayProductDetail(product, quantity);
 			textFieldQuantity.setText(Integer.toString(this.quantity));
 			textFieldID.setEditable(false);
 			textFieldBarcode.setEditable(false);
@@ -113,7 +115,9 @@ public class CheckoutProductPanel extends JPanel {
 			this.product.getProductId() != product.getProductId()) {
 			this.product = product;
 
-			displayProductDetail(product, 1);			
+			displayProductDetail(product, 1);	  	
+			SubjectManager.getInstance().Update("CheckOutPanel", "SaleItem", "Found");
+			
 			return true;
 		}
 		return false;
@@ -274,7 +278,7 @@ public class CheckoutProductPanel extends JPanel {
 		buttonCancel = new JButton("Cancel");
 		buttonCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				resetUI();
+				reset();
 			}
 		});
 
