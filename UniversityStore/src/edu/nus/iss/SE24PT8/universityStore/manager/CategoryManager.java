@@ -4,6 +4,7 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author Mugunthan
  */
-public class CategoryManager implements IManager{
+public class CategoryManager {
     
     private static CategoryManager instance = null;
     private ArrayList<Category> categories = null;
@@ -46,92 +47,54 @@ public class CategoryManager implements IManager{
         return categories;
     }
     
-    public ReturnObject addCategory(String code, String name){
+    public Category addCategory(String code, String name) throws BadCategoryException{
         if(code.trim().equals("") || name.trim().equals("") || code == null || name == null|| code.length() > 3)
-          return new ReturnObject(false, Constants.CONST_CAT_ERR_INVALID_DETAILS, null);
+          throw new BadCategoryException(Constants.CONST_CAT_ERR_INVALID_DETAILS);
         if (getCategory(code.toUpperCase()) == null){  
             Category newCat = new Category (code.toUpperCase(), name);
             categories.add(newCat);
             
             DataAdapter.writeCategories(categories);
             DataAdapter.createVedorFile(code.toUpperCase());
-            return new ReturnObject(true,Constants.CONST_CAT_MSG_CREATION_SUCUESS, newCat);
+            return newCat;
         } else {
-            return new ReturnObject(false,Constants.CONST_CAT_ERR_CATCODEEXIST, null);
+        	throw new BadCategoryException(Constants.CONST_CAT_ERR_CATCODEEXIST);
         }            
         
     }
     
     //Assumption - category code canno't be changed
-    public ReturnObject updateCategory(Category cat) {
+    public Category updateCategory(Category cat) throws BadCategoryException {
         Category oldCategory = getCategory(cat.getCategoryCode());
         if (oldCategory != null ) {
             oldCategory.setCategoryName(cat.getCategoryName());
             DataAdapter.writeCategories(categories);
             DataAdapter.writeVendors(cat.getVendorList(), cat.getCategoryCode());
-            return new ReturnObject(true, Constants.CONST_CAT_MSG_UPDATE_SUCUESS, oldCategory);
+            return oldCategory;
         } else {
-            return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, oldCategory);
+            throw new BadCategoryException(Constants.CONST_CAT_ERR_NOTEXIST);
         }
     }
     
-    public ReturnObject deleteCategory(String code){
+    public boolean deleteCategory(String code) throws BadCategoryException {
         if(code.trim().equals("") || code == null)
-            return new ReturnObject(false,Constants.CONST_CAT_ERR_NOTEXIST, null);
+        	throw new BadCategoryException(Constants.CONST_CAT_ERR_NOTEXIST);
         
         Category cat = getCategory(code);
         if (cat != null) {
             if (productMgr.getProductCountInCategory(cat) > 0) {
-                return new ReturnObject(false,Constants.CONST_CAT_ERR_DELETE, null);
+            	throw new BadCategoryException(Constants.CONST_CAT_ERR_DELETE);
             } else {
                 categories.remove(cat);
                 DataAdapter.writeCategories(categories);
                 DataAdapter.removeVedorFile(code);
-                return new ReturnObject(true, Constants.CONST_CAT_MSG_DELETE_SUCUESS, cat);
+                return true;//new ReturnObject(true, Constants.CONST_CAT_MSG_DELETE_SUCUESS, cat);
             }                
         } else {
-            return new ReturnObject(false,Constants.CONST_CAT_ERR_NOTEXIST, null);
+        	throw new BadCategoryException(Constants.CONST_CAT_ERR_NOTEXIST);
         }        
         
-    }
-
-    @Override
-    public void getRelatedObjects() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveData() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public ArrayList<Vendor> getVendorsNotInCategory(Category category){
-        Category checkCategory;
-        if(category==null){
-            checkCategory=new Category("DUMMYXXX","DUMMYXXX");
-        }else{
-            checkCategory=category;
-        }
-        
-        ArrayList<Vendor> vendorsNotAssigned=new ArrayList<Vendor>();
-        ArrayList<Vendor> vendorsAssigned=checkCategory.getVendorList();
-        
-        
-        for(Category cat:categories){
-            //Skip same category
-            if(cat.getCategoryCode().equalsIgnoreCase(checkCategory.getCategoryCode())){
-                continue;//skip same category
-            }
-            
-            //check vendors
-            for(Vendor ven:cat.getVendorList()){
-                if(!vendorsAssigned.contains(ven)&& !vendorsNotAssigned.contains(ven)){
-                    vendorsNotAssigned.add(ven);
-                }
-            }//end of vendor check
-        }// end of categories loop
-        return vendorsNotAssigned;
-    }
+    } 
 
 	public void updateVendorList(ArrayList<Vendor> newVendorList, String catCode) {
 		getCategory(catCode).setVendorList(newVendorList);

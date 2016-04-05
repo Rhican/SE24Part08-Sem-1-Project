@@ -47,8 +47,8 @@ public class Store {
         mgrStoreKeeper=StoreKeeperManager.getInstance();
         //After all Managers are loaded, get the related objects
         mgrProduct.getRelatedObjects();
-        mgrCategory.getRelatedObjects();
-        mgrVendor.getRelatedObjects();
+//        mgrCategory.getRelatedObjects();
+//        mgrVendor.getRelatedObjects();
         mgrMember.getRelatedObjects();
         mgrDiscount.getRelatedObjects();
         
