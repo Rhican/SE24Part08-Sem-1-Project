@@ -97,13 +97,12 @@ public class TransactionManager {
 			String id = String.valueOf(transaction.getId());
 			for (SaleItem saleitem : saleitems) {
 				Product product = saleitem.getProduct();
-				String[] row = new String[6];
+				String[] row = new String[5];
 				row[0] = product.getProductId();
 				row[1] = product.getProductName();
 				row[2] = product.getBriefDesp();
-				row[3] = String.valueOf(saleitem.getSaleQuantity());
+				row[3] = id;
 				row[4] = date;
-				row[5] = id;
 				reportInList.add(row);
 			}
 		}
@@ -118,10 +117,9 @@ public class TransactionManager {
 			columnNames.clear();
 			columnNames.addElement("Product ID");
 			columnNames.addElement("Product Name");
-			columnNames.addElement("Description");
-			columnNames.addElement("Quantity");
-			columnNames.addElement("Transaction Date");
+			columnNames.addElement("Product Description");
 			columnNames.addElement("Transaction No");
+			columnNames.addElement("Transaction Date");
 		}
 		// {"Product ID", "Product Name", "Product Description", "Transaction
 		// No", "Transaction Date"};
