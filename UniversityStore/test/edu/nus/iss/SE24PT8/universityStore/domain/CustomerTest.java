@@ -4,13 +4,10 @@ package edu.nus.iss.SE24PT8.universityStore.domain;
 import edu.nus.iss.SE24PT8.universityStore.domain.Customer;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
 import junit.framework.TestCase;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertSame;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
