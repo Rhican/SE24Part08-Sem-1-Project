@@ -143,21 +143,5 @@ public class Store {
                 System.out.println("        "+sale.getProductID()+DataAdapter.comma+sale.getSaleQuantity());
             }
         }
-        
-        
-    
-        
-        
     }
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
 }
