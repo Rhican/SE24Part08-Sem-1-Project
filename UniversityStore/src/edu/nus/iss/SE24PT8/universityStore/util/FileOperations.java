@@ -51,7 +51,7 @@ public class FileOperations {
     }
 
     public static void writeFile(ArrayList<String> data, String filename, boolean append) {
-        System.out.println("Writing File");
+        //System.out.println("Writing File");
         FileWriter fw;
         try {
             fw = new FileWriter(filename, append);
