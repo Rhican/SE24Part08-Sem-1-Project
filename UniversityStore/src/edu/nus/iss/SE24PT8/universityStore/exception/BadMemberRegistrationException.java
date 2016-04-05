@@ -11,7 +11,12 @@ package edu.nus.iss.SE24PT8.universityStore.exception;
  * @created date 26 March 2016
  */
 public class BadMemberRegistrationException extends Exception {
-    public BadMemberRegistrationException(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public BadMemberRegistrationException(){
         
     }
     
