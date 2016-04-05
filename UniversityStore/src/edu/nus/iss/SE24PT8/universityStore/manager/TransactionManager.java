@@ -7,6 +7,8 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
+import edu.nus.iss.SE24PT8.universityStore.domain.TransactionInterface;
+import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,15 +37,11 @@ public class TransactionManager {
         transactions=DataAdapter.loadTransactions();
     }
 
-    /**
-     * Write To File
-     * Must call after add, update, delete product item
-     *
-     */
-    
-    public boolean closeTransaction(Transaction transaction) {
-    	if (transaction.close() ) {
-    		DataAdapter.appendTransaction(transaction);
+    public boolean closeTransaction(TransactionInterface transactionInterface) throws TransactionException {
+    	Transaction transaction = (Transaction)(transactionInterface);
+    	if (transaction == null) return false;
+    	if (transaction.close(false, false) ) {
+    		if (transaction != null) DataAdapter.appendTransaction(transaction);
     		return true;
     	}
     	return false;
@@ -56,7 +54,7 @@ public class TransactionManager {
         return null;
     }
     
-    public Transaction getNewTransaction() {
+    public TransactionInterface getNewTransaction() {
         Transaction newTransaction = new Transaction();
         transactions.add(newTransaction);
         return newTransaction;

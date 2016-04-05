@@ -31,12 +31,15 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.SystemColor;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
+import edu.nus.iss.SE24PT8.universityStore.domain.TransactionInterface;
+import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
 import edu.nus.iss.SE24PT8.universityStore.externalDevice.Printer;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -57,16 +60,16 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	private JTextField textFieldTotalAmount;
 	private CheckoutProductPanel productPanel = new CheckoutProductPanel();
 	private CheckoutMemberPanel memberPanel = new CheckoutMemberPanel();
-	private CheckoutPayDialog paymentDialog = new CheckoutPayDialog();
+	private CheckoutPayDialog paymentDialog = null;
 	private Printer printer = new Printer();
 	private JPanel panelLeft;
 	private JButton btnPage;
-	private Transaction transaction = TransactionManager.getInstance().getNewTransaction();
+	private TransactionInterface transaction = TransactionManager.getInstance().getNewTransaction();
 	private JButton btnDelete;
 	private JButton btnPay;
 
 	private void switchPanel(String panel) {
-		panelLeft.setVisible(false);
+		panelLeft.setVisible(false); 
 		if (panel.equalsIgnoreCase("Product")) {
 			panelLeft.remove(memberPanel);
 			panelLeft.add(productPanel);
@@ -132,7 +135,15 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	private void handleAddSaleItem() {
 		Product product = productPanel.getProduct();
 		int quantity = productPanel.getQuanity();
-		transaction.addSaleItem(product, quantity);
+		
+		try {
+			transaction.addSaleItem(product, quantity);
+		} catch (TransactionException e) {
+			JOptionPane.showMessageDialog(getRootPane(),
+		   			 "Fail to Add Sale Item \n" + e.getMessage(),
+						"Exception", JOptionPane.ERROR_MESSAGE);
+		}
+		
 		UpdateSaleItemTable();
 		btnDelete.setEnabled(false);
 		productPanel.reset();
@@ -177,7 +188,13 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		if (!id.isEmpty())
 		{
 			SaleItem saleItem = transaction.getSaleItem(id);
-			transaction.removeSaleItem(saleItem);
+			try {
+				transaction.removeSaleItem(saleItem);
+			} catch (TransactionException e) {
+				JOptionPane.showMessageDialog(getRootPane(),
+			   			 "Fail to Add Sale Item \n" + e.getMessage(),
+							"Exception", JOptionPane.ERROR_MESSAGE);
+			}
 			UpdateSaleItemTable();
 			productPanel.reset();
 		}
@@ -191,35 +208,42 @@ public class CheckoutPanel extends JPanel implements INotificable {
 				return;
 			}
 		}
+		if (paymentDialog == null) paymentDialog = new CheckoutPayDialog();
 		paymentDialog.show(transaction.getNetAmount());
 	}
 	
 	private void handlePaymentComplete() {
 		TransactionManager manager = TransactionManager.getInstance();
-		if ( manager.closeTransaction(transaction) )
-		{
-			printTransaction(transaction);
-			JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" +  transaction.getId(), "Success", JOptionPane.INFORMATION_MESSAGE);
-			checkForLowInventoryProduct(transaction);
-			
-			transaction = manager.getNewTransaction();
-			switchPanel("Product");
-			UpdateSaleItemTable();		
-			paymentDialog.reset();
-			memberPanel.reset();
-			productPanel.reset();
-			
-		}
-		else {
+		try {
+			if ( manager.closeTransaction(transaction) )
+			{
+				printTransaction(transaction);
+				JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" +  transaction.getId(), "Success", JOptionPane.INFORMATION_MESSAGE);
+				checkForLowInventoryProduct(transaction.getSaleItems());
+				
+				transaction = manager.getNewTransaction();
+				switchPanel("Product");
+				UpdateSaleItemTable();		
+				paymentDialog.reset();
+				memberPanel.reset();
+				productPanel.reset();
+				
+			}
+			else {
+				JOptionPane.showMessageDialog(getRootPane(),
+			   			 "Fail to Save transaction",
+							"Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (TransactionException e) {
 			JOptionPane.showMessageDialog(getRootPane(),
-		   			 "Fail to Save transaction",
+		   			 "Fail to Close transaction" + e.getMessage(),
 						"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}
-	private void checkForLowInventoryProduct(Transaction transaction) {
+	private void checkForLowInventoryProduct(ArrayList<SaleItem> saleItems) {
 		ArrayList<Product> productList = new ArrayList<Product>();
-		for(SaleItem saleitem : transaction.getSaleItems()) {
+		for(SaleItem saleitem : saleItems) {
 			productList.add(saleitem.getProduct());
 		}
 		ArrayList<Product> lowInventoryProducts = ProductManager.getInstance().getLowerInventoryProducts(productList);
@@ -250,7 +274,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		
 	}
 	
-	private void printTransaction(Transaction transaction) {
+	private void printTransaction(TransactionInterface transaction) {
 		String data = "\n ============================================================" + 
 				"\n\t\t\t University Store  " + 
 				"\n\t\t\t    Receipt # " + transaction.getId() + " \n "+ 
