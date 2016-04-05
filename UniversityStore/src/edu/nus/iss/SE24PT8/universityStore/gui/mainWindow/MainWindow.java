@@ -36,6 +36,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 
 
@@ -64,7 +65,12 @@ public class MainWindow extends javax.swing.JFrame {
     	jLabelStoreKeeperName.setText(storeKeeperName);
     	jToggleButtonCheckOut.setSelected(true);
         jToggleButtonCheckOutActionPerformed(null);
-    	this.setVisible(true);
+        
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - instance.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - instance.getHeight()) / 2);
+        instance.setLocation(x, y);
+    	setVisible(true);
     }
     
     public void HideMainWindow() {

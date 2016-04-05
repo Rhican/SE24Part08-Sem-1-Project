@@ -6,6 +6,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
+import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -45,6 +46,7 @@ public class CheckoutPayDialog extends JFrame {
 		totalAmount = total;
 		textFieldTotal.setText(formatDecimal(totalAmount));
 		textFieldPayment.setText(formatDecimal(totalAmount));
+		setLocationRelativeTo(MainWindow.getInstance());
 		setVisible(true);
 	}
 	
