@@ -86,6 +86,7 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
             	JOptionPane.showMessageDialog(new JFrame(),
             			returnObject.getMessage(),
     					"Success", JOptionPane.INFORMATION_MESSAGE);
+            	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Delete");
         	refersh();
             } else {
             	JOptionPane.showMessageDialog(new JFrame(),
