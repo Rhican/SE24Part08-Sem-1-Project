@@ -5,7 +5,6 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.gui.mainWindow;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.DiscountPanel;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.Home;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.MemberPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProductPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.StoreKeeperPanel;
@@ -33,8 +32,6 @@ import javax.swing.JLabel;
 import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
