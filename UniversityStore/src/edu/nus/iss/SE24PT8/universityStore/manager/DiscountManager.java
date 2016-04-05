@@ -101,6 +101,42 @@ public class DiscountManager implements IManager {
         return returnObj;
 
     }
+   
+   public ReturnObject upDateDiscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
+	   
+	   ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+       Discount discount =  getDiscountByCode(discountCode);
+       
+       if (  discount == null){
+    		returnObj  = new ReturnObject(false, "Eror in Updating Discount information",null);
+    		return returnObj;
+       }
+       
+       if (isPeriodAlways) {
+           period = 0;
+       }
+
+
+       if (applicableFor.trim().equalsIgnoreCase(Constants.CONST_CUST_TYPE_MEMBER)) {
+           discount = (MemberDiscount) discount;
+           discount.setApplicableFor(Constants.CONST_CUST_TYPE_MEMBER);
+       } else {
+    	   discount = (MemberDiscount) discount;
+           discount.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+       }
+       discount.setDiscountCode(discountCode);
+       discount.setDiscountDes(description);
+       discount.setDiscountPercent(percentage);
+       discount.setDiscountStartDate(startDate);
+       discount.setDiscountPeriod(period);
+       discount.setIsStartDateAlways(isStartDateAlways);
+       discount.setIsPeriodAlways(isPeriodAlways);
+       
+       
+       saveData();
+       return returnObj;
+
+   }
 
     
      @Override

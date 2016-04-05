@@ -64,7 +64,7 @@ public class DiscountEntryPanel extends BaseDialogBox{
 	
 	
 	public DiscountEntryPanel () {
-        super (MainWindow.getInstance(), "Add Cetegory","add");
+        super (MainWindow.getInstance(), "Add Discount","add");
         super.setModalityType(Dialog.ModalityType.MODELESS);
     }
 
@@ -218,7 +218,7 @@ public class DiscountEntryPanel extends BaseDialogBox{
         
         if ( radioApplyMember.isSelected()){
         	applicableFor = "M";
-        }else if ( radioApplyMember.isSelected()){
+        }else if ( radioApplyPulic.isSelected()){
         	applicableFor = "A";
         }else{
         	JOptionPane.showMessageDialog(rootPane,
