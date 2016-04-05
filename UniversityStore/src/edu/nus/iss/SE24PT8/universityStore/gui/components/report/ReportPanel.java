@@ -167,7 +167,7 @@ public class ReportPanel extends JPanel implements INotificable {
 			String[] columnNames = {"Product ID", "Product Name", "Product Description", "Transaction No", "Transaction Date"};
 			Object[][] txns = new Object[0][0];
 			try {
-				txns = manager.getMgrTransaction().getTransactionReport(format.parse(startDate), format.parse(startDate), null);
+				txns = manager.getMgrTransaction().getTransactionReport(format.parse(startDate), format.parse(endDate), null);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
