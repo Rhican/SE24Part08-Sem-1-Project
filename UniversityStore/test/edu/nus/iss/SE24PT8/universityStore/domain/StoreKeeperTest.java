@@ -7,13 +7,10 @@ package edu.nus.iss.SE24PT8.universityStore.domain;
  */
 
 import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadVendorException;
-
 import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

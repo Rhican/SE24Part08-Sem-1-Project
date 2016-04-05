@@ -70,8 +70,10 @@ public class VendorPanel extends JPanel  implements INotificable {
 			categories = new JComboBox<Item<String>>();
 			categories.addActionListener (new ActionListener () {
 			    public void actionPerformed(ActionEvent e) {
-			    	Item cat = (Item)categories.getSelectedItem();
-			        populateData(cat.getValue().toString());
+			    	if(categories.getSelectedItem() != null){
+				    	Item cat = (Item)categories.getSelectedItem();
+				        populateData(cat.getValue().toString());
+			    	}
 			    }
 			});
 			vendorPane = new JScrollPane();
@@ -144,13 +146,12 @@ public class VendorPanel extends JPanel  implements INotificable {
 
 	}
 	private void populateCategories() {
-		categories.removeAll();
+		categories.removeAllItems();
 		ArrayList<Category> catList = manager.getMgrCategory().getCategories();
 		for(Category cat : catList){
 			Item<String> item = new Item<String>(cat.getCategoryCode(), cat.getCategoryName());
 			categories.addItem(item);
 		}
-		
 	}
 	
 	private void populateData(String catCode){
@@ -191,7 +192,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 			}
 		}
 		else if (group.equals("CategoryPanel") && topic.equals("Category")) {
-			if (data.equalsIgnoreCase("Add")) {
+			if (data.equalsIgnoreCase("Add") || data.equalsIgnoreCase("Delete")) {
 				populateCategories();
 				refersh();
 			}

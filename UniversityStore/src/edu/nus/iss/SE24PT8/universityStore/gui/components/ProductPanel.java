@@ -8,19 +8,14 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
-import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.category.AddCategoryDialog;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.category.ModifyCategoryDialog;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
@@ -29,7 +24,7 @@ import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 /**
  *
- * @author SE24PT8
+ * @author SE24PT8 , Mi Site
  */
 public class ProductPanel extends BaseModulePanel implements INotificable {
 	
@@ -39,7 +34,8 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private Store manager = Store.getInstance();
 	private Object[][] products;
 	private DefaultTableModel dataModel;
-	String[] columnNames = manager.getMgrProduct().getProductTableHeader();
+	private  static String[] columnNames = { "ProductId", "ProductName", "BriefDesc " ,"CategoryName","AvailableQuantity" ,"Price" ,"BarcodeNo"  ,"ReOrderQuantity","OrderQuantity" };
+	//String[] columnNames = manager.getMgrProduct().getProductTableHeader();
 	
 	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
 
@@ -92,27 +88,31 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
            
             ProdcutEditDialog editProdcutDialog = new ProdcutEditDialog(product);
             editProdcutDialog.pack();
-           
             editProdcutDialog.setVisible(true);
         }
 		refersh();
 	}
 	
 	protected void performDeleteAction (){
+		JOptionPane.showMessageDialog(getRootPane(),
+    			"You are not allow to delete the product !",
+				"Warning", JOptionPane.INFORMATION_MESSAGE);
+		/*
 		if (productTable.getSelectedRow() != -1) {
             String code = productTable.getValueAt(productTable.getSelectedRow(), 0).toString();
             ReturnObject  returnObject = manager.getMgrCategory().deleteCategory(code);
             if (returnObject.isSuccess()) {
-            	JOptionPane.showMessageDialog(new JFrame(),
+            	JOptionPane.showMessageDialog(getRootPane(),
             			returnObject.getMessage(),
     					"Success", JOptionPane.INFORMATION_MESSAGE);
         	refersh();
             } else {
-            	JOptionPane.showMessageDialog(new JFrame(),
+            	JOptionPane.showMessageDialog(getRootPane(),
             			returnObject.getMessage(),
     					"Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        */
 	}
 	
 	

@@ -11,7 +11,12 @@ package edu.nus.iss.SE24PT8.universityStore.exception;
  * @created-date 27-march-2016
  */
 public class BadStoreKeeperAdminException extends Exception {
-   public BadStoreKeeperAdminException(){
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+public BadStoreKeeperAdminException(){
    }
    
    public BadStoreKeeperAdminException(String message){

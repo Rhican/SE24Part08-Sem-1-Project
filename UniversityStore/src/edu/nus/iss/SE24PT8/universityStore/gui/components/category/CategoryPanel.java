@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
@@ -81,17 +82,18 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
 	protected void performDeleteAction (){
 		if (catList.getSelectedRow() != -1) {
             String code = catList.getValueAt(catList.getSelectedRow(), 0).toString();
-            ReturnObject  returnObject = manager.getMgrCategory().deleteCategory(code);
-            if (returnObject.isSuccess()) {
+            try {
+				boolean  isDeleted = manager.getMgrCategory().deleteCategory(code);
             	JOptionPane.showMessageDialog(new JFrame(),
-            			returnObject.getMessage(),
+            			Constants.CONST_CAT_MSG_DELETE_SUCUESS,
     					"Success", JOptionPane.INFORMATION_MESSAGE);
-        	refersh();
-            } else {
+            	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Delete");
+            	refersh();
+			} catch (BadCategoryException e) {
             	JOptionPane.showMessageDialog(new JFrame(),
-            			returnObject.getMessage(),
+            			e.getMessage(),
     					"Error", JOptionPane.ERROR_MESSAGE);
-            }
+			}
         }
 	}
 

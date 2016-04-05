@@ -19,7 +19,7 @@ import java.util.Date;
  */
 public class Transaction implements TransactionInterface {
 	private static long transactionIDCount = 0;
-	private static final String PUBLIC = "PUBLIC";
+	private static NonMember nonMember = null;
 	private long id;
 	private String memberID;
 	private Date date;
@@ -29,10 +29,18 @@ public class Transaction implements TransactionInterface {
 
 	// - Constructors -------------------------------------------------------
 	public Transaction() {
+		if (nonMember == null) {
+			try {
+				String name = MemberManager.getInstance().getNonMemberName();
+				nonMember = new NonMember(name, name);
+			} catch (BadMemberRegistrationException e) {
+				System.out.println("Warning: Fail to initialise NonMember object.");
+			}
+		}
 		this.id = 0;
 		this.date = new Date();
 		this.memberID = "PUBLIC";
-		this.discount = DiscountManager.getInstance().getMaxDiscount(date, null);
+		this.discount = getDefaultDiscount();
 		this.redeemedPoint = 0;
 		this.saleItems = new HashMap<String, SaleItem>();
 	}
@@ -42,7 +50,7 @@ public class Transaction implements TransactionInterface {
 		if (isClosed())
 			this.date = date;
 	}
-	
+
 	public boolean setDiscount(Discount discount) {
 		if (!isClosed())
 			this.discount = discount;
@@ -57,7 +65,7 @@ public class Transaction implements TransactionInterface {
 
 	public boolean setMember(String memberID) {
 		if (!isClosed()) {
-			if (memberID == PUBLIC)
+			if (memberID.equalsIgnoreCase(nonMember.getID()))
 				this.memberID = "";
 			else
 				this.memberID = memberID;
@@ -86,7 +94,7 @@ public class Transaction implements TransactionInterface {
 		String productID = saleItem.getProductID();
 		if (saleItems.containsKey(productID)) {
 			saleItems.remove(productID);
-		} 
+		}
 		return true;
 	}
 
@@ -105,11 +113,11 @@ public class Transaction implements TransactionInterface {
 			if (!validateSaleItems()) {
 				throw new TransactionException("Sale Items Validation failed.");
 			}
-			if(!validateMember()) {
+			if (!validateMember()) {
 				throw new TransactionException("Member Validation failed.");
 			}
 		}
-		
+
 		if (!isProcessedRecord) {
 			MemberManager memberManager = MemberManager.getInstance();
 			Member member = memberManager.getMember(memberID);
@@ -117,20 +125,24 @@ public class Transaction implements TransactionInterface {
 				try {
 					if (redeemedPoint > 0)
 						memberManager.redeemPoints(memberID, redeemedPoint);
-					memberManager.addLoyaltyPoints(memberID, computeRoyalityPoint());
+					for (int newRoyalPoint = computeRoyalityPoint(); newRoyalPoint >= 1
+							&& newRoyalPoint <= 5000; newRoyalPoint -= 5000) {
+						memberManager.addLoyaltyPoints(memberID, computeRoyalityPoint());
+					}
 				} catch (BadMemberRegistrationException ex) {
-					throw new TransactionException("Fail to update member, exception from member manager:\n" + ex.getMessage(), ex);
+					throw new TransactionException(
+							"Fail to update member, exception from member manager:\n" + ex.getMessage(), ex);
 				}
 			}
 			saleItems.values().stream().forEach((saleItem) -> {
 				updateProduct(saleItem);
 			});
 		}
-		
+
 		if (!isClosed()) {
 			id = getNextID();
 		}
-		
+
 		return true;
 	}
 
@@ -138,7 +150,7 @@ public class Transaction implements TransactionInterface {
 	public long getId() {
 		return id;
 	}
-	
+
 	public Date getDate() {
 		return date;
 	}
@@ -148,7 +160,11 @@ public class Transaction implements TransactionInterface {
 	}
 
 	public double getDiscountAmount() {
-		return (discount != null) ? computeDiscountedAmount(discount.getDiscountPercent()) : 0;
+		if (discount != null) return computeDiscountedAmount(discount.getDiscountPercent());
+		else {
+			Discount nonMemberDiscount = DiscountManager.getInstance().getMaxDiscount(date, nonMember);
+			return computeDiscountedAmount(nonMemberDiscount.getDiscountPercent());
+		}
 	}
 
 	public double getNetAmount() {
@@ -172,19 +188,25 @@ public class Transaction implements TransactionInterface {
 	public final ArrayList<SaleItem> getSaleItems() {
 		return new ArrayList<>(saleItems.values());
 	}
-	
+
 	public Member getMember() {
 		return MemberManager.getInstance().getMember(memberID);
 	}
 
 	public String getMemberID() {
-		if (memberID.isEmpty()) return PUBLIC;
+		if (memberID.isEmpty())
+			return nonMember.getID();
 		return memberID;
 	}
 
 	public Discount getDiscount() {
 		return discount;
 	}
+	
+	public Discount getDefaultDiscount() {
+		return DiscountManager.getInstance().getMaxDiscount(date, nonMember);
+	}
+	
 
 	public boolean isClosed() {
 		return getId() != 0;
@@ -207,7 +229,7 @@ public class Transaction implements TransactionInterface {
 		}
 		return true;
 	}
-	
+
 	private boolean validateMember() {
 		// 2. Check if member loyalty point is bigger than redeeming point
 		if (redeemedPoint > 0 && getMember() != null && redeemedPoint > getMember().getLoyaltyPoints())
@@ -254,12 +276,13 @@ public class Transaction implements TransactionInterface {
 		return computeTotalAmount() - computeRedeemAmount(redeemedPoint)
 				- ((discount != null) ? computeDiscountedAmount(discount.getDiscountPercent()) : 0);
 	}
-	
-	private void validateThrowExceptionIfCanNotModify() throws TransactionException{
-		if (isClosed()) 
+
+	private void validateThrowExceptionIfCanNotModify() throws TransactionException {
+		if (isClosed())
 			throw new TransactionException("Transaction is Closed, no modification is allowed.");
 	}
-	private void validateThrowExceptionIfQuantityInvalid(int quantity) throws TransactionException{
+
+	private void validateThrowExceptionIfQuantityInvalid(int quantity) throws TransactionException {
 		if (quantity <= 0)
 			throw new TransactionException("Exception: Item Quantity can not less than 1.");
 	}

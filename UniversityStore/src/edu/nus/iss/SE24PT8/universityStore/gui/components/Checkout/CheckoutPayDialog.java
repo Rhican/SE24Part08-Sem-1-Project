@@ -1,33 +1,41 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-import javax.swing.JFormattedTextField;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
+/**
+* CheckoutPayDialog for final payment gui
+* 
+* @author Zehua
+*/
 public class CheckoutPayDialog extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldTotal;
 	private JFormattedTextField textFieldPayment;
@@ -53,6 +61,7 @@ public class CheckoutPayDialog extends JFrame {
 	private void UpdateBalance(double pay) {
 		payAmount = pay;
 		balanceAmount = totalAmount - payAmount;
+		if (balanceAmount > -0.01f && balanceAmount < 0.01f) balanceAmount= 0.00f;
 		if (textFieldBalance != null) textFieldBalance.setText(formatDecimal(balanceAmount));
 		if (btnOkay != null) btnOkay.setEnabled(balanceAmount <= 0.01f);
 	}
@@ -64,24 +73,25 @@ public class CheckoutPayDialog extends JFrame {
 	 * Create the frame.
 	 */
 	public CheckoutPayDialog() {
+		setResizable(false);
 		setAlwaysOnTop(true);
 		setTitle("Payment");
-		setBounds(100, 100, 286, 205);
+		setBounds(100, 100, 396, 275);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Total:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		textFieldTotal = new JTextField();
 		textFieldTotal.setText("0");
 		textFieldTotal.setEditable(false);
-		textFieldTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
+		textFieldTotal.setFont(new Font("Tahoma", Font.BOLD, 26));
 		textFieldTotal.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Payment: ");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		NumberFormat format2 = NumberFormat.getNumberInstance();
 		NumberFormatter formater2 = new NumberFormatter(format2);
@@ -104,19 +114,20 @@ public class CheckoutPayDialog extends JFrame {
 			}
 		});
 		textFieldPayment.setText("0");
-		textFieldPayment.setFont(new Font("Tahoma", Font.BOLD, 13));
+		textFieldPayment.setFont(new Font("Tahoma", Font.BOLD, 26));
 		textFieldPayment.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Balance:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		textFieldBalance = new JTextField();
 		textFieldBalance.setText("0");
 		textFieldBalance.setEditable(false);
-		textFieldBalance.setFont(new Font("Tahoma", Font.BOLD, 13));
+		textFieldBalance.setFont(new Font("Tahoma", Font.BOLD, 26));
 		textFieldBalance.setColumns(10);
 		
 		btnOkay = new JButton("Confirm");
+		btnOkay.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		btnOkay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Done");
@@ -125,6 +136,7 @@ public class CheckoutPayDialog extends JFrame {
 		btnOkay.setEnabled(false);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SubjectManager.getInstance().Update("CheckOutPanel", "Payment", "Cancel");
@@ -135,23 +147,20 @@ public class CheckoutPayDialog extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblNewLabel_2)
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblNewLabel_2)
+								.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldTotal, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
+								.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+								.addComponent(textFieldPayment, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+								.addComponent(textFieldTotal, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(90)
+							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addGap(128)
 							.addComponent(btnOkay)))
 					.addContainerGap())
 		);
@@ -170,11 +179,11 @@ public class CheckoutPayDialog extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(textFieldBalance, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_2, Alignment.TRAILING))
-					.addGap(18)
+					.addGap(35)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnOkay)
-						.addComponent(btnCancel))
-					.addGap(28))
+						.addComponent(btnCancel)
+						.addComponent(btnOkay))
+					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

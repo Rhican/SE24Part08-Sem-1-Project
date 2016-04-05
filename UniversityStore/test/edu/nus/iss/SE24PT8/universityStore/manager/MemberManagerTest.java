@@ -2,17 +2,18 @@ package edu.nus.iss.SE24PT8.universityStore.manager;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author THIRILWIN
  *  @date 2016-March-17
  */
-public class MemberManagerTest {
+public class MemberManagerTest extends TestCase{
     
     public MemberManagerTest() {
     }

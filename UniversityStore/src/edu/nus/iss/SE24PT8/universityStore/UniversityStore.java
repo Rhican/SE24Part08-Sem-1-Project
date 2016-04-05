@@ -18,7 +18,6 @@ import edu.nus.iss.SE24PT8.universityStore.main.Store;
  */
 public class UniversityStore implements INotificable {
 
-	private Store manager = Store.getInstance(); // Initialise managers;
 	private Login login = null;
 	private MainWindow mainWindow = null;
 	
@@ -26,10 +25,11 @@ public class UniversityStore implements INotificable {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	UniversityStore store = new UniversityStore();
+    	new UniversityStore();
     }
 
     public UniversityStore() {
+    	Store.getInstance();
     	login = new Login();
     	mainWindow = MainWindow.getInstance();
     	

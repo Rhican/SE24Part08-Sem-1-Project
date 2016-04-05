@@ -4,17 +4,18 @@ package edu.nus.iss.SE24PT8.universityStore.domain;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.NonMember;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author THIRILWIN
  * @created-date 2016-March-17
  */
-public class NonMemberTest {
+public class NonMemberTest extends TestCase {
     
     NonMember m1,m2,m3;
     public NonMemberTest() {

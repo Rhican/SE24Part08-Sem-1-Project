@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public interface TransactionInterface {
 
@@ -19,6 +18,7 @@ public interface TransactionInterface {
 	public Member getMember();
 	public String getMemberID();
 	public Discount getDiscount();
+	public Discount getDefaultDiscount();
 	public ArrayList<SaleItem> getSaleItems();
 	public SaleItem getSaleItem(String productID);
 	

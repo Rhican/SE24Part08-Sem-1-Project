@@ -614,20 +614,5 @@ public class DataAdapter {
 
 	}
 
-	public static void main(String[] args) {
-
-		DataAdapter.testRetrieve();
-		Category cat = CategoryManager.getInstance().getCategory("CLO");
-		for (Vendor ven : cat.getVendorList()) {
-			System.out.println("Vendors for cat CLO" + ven);
-		}
-
-		ArrayList<Vendor> notIn = CategoryManager.getInstance().getVendorsNotInCategory(cat);
-		System.out.println("Vendors not in CLO");
-		for (Vendor ven : notIn) {
-			System.out.println("Vendor" + ven);
-		}
-
-	}
 
 }// end of class

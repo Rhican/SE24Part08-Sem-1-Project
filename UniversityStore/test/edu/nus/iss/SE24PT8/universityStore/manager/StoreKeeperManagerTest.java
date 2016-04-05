@@ -63,7 +63,6 @@ public class StoreKeeperManagerTest extends TestCase {
      @Test
      public void testInstance() throws BadStoreKeeperAdminException
      {
-        StoreKeeperManager storeKeeperManager =StoreKeeperManager.getInstance();
         assertFalse(StoreKeeperManager.getInstance().getStoreKeeper() == null);
         assertFalse(StoreKeeperManager.getInstance().getStoreKeeper().size()==0);
          
