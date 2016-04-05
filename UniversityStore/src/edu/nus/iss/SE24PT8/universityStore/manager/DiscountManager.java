@@ -13,8 +13,12 @@ import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.hamcrest.core.IsInstanceOf;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,6 +36,9 @@ public class DiscountManager implements IManager {
     private MemberManager memberManager;
     
     private  static String[] columnNames = { "Code " ,"Description" , "Apply" , "From" , "Duration" };
+    private static final DateFormat Dateformat = new SimpleDateFormat("yyyy-M-dd");
+    
+     
     
     public static DiscountManager getInstance() {
         if (Instance == null) {
@@ -198,7 +205,7 @@ public class DiscountManager implements IManager {
 			if ( discount.isIsStartDateAlways() ){
 ;				rowData[3] = Constants.CONST_ALWAYS;
 			}else if ( discount.getDiscountStartDate() != null){
-				rowData[3] = discount.getDiscountStartDate().toString();
+				rowData[3] = Dateformat.format(discount.getDiscountStartDate());
 			}else {
 				rowData[3] = "NA";
 			}
