@@ -29,7 +29,7 @@ public class ProductManager implements IManager{
 
     private static CategoryManager categoryManager;
     
-    private  static String[] inventoryCheckColumnNames = { "ProdcutName", "Description" ,"Category Name" ,"Price"  ,"Quantity" ,"Reorder Quantity", "Order Quantity" ,"Vendor" ,"Remark"};
+    private  static String[] inventoryCheckColumnNames = { "ProductID","ProdcutName", "Description" ,"Category Name" ,"Price"  ,"Quantity" ," Reorder Quantity (threshold) ", "Order Quantity" ,"Vendor" ,"Remark"};
     private  static String[] columnNames = { "Product Id", "ProdcutName", "BarCode " ,"Product Desc" ,"Category Name" ,"Price"  ,"Quantity" };
 
     public ArrayList<Product> getProductList() {
@@ -344,21 +344,22 @@ public class ProductManager implements IManager{
    		Object[][] tableData = new Object[prodcuts.size()][3];
    		for (int i = 0; i < prodcuts.size(); i++) {
    			Product product = prodcuts.get(i);
-   			Object[] rowData = new Object[9];
-   			rowData[0] = product.getProductName();
-   			rowData[1]  = product.getBriefDesp();
-   			rowData[2] = product.getCategory().getCategoryName();
-   			rowData[3] = product.getPrice();
-   			rowData[4] = product.getQty();
-   			rowData[5] = product.getReorderQty();
-   			rowData[6] = product.getOrderQty();
+   			Object[] rowData = new Object[10];
+   			rowData[0] = product.getProductId();
+   			rowData[1] = product.getProductName();
+   			rowData[2] = product.getBriefDesp();
+   			rowData[3] = product.getCategory().getCategoryName();
+   			rowData[4] = product.getPrice();
+   			rowData[5] = product.getQty();
+   			rowData[6] = product.getReorderQty();
+   			rowData[7] = product.getOrderQty();
    			if ( product.getCategory().getVendorList().size() >=1 ){
-   				rowData[7] = product.getCategory().getVendorList().get(0);
-   				rowData[8] = "";
+   				rowData[8] = product.getCategory().getVendorList().get(0);
+   				rowData[9] = "";
    			}
    			else {
-   				rowData[7] = "NA";
-   				rowData[8] = "Add Vendor for Prodcut Category First";
+   				rowData[8] = "NA";
+   				rowData[9] = "Add Vendor for Prodcut Category First";
    			}
    			
    			tableData[i] = rowData;
@@ -375,7 +376,10 @@ public class ProductManager implements IManager{
 		ReturnObject returnObj  = new ReturnObject(true, "ok", null);
 		if(  getLowerInventoryProducts().size() >=1) {
 			for (Product product : getLowerInventoryProducts()) {
-				product.setQty(product.getOrderQty() + product.getOrderQty());
+				//product.setQty(product.getOrderQty() + product.getOrderQty());
+				int orderno= product.getOrderQty() + product.getQty();
+				product.setQty(orderno);
+				saveData();
 			}
 		}
 			
