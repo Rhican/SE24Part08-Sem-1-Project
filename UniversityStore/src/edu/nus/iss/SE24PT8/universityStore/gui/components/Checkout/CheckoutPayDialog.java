@@ -1,35 +1,41 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
-import javax.swing.JFormattedTextField;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-
+/**
+* CheckoutPayDialog for final payment gui
+* 
+* @author Zehua
+*/
 public class CheckoutPayDialog extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textFieldTotal;
 	private JFormattedTextField textFieldPayment;

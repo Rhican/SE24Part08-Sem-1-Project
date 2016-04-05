@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public interface TransactionInterface {
 

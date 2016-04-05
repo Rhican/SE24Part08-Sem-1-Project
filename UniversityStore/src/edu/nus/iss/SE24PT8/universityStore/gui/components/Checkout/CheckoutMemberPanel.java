@@ -6,14 +6,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.SystemColor;
-import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.text.NumberFormatter;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-//import org.eclipse.wb.swing.FocusTraversalOnArray;
-
 import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
 import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -30,7 +25,16 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
 
+/**
+* CheckoutMemberPanel for member and discount GUI
+*
+* @author Zehua
+*/
 public class CheckoutMemberPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textFieldID;
 	private JTextField textFieldName;
 	private JTextField textFieldRedeemPoint;
@@ -46,6 +50,7 @@ public class CheckoutMemberPanel extends JPanel {
 		SearchForMemeber("");
 		focusID();
 	}
+
 	public void focusID() {
 		UpdateDiscount();
 		textFieldID.requestFocus();
@@ -54,19 +59,19 @@ public class CheckoutMemberPanel extends JPanel {
 	public Member getMemeber() {
 		return this.member;
 	}
-	
+
 	public Discount getDiscount() {
 		return this.discount;
 	}
-	
+
 	public int getRedeemPoint() {
 		return Integer.valueOf(textFieldRedeemPoint.getText().replace(",", ""));
 	}
-	
+
 	public void setDefaultDiscount(Discount discount) {
 		defaultDiscount = discount;
 	}
-	
+
 	private void SearchForMemeber(String memberID) {
 		member = MemberManager.getInstance().getMember(memberID);
 		if (member != null) {
@@ -74,43 +79,47 @@ public class CheckoutMemberPanel extends JPanel {
 			textFieldName.setText(member.getName());
 			int maxPoint = member.getLoyaltyPoints();
 			textFieldRedeemPoint.setText("0");
-			labelMaxRedeemPoint.setText("/" + String.valueOf(maxPoint));	
+			labelMaxRedeemPoint.setText("/" + String.valueOf(maxPoint));
 			textFieldRedeemPoint.setEditable(true);
-		}
-		else {
+		} else {
 			member = null;
 			textFieldName.setText("");
 			textFieldRedeemPoint.setText("0");
-			labelMaxRedeemPoint.setText("/ Max");	
+			labelMaxRedeemPoint.setText("/ Max");
 			textFieldRedeemPoint.setEditable(false);
 		}
 		SubjectManager.getInstance().Update("CheckOutPanel", "Member", "Update");
 		UpdateDiscount();
 	}
+
 	private void UpdateDiscount() {
-		discount = (member != null) ? DiscountManager.getInstance().getMaxDiscount(new Date(), member) : defaultDiscount;
-		
-		if (discount == null)  textFieldDiscount.setText("");
+		discount = (member != null) ? DiscountManager.getInstance().getMaxDiscount(new Date(), member)
+				: defaultDiscount;
+
+		if (discount == null)
+			textFieldDiscount.setText("");
 		else {
 			textFieldDiscount.setText(String.valueOf(discount.getDiscountPercent()) + "%");
 		}
-		SubjectManager.getInstance().Update("CheckOutPanel", "Discount", "Update"); // no modification, no required 		
+		SubjectManager.getInstance().Update("CheckOutPanel", "Discount", "Update"); // no
+																					// modification,
+																					// no
+																					// required
 	}
-	
-	
+
 	/**
 	 * Create the panel.
 	 */
 	public CheckoutMemberPanel() {
-		
+
 		JPanel panel = new JPanel();
-		
+
 		JLabel lblMemberId = new JLabel("Member ID:");
-		
+
 		JLabel label_1 = new JLabel("Name:");
-		
+
 		JLabel lblRedeemPoint = new JLabel("Redeem:");
-		
+
 		textFieldID = new JTextField();
 		textFieldID.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldID.addKeyListener(new KeyAdapter() {
@@ -118,8 +127,7 @@ public class CheckoutMemberPanel extends JPanel {
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					SearchForMemeber(textFieldID.getText());
-				}
-				else {
+				} else {
 					super.keyReleased(e);
 				}
 			}
@@ -131,13 +139,13 @@ public class CheckoutMemberPanel extends JPanel {
 			}
 		});
 		textFieldID.setColumns(10);
-		
+
 		textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldName.setEditable(false);
 		textFieldName.setColumns(10);
 		textFieldName.setBackground(SystemColor.menu);
-		
+
 		NumberFormat format = NumberFormat.getIntegerInstance();
 		NumberFormatter pointFormater = new NumberFormatter(format);
 		pointFormater.setAllowsInvalid(false); // this is the key!!
@@ -149,7 +157,8 @@ public class CheckoutMemberPanel extends JPanel {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				String text = textFieldRedeemPoint.getText();
-				if (text.isEmpty()) return;
+				if (text.isEmpty())
+					return;
 				SubjectManager.getInstance().Update("CheckOutPanel", "Member", "Update");
 			}
 		});
@@ -160,12 +169,12 @@ public class CheckoutMemberPanel extends JPanel {
 				int point = 0;
 				try {
 					point = Integer.parseInt(textFieldRedeemPoint.getText().replace(",", ""));
-				} catch(NumberFormatException ex) {
+				} catch (NumberFormatException ex) {
 					textFieldRedeemPoint.setText(Integer.toString(member.getLoyaltyPoints()));
 				}
-				
+
 				switch (e.getKeyCode()) {
-				case KeyEvent.VK_UP:					
+				case KeyEvent.VK_UP:
 					point++;
 					textFieldRedeemPoint.setText(Integer.toString(point));
 					break;
@@ -176,17 +185,18 @@ public class CheckoutMemberPanel extends JPanel {
 					SubjectManager.getInstance().Update("CheckOutPanel", "Member", "Update");
 					break;
 				default:
-					super.keyReleased(e);					
+					super.keyReleased(e);
 					return;
 				}
 				textFieldRedeemPoint.setText(Integer.toString(point));
 			}
 		});
-				
+
 		textFieldRedeemPoint.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String text = textFieldRedeemPoint.getText();
-				if (text.isEmpty()) return;
+				if (text.isEmpty())
+					return;
 				int point = Integer.parseInt(text.replace(",", ""));
 				if (member == null && !textFieldRedeemPoint.getText().equals("")) {
 					textFieldRedeemPoint.setText("");
@@ -199,88 +209,77 @@ public class CheckoutMemberPanel extends JPanel {
 				}
 			}
 		});
-		
+
 		labelMaxRedeemPoint = new JLabel("/ Max");
-		
+
 		JLabel lblDiscount = new JLabel("Discount: ");
-		
+
 		textFieldDiscount = new JTextField();
 		textFieldDiscount.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldDiscount.setBackground(SystemColor.menu);
 		textFieldDiscount.setEditable(false);
 		textFieldDiscount.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED))
-							.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
+								.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+										.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.RELATED))
+						.addGroup(gl_panel.createSequentialGroup().addContainerGap()
 								.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED))
-							.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)).addGroup(
+										gl_panel.createSequentialGroup().addContainerGap()
+												.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 56,
+														Short.MAX_VALUE)
+												.addPreferredGap(ComponentPlacement.RELATED)))
+						.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(lblDiscount)
 								.addPreferredGap(ComponentPlacement.RELATED)))
+				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblDiscount)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldRedeemPoint, 94, 94, 94)
-								.addComponent(textFieldDiscount, 94, 94, 94))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(textFieldRedeemPoint, 94, 94, 94)
+										.addComponent(textFieldDiscount, 94, 94, 94))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
 						.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
 						.addComponent(textFieldName, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblMemberId))
-					.addGap(11)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(label_1))
-					.addGap(14)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(labelMaxRedeemPoint)
-						.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addContainerGap()));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblMemberId))
+						.addGap(11)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_1))
+						.addGap(14)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(labelMaxRedeemPoint)
+								.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblRedeemPoint))
-					.addGap(12)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textFieldDiscount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDiscount))
-					.addGap(23))
-		);
+				.addGap(12)
+				.addGroup(gl_panel
+						.createParallelGroup(Alignment.BASELINE).addComponent(textFieldDiscount,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDiscount)).addGap(23)));
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-					.addGap(3))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+				groupLayout.createSequentialGroup().addComponent(panel, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+						.addGap(3)));
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(5)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-					.addGap(6))
-		);
+				groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup()
+						.addGap(5).addComponent(panel, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE).addGap(6)));
 		setLayout(groupLayout);
-		//setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{textFieldID, textFieldRedeemPoint, textFieldDiscount, textFieldName, panel, lblDiscount, lblRedeemPoint, lblMemberId, label_1, labelMaxRedeemPoint}));
+		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
+		// Component[]{textFieldID, textFieldRedeemPoint, textFieldDiscount,
+		// textFieldName, panel, lblDiscount, lblRedeemPoint, lblMemberId,
+		// label_1, labelMaxRedeemPoint}));
 
 	}
 }

@@ -1,14 +1,25 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
-import javax.swing.JPanel;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.SystemColor;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.text.NumberFormatter;
 
 //import org.eclipse.wb.swing.FocusTraversalOnArray;
@@ -18,19 +29,11 @@ import edu.nus.iss.SE24PT8.universityStore.domain.SaleItem;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 
-import java.awt.Component;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.beans.PropertyChangeListener;
-import java.text.NumberFormat;
-import java.beans.PropertyChangeEvent;
-import javax.swing.JFormattedTextField;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-
+/**
+* CheckoutProductPanel for product GUI
+* 
+* @author Zehua
+*/
 public class CheckoutProductPanel extends JPanel {
 	/**
 	 * 
