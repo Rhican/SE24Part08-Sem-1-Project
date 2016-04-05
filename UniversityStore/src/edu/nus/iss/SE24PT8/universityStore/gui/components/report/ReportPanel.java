@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
@@ -164,15 +165,15 @@ public class ReportPanel extends JPanel implements INotificable {
 				JOptionPane.showMessageDialog(getRootPane(),
 	        			 "End date format should be yyyy-MM-dd",
 	 					"Error", JOptionPane.ERROR_MESSAGE);
-			String[] columnNames = {"Product ID", "Product Name", "Product Description", "Transaction No", "Transaction Date"};
+			Vector<String> columnNames = new Vector<String>();
 			Object[][] txns = new Object[0][0];
 			try {
-				txns = manager.getMgrTransaction().getTransactionReport(format.parse(startDate), format.parse(endDate), null);
+				txns = manager.getMgrTransaction().getTransactionReport(format.parse(startDate), format.parse(endDate), columnNames);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			dataModel = new DefaultTableModel(txns, columnNames);
-			dataModel.setDataVector(txns, columnNames);
+			dataModel = new DefaultTableModel(txns, columnNames.toArray());
+			dataModel.setDataVector(txns, columnNames.toArray());
 			reportPane.setViewportView(new BaseTable(dataModel));			
 		} else if (reportType.equals(MEMBER_LIST)){
 			datePanal.setVisible(false);
