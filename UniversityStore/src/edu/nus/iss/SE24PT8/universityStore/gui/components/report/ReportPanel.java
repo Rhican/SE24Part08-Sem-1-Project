@@ -146,7 +146,7 @@ public class ReportPanel extends JPanel implements INotificable {
 			reportPane.setViewportView(new BaseTable(dataModel));			
 		} else if (reportType.equals(PRODUCT_LIST)){
 			datePanal.setVisible(false);
-			String[] columnNames = { "Product Id", "Prodcut Name", "BarCode " ,"Product Description" ,"Category Name" ,"Price" ,"Quantity" };
+			String[] columnNames = { "ProductId", "ProductName", "BriefDesc " ,"CategoryName","AvailableQuantity" ,"Price" ,"BarcodeNo"  ,"ReOrderQuantity","OrderQuantity" };
 			Object[][] products = manager.getMgrProduct().prepareProductTableModel();
 			dataModel = new DefaultTableModel(products, columnNames);
 			dataModel.setDataVector(products, columnNames);
