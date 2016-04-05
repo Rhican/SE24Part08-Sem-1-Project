@@ -23,7 +23,7 @@ public class MemberEntryDialog extends BaseDialogBox{
 	private JTextField memberIDField;
 	
 	public MemberEntryDialog(){
-		super(MainWindow.getInstance(),"Add NewMember","add");
+		super(MainWindow.getInstance(),"New member","add");
 		super.setModalityType(Dialog.ModalityType.MODELESS);
 	}
 	

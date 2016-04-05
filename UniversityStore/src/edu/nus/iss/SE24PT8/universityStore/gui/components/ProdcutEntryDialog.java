@@ -1,23 +1,16 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
-import java.awt.Component;
+
 import java.awt.Dialog;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-
-import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
@@ -47,18 +40,12 @@ private static final long serialVersionUID = 1L;
     private String entryFlag;
      
     private ProductManager prodMgr =  Store.getInstance().getMgrProduct();
-    private ArrayList<Category> categories ;
-
     public ProdcutEntryDialog () {
     	
-        super (MainWindow.getInstance(), "Add Product","add");
+        super (MainWindow.getInstance(), "New Product","add");
         super.setModalityType(Dialog.ModalityType.MODELESS);
         
-        
     }
-    
-    
-    
     
     public void setEntryFlag(String flag){
     	this.entryFlag = flag;
@@ -77,28 +64,27 @@ private static final long serialVersionUID = 1L;
         intFormatter.setValueClass(Double.class);
         intFormatter.setMinimum(0.0);
     	
-    	txtName  = new JTextField();
-        txtBarCode  = new JTextField();
-    	txtDescription  = new JTextField();
+    	txtName  = new JTextField(20);
+        txtBarCode  = new JTextField(20);
+    	txtDescription  = new JTextField(20);
     	txtPrice = new JFormattedTextField(doubleFormatter);
     	txtQty = new JFormattedTextField(intFormatter);
     	txtReorderQty = new JFormattedTextField(intFormatter);
     	txtOrderQty = new JFormattedTextField();
     	
     	comboCategory = new JComboBox(getComboCatData().toArray());
-    	for (ComboItem item : getComboCatData()) {
-			comboCategory.addItem(item);
-		}
+    	//for (ComboItem item : getComboCatData()) {
+		//	comboCategory.addItem(item);
+		//}
     	
         p.setLayout (new GridLayout (0, 2));
-        
-        p.add (new JLabel ("Prodcut Name"));
+        p.add (new JLabel ("Product Name"));
         p.add(txtName);
         p.add (new JLabel ("BarCode"));
         p.add(txtBarCode);
         p.add (new JLabel ("Description"));
         p.add(txtDescription);
-        p.add (new JLabel ("Description"));
+        p.add (new JLabel ("Category"));
         p.add(comboCategory);
         p.add (new JLabel ("Price"));
         p.add(txtPrice);
@@ -108,8 +94,6 @@ private static final long serialVersionUID = 1L;
         p.add(txtReorderQty);
         p.add (new JLabel ("Order Quantity"));
         p.add(txtOrderQty);
-        
-
         return p;
     }
     
@@ -117,7 +101,7 @@ private static final long serialVersionUID = 1L;
 	protected boolean performCreateUpdateAction() {
 		String productName = txtName.getText();
 		String briefDesp = txtDescription.getText();
-		int qty = 0;
+		int qty = Integer.parseInt(txtQty.getText());
 		double price = Double.parseDouble(txtPrice.getText());
 		String barCode = txtBarCode.getText();
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());
