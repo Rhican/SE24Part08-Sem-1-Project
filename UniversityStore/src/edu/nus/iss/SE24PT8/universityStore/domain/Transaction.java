@@ -19,7 +19,7 @@ import java.util.Date;
  */
 public class Transaction implements TransactionInterface {
 	private static long transactionIDCount = 0;
-	private static final String PUBLIC = "PUBLIC";
+	private static NonMember nonMember = null;
 	private long id;
 	private String memberID;
 	private Date date;
@@ -29,10 +29,18 @@ public class Transaction implements TransactionInterface {
 
 	// - Constructors -------------------------------------------------------
 	public Transaction() {
+		if (nonMember == null) {
+			try {
+				String name = MemberManager.getInstance().getNonMemberName();
+				nonMember = new NonMember(name, name);
+			} catch (BadMemberRegistrationException e) {
+				System.out.println("Warning: Fail to initialise NonMember object.");
+			}
+		}
 		this.id = 0;
 		this.date = new Date();
 		this.memberID = "PUBLIC";
-		this.discount = DiscountManager.getInstance().getMaxDiscount(date, null);
+		this.discount = getDefaultDiscount();
 		this.redeemedPoint = 0;
 		this.saleItems = new HashMap<String, SaleItem>();
 	}
@@ -57,7 +65,7 @@ public class Transaction implements TransactionInterface {
 
 	public boolean setMember(String memberID) {
 		if (!isClosed()) {
-			if (memberID == PUBLIC)
+			if (memberID.equalsIgnoreCase(nonMember.getID()))
 				this.memberID = "";
 			else
 				this.memberID = memberID;
@@ -152,7 +160,11 @@ public class Transaction implements TransactionInterface {
 	}
 
 	public double getDiscountAmount() {
-		return (discount != null) ? computeDiscountedAmount(discount.getDiscountPercent()) : 0;
+		if (discount != null) return computeDiscountedAmount(discount.getDiscountPercent());
+		else {
+			Discount nonMemberDiscount = DiscountManager.getInstance().getMaxDiscount(date, nonMember);
+			return computeDiscountedAmount(nonMemberDiscount.getDiscountPercent());
+		}
 	}
 
 	public double getNetAmount() {
@@ -183,13 +195,18 @@ public class Transaction implements TransactionInterface {
 
 	public String getMemberID() {
 		if (memberID.isEmpty())
-			return PUBLIC;
+			return nonMember.getID();
 		return memberID;
 	}
 
 	public Discount getDiscount() {
 		return discount;
 	}
+	
+	public Discount getDefaultDiscount() {
+		return DiscountManager.getInstance().getMaxDiscount(date, nonMember);
+	}
+	
 
 	public boolean isClosed() {
 		return getId() != 0;

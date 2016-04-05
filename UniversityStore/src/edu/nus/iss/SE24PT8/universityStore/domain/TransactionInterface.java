@@ -19,6 +19,7 @@ public interface TransactionInterface {
 	public Member getMember();
 	public String getMemberID();
 	public Discount getDiscount();
+	public Discount getDefaultDiscount();
 	public ArrayList<SaleItem> getSaleItems();
 	public SaleItem getSaleItem(String productID);
 	

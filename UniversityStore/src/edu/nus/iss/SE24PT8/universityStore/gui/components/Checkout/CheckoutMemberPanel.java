@@ -38,6 +38,7 @@ public class CheckoutMemberPanel extends JPanel {
 	private JLabel labelMaxRedeemPoint;
 	private Member member = null;
 	private Discount discount = null;
+	private Discount defaultDiscount = null;
 
 	public void reset() {
 		member = null;
@@ -46,7 +47,24 @@ public class CheckoutMemberPanel extends JPanel {
 		focusID();
 	}
 	public void focusID() {
+		UpdateDiscount();
 		textFieldID.requestFocus();
+	}
+
+	public Member getMemeber() {
+		return this.member;
+	}
+	
+	public Discount getDiscount() {
+		return this.discount;
+	}
+	
+	public int getRedeemPoint() {
+		return Integer.valueOf(textFieldRedeemPoint.getText().replace(",", ""));
+	}
+	
+	public void setDefaultDiscount(Discount discount) {
+		defaultDiscount = discount;
 	}
 	
 	private void SearchForMemeber(String memberID) {
@@ -70,7 +88,8 @@ public class CheckoutMemberPanel extends JPanel {
 		UpdateDiscount();
 	}
 	private void UpdateDiscount() {
-		discount = DiscountManager.getInstance().getMaxDiscount(new Date(), member);
+		discount = (member != null) ? DiscountManager.getInstance().getMaxDiscount(new Date(), member) : defaultDiscount;
+		
 		if (discount == null)  textFieldDiscount.setText("");
 		else {
 			textFieldDiscount.setText(String.valueOf(discount.getDiscountPercent()) + "%");
@@ -78,17 +97,6 @@ public class CheckoutMemberPanel extends JPanel {
 		SubjectManager.getInstance().Update("CheckOutPanel", "Discount", "Update"); // no modification, no required 		
 	}
 	
-	public Member getMemeber() {
-		return this.member;
-	}
-	
-	public Discount getDiscount() {
-		return this.discount;
-	}
-	
-	public int getRedeemPoint() {
-		return Integer.valueOf(textFieldRedeemPoint.getText());
-	}
 	
 	/**
 	 * Create the panel.
@@ -151,7 +159,7 @@ public class CheckoutMemberPanel extends JPanel {
 			public void keyReleased(KeyEvent e) {
 				int point = 0;
 				try {
-					point = Integer.parseInt(textFieldRedeemPoint.getText());
+					point = Integer.parseInt(textFieldRedeemPoint.getText().replace(",", ""));
 				} catch(NumberFormatException ex) {
 					textFieldRedeemPoint.setText(Integer.toString(member.getLoyaltyPoints()));
 				}
@@ -179,7 +187,7 @@ public class CheckoutMemberPanel extends JPanel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String text = textFieldRedeemPoint.getText();
 				if (text.isEmpty()) return;
-				int point = Integer.parseInt(text);
+				int point = Integer.parseInt(text.replace(",", ""));
 				if (member == null && !textFieldRedeemPoint.getText().equals("")) {
 					textFieldRedeemPoint.setText("");
 					return;
