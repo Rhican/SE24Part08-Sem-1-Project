@@ -48,7 +48,7 @@ public class Store {
         //After all Managers are loaded, get the related objects
         mgrProduct.getRelatedObjects();
 //        mgrCategory.getRelatedObjects();
-        mgrVendor.getRelatedObjects();
+//        mgrVendor.getRelatedObjects();
         mgrMember.getRelatedObjects();
         mgrDiscount.getRelatedObjects();
         
