@@ -5,15 +5,13 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+
 import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.NonMember;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
-import edu.nus.iss.SE24PT8.universityStore.util.FileOperations;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,7 +29,7 @@ public class MemberManager implements IManager {
     
     private static MemberManager Instance=null;
     private HashMap<String,Member> memberlist=null;
-  //  private NonMember publicMember;
+    private NonMember publicMember;
     
     public static MemberManager getInstance(){
         if(Instance ==null)
@@ -58,10 +56,7 @@ public class MemberManager implements IManager {
         {
             memberlist=null;
         }
-    
-        //publicMember=new NonMember(Constants.CONST_CUST_NONMEMBER_ID,Constants.CONST_CUST_NONMEMBER_NAME);
-       
-    }
+   }
     
    public HashMap<String,Member> getMembers()
    {
@@ -228,12 +223,13 @@ public class MemberManager implements IManager {
        }
    }
 
-   /*
-   public String getNonMemberName()
+   
+   public String getNonMemberName() throws BadMemberRegistrationException
    {
-      return publicMember.getCustomerName();
+	  publicMember=new NonMember(Constants.CONST_CUST_NONMEMBER_ID,Constants.CONST_CUST_NONMEMBER_NAME);
+      return publicMember.getName();
    }
-   */
+   
    public void addLoyaltyPoints(String memberid, int points) throws BadMemberRegistrationException
    {
      String error=null;
