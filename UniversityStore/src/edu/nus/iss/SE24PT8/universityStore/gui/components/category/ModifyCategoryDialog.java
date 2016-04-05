@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import edu.nus.iss.SE24PT8.universityStore.UniversityStore;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
@@ -84,19 +85,19 @@ public class ModifyCategoryDialog extends BaseDialogBox {
         	String selectedVendorName = selectedVendor.getValue().toString();
         	updateVendorPreference(cat, selectedVendorName);
     	}
-        ReturnObject  returnObject = Store.getInstance().getMgrCategory().updateCategory(cat);
-        if (returnObject.isSuccess()) {
+        try {
+			Category  newCat = Store.getInstance().getMgrCategory().updateCategory(cat);
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			Constants.CONST_CAT_MSG_UPDATE_SUCUESS,
 					"Success", JOptionPane.INFORMATION_MESSAGE);
         	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Add");
         	return true;
-        } else {
+		} catch (BadCategoryException e) {
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
-        }
+		}
     }
 
 	private void updateVendorPreference(Category cat, String selectedVendorName) {

@@ -10,24 +10,16 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import junit.framework.TestCase;
+
 import static org.junit.Assert.*;
 
 /**
  *
  * @author Mugunthan
  */
-public class VendorManagerTest {
-    
-    public VendorManagerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+public class VendorManagerTest extends TestCase{
     
     @Before
     public void setUp() {
@@ -37,9 +29,12 @@ public class VendorManagerTest {
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void testVendorMgrInstance(){
+        VendorManager vendorManager1 = VendorManager.getInstance();
+        VendorManager vendorManager2 = VendorManager.getInstance();
+        assertFalse(vendorManager1 == null);
+        assertFalse(vendorManager2 == null);
+        assertTrue(vendorManager1.equals(vendorManager2)); // Singleton test    	
+    }
 }

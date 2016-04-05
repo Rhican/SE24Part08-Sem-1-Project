@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
@@ -156,6 +157,8 @@ public class ReportPanel extends JPanel implements INotificable {
 			datePanal.setVisible(true);
 			String startDate = startField.getText();
 			String endDate = endField.getText();
+//			String regex = "^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$";			 
+//			Pattern pattern = Pattern.compile(regex);
 			if (!isValidDate(startDate))
 				JOptionPane.showMessageDialog(getRootPane(),
 	        			 "Start date format should be yyyy-MM-dd",

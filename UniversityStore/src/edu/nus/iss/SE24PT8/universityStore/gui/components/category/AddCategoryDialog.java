@@ -6,6 +6,8 @@ import java.awt.Label;
 
 import javax.swing.*;
 
+import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.EntryJPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -64,19 +66,19 @@ public class AddCategoryDialog extends BaseDialogBox {
 					"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        ReturnObject  returnObject = Store.getInstance().getMgrCategory().addCategory(code, name);
-        if (returnObject.isSuccess()) {
+        try {
+			Category  cat = Store.getInstance().getMgrCategory().addCategory(code, name);
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			Constants.CONST_CAT_MSG_CREATION_SUCUESS,
 					"Success", JOptionPane.INFORMATION_MESSAGE);
         	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Add");
         	return true;
-        } else {
+		} catch (BadCategoryException e) {
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
-        }
+		}
     }
 
 }
