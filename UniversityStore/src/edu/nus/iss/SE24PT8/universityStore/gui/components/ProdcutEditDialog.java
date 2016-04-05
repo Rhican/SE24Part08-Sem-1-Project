@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
@@ -21,10 +20,13 @@ import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
-import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class ProdcutEditDialog extends BaseDialogBox{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtName;
     private JTextField txtBarCode;
     private JTextField txtDescription;
@@ -38,8 +40,6 @@ public class ProdcutEditDialog extends BaseDialogBox{
     private Product prodcut;
      
     private ProductManager prodMgr =  Store.getInstance().getMgrProduct();
-    private ArrayList<Category> categories ;
-
     public ProdcutEditDialog (Product prodcut) {
     	
         super (MainWindow.getInstance(), "Modify Product","modify");
@@ -71,9 +71,9 @@ public class ProdcutEditDialog extends BaseDialogBox{
     	txtOrderQty = new JFormattedTextField();
     	
     	comboCategory = new JComboBox(getComboCatData().toArray());
-    	for (ComboItem item : getComboCatData()) {
-			comboCategory.addItem(item);
-		}
+    	//for (ComboItem item : getComboCatData()) {
+		//	comboCategory.addItem(item);
+		//}
     	
     	int selectedComboIndex  = 1;
     	
@@ -86,7 +86,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
     	
         p.setLayout (new GridLayout (0, 2));
         
-        p.add (new JLabel ("Prodcut Name"));
+        p.add (new JLabel ("Product Name"));
         p.add(txtName);
         txtName.setText(prodcut.getProductName());
         p.add (new JLabel ("BarCode"));
@@ -119,7 +119,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
 
 	protected boolean performCreateUpdateAction() {
 		String briefDesp = txtDescription.getText();
-		int qty = 0;
+		int qty =  Integer.parseInt(txtQty.getText());
 		double price = Double.parseDouble(txtPrice.getText());
 		String barCode = txtBarCode.getText();
 		int reorderQty = Integer.parseInt(txtReorderQty.getText());

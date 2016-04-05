@@ -314,24 +314,26 @@ public class ProductManager implements IManager{
      
      
      //All Products
+     //public Object[][] prepareProductTableModel() {
+ 	//	ArrayList<Product> list = getProductList();
+ 	//	return prepareProductTableModel(list);
+    // }
+     
+     
      public Object[][] prepareProductTableModel() {
- 		ArrayList<Product> list = getProductList();
- 		return prepareProductTableModel(list);
-
-     }
-     
-     
-     public Object[][] prepareProductTableModel(ArrayList<Product> prodcuts) {
-  		Object[][] tableData = new Object[prodcuts.size()][3];
-  		for (int i = 0; i < prodcuts.size(); i++) {
-  			Product product = prodcuts.get(i);
-  			Object[] rowData = new Object[6];
-  			rowData[0] = product.getProductName();
-  			rowData[1]  = product.getBarcode();
+  		Object[][] tableData = new Object[productList.size()][3];
+  		for (int i = 0; i < productList.size(); i++) {
+  			Product product = productList.get(i);
+  			Object[] rowData = new Object[9];
+  			rowData[0] = product.getProductId();
+  			rowData[1]  = product.getProductName();
   			rowData[2] = product.getBriefDesp();
   			rowData[3] = product.getCategory().getCategoryName();
-  			rowData[4] = product.getPrice();
-  			rowData[5] = product.getQty();
+  			rowData[4] = product.getQty();
+  			rowData[5] = product.getPrice();
+  			rowData[6] = product.getBarcode();
+  			rowData[7] = product.getReorderQty();
+  			rowData[8] = product.getOrderQty();
   			tableData[i] = rowData;
   		}
   		return tableData;
