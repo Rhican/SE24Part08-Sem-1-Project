@@ -79,7 +79,7 @@ public class Login extends javax.swing.JFrame {
         StoreKeeperLabel = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
-        txtUserPassword = new javax.swing.JTextField();
+        txtUserPassword = new javax.swing.JPasswordField();
         Login = new javax.swing.JButton();
         jLogoutMessage = new javax.swing.JLabel();
         footerPanel = new javax.swing.JPanel();
@@ -331,6 +331,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel titlePanel;
     private javax.swing.JTextField txtUserName;
-    private javax.swing.JTextField txtUserPassword;
+    private javax.swing.JPasswordField txtUserPassword;
     private javax.swing.JPanel jPanelTop;
 }
