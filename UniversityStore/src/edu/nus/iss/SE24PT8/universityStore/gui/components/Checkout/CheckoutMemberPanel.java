@@ -28,6 +28,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class CheckoutMemberPanel extends JPanel {
 	private JTextField textFieldID;
@@ -103,6 +104,7 @@ public class CheckoutMemberPanel extends JPanel {
 		JLabel lblRedeemPoint = new JLabel("Redeem:");
 		
 		textFieldID = new JTextField();
+		textFieldID.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldID.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -123,6 +125,7 @@ public class CheckoutMemberPanel extends JPanel {
 		textFieldID.setColumns(10);
 		
 		textFieldName = new JTextField();
+		textFieldName.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldName.setEditable(false);
 		textFieldName.setColumns(10);
 		textFieldName.setBackground(SystemColor.menu);
@@ -133,6 +136,7 @@ public class CheckoutMemberPanel extends JPanel {
 		pointFormater.setMinimum(0); // Optional
 
 		textFieldRedeemPoint = new JFormattedTextField(pointFormater);
+		textFieldRedeemPoint.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldRedeemPoint.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -193,6 +197,7 @@ public class CheckoutMemberPanel extends JPanel {
 		JLabel lblDiscount = new JLabel("Discount: ");
 		
 		textFieldDiscount = new JTextField();
+		textFieldDiscount.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		textFieldDiscount.setBackground(SystemColor.menu);
 		textFieldDiscount.setEditable(false);
 		textFieldDiscount.setColumns(10);
@@ -200,13 +205,24 @@ public class CheckoutMemberPanel extends JPanel {
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(22)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblDiscount, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-						.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
-					.addGap(4)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED))
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED))
+							.addGroup(gl_panel.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblDiscount)
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
@@ -215,37 +231,29 @@ public class CheckoutMemberPanel extends JPanel {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
 						.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-						.addComponent(textFieldName))
+						.addComponent(textFieldName, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(14)
-							.addComponent(lblMemberId))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(14)
-							.addComponent(label_1))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(11)
-							.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMemberId))
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_1))
 					.addGap(14)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblRedeemPoint)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(labelMaxRedeemPoint)
-								.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(12)
-							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldDiscount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDiscount))))
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(labelMaxRedeemPoint)
+						.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblRedeemPoint))
+					.addGap(12)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldDiscount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblDiscount))
 					.addGap(23))
 		);
 		panel.setLayout(gl_panel);

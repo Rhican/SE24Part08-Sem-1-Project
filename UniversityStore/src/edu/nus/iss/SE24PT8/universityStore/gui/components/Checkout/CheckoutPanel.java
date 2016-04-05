@@ -226,8 +226,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 				UpdateSaleItemTable();		
 				paymentDialog.reset();
 				memberPanel.reset();
-				productPanel.reset();
-				
+				productPanel.reset();				
 			}
 			else {
 				JOptionPane.showMessageDialog(getRootPane(),
@@ -236,7 +235,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			}
 		} catch (TransactionException e) {
 			JOptionPane.showMessageDialog(getRootPane(),
-		   			 "Fail to Close transaction" + e.getMessage(),
+		   			 "Fail to Close transaction\n" + e.getMessage(),
 						"Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
@@ -366,7 +365,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
 					.addGap(0))
 		);
 		groupLayout.setVerticalGroup(
@@ -376,8 +375,8 @@ public class CheckoutPanel extends JPanel implements INotificable {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-						.addComponent(panelLeft, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE))
-					.addGap(12))
+						.addComponent(panelLeft, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
+					.addGap(7))
 		);
 		panelLeft.setLayout(new GridLayout(1, 0, 0, 0));
 
