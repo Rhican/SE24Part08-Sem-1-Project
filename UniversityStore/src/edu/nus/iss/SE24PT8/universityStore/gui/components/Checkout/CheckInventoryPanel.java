@@ -48,7 +48,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 	private Object[][] products;
 	private DefaultTableModel dataModel;
 	String[] columnNames = manager.getMgrProduct().getInventoryCheckTableHeader();
-	private ProductManager prodMgr = manager.getMgrProduct();
+	//private ProductManager prodMgr = manager.getMgrProduct();
 	
 	
 	private JLabel titleLabel;
@@ -65,8 +65,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		
 
 	public void refersh() {
-		products = prodMgr.getLowInventoryProdcutTableModel();
-		
+		products =  manager.getMgrProduct().getLowInventoryProdcutTableModel();
 		dataModel.setDataVector(products, columnNames);
 		dataModel.fireTableDataChanged();
 		productTable.setVisible(false);
@@ -79,9 +78,10 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		this.setLayout(thisLayout);
 		setLocation(500, 500);
 		//this.setPreferredSize(getRootPane().getSize());
-		this.setPreferredSize(new java.awt.Dimension(500, 700));
+		this.setPreferredSize(new java.awt.Dimension(500, 300));
 		titleLabel = new JLabel();
-		titleLabel.setText("Check Inventory" );
+		titleLabel.setText("Check Inventory");
+		//titleLabel.setText("Check Inventory( Product List - quantity below a specific threshold)" );
 		titleLabel.setVerifyInputWhenFocusTarget(false);
 		titleLabel.setForeground(Constants.STORE_APP_TITLE_COLOR);
 		titleLabel.setFont(Constants.STORE_APP_TITLE_FONT);
@@ -145,6 +145,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		return dataPane;
 	}
 	
+ 	/*
 	protected void performAddAction (){
 		ProdcutEntryDialog d = new ProdcutEntryDialog();
 		d.setEntryFlag(Constants.PRODCUT_ENTRYFLAG_NEW);
@@ -152,7 +153,8 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		d.setVisible(true);
 		refersh();
 	}
-	
+	*/
+ 	/*
 	protected void performModifyAction () {
 		if (productTable.getSelectedRow() != -1) {
 			int selectedRow = productTable.getSelectedRow();
@@ -177,16 +179,19 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		}
 		refersh();
 	}
-	
+	*/
 	public void performOrderItem() {
 		if (productTable.getSelectedRow() != -1) {
 			int selectedRow = productTable.getSelectedRow();
-			Product product = manager.getMgrProduct().getProductList().get(selectedRow);
+			String producID=productTable.getValueAt(productTable.getSelectedRow(),0).toString();
+			Product product = manager.getMgrProduct().getProductByID(producID);
+			//Product product = manager.getMgrProduct().getProductList().get(selectedRow);
 			if (product == null) {
-				
-				
 				try {
-					throw new Exception("Error in loading prodcut information");
+					//throw new Exception("Error in loading product information");
+					 JOptionPane.showMessageDialog(getRootPane(),
+							 "Error in loading product information",
+		 					"Error", JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -196,7 +201,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		 ReturnObject returnObj  = 	manager.getMgrProduct().orderProdcut(product, product.getOrderQty());
 		 if ( returnObj!=null && returnObj.isSuccess()){
 			 JOptionPane.showMessageDialog(getRootPane(),
-						returnObj.getMessage(),
+						"Order successful!",
  					"Success", JOptionPane.INFORMATION_MESSAGE);
 		 }
 
@@ -208,8 +213,8 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		 ReturnObject returnObj  = 	manager.getMgrProduct().orderAllLowInventoryProdcut();
 		 if ( returnObj!=null && returnObj.isSuccess()){
 			 JOptionPane.showMessageDialog(getRootPane(),
-						returnObj.getMessage(),
-					"All Items are ordered sucessfully!", JOptionPane.INFORMATION_MESSAGE);
+						"All Items are ordered sucessfully!",
+					"Success", JOptionPane.INFORMATION_MESSAGE);
 		 }
 		 refersh();
 	}
@@ -222,7 +227,7 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 			}
 		}
 
-		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
+		//System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
 		refersh();
 	}
 }

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadVendorException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.EntryJPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -72,18 +74,18 @@ public class AddVendorDialog extends BaseDialogBox {
 					"Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        ReturnObject returnObject = Store.getInstance().getMgrVendor().addVendor(catCode, name, desc);
-        if (returnObject.isSuccess()) {
+        try {
+			Vendor vendor = Store.getInstance().getMgrVendor().addVendor(catCode, name, desc);
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			Constants.CONST_VENDOR_MSG_CREATION_SUCUESS,
 					"Success", JOptionPane.INFORMATION_MESSAGE);
         	SubjectManager.getInstance().Update("VendorPanel", "Vendor", "Add");
         	return true;
-        } else {
+		} catch (BadVendorException e) {
         	JOptionPane.showMessageDialog(rootPane,
-        			returnObject.getMessage(),
+        			e.getMessage(),
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
-        }
+		}
     }
 }

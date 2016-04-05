@@ -6,7 +6,7 @@
 
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,7 +34,7 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	private Store manager = Store.getInstance();
 	private Object[][] products;
 	private DefaultTableModel dataModel;
-	private  static String[] columnNames = { "ProductId", "ProductName", "BriefDesc " ,"CategoryName","AvailableQuantity" ,"Price" ,"BarcodeNo"  ,"ReOrderQuantity","OrderQuantity" };
+	private  static String[] columnNames = { "ProductId", "ProductName", "BriefDesc " ,"CategoryName","AvailableQuantity" ,"Price" ,"BarcodeNo"  ,"Reorder Quantity (threshold)","OrderQuantity" };
 	//String[] columnNames = manager.getMgrProduct().getProductTableHeader();
 	
 	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
@@ -42,9 +42,11 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	public ProductPanel() {
 		super("Product",allowedOperations);
 		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
+		refersh();
 	}
 
 	public void refersh() {
+		products =null;
 		products = manager.getMgrProduct().prepareProductTableModel();
 		productTable.setVisible(false);
 		dataModel.setDataVector(products, columnNames);
@@ -124,7 +126,7 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 			}
 		}
 
-		System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
+		//System.out.println("Group: " + group + "Topic: " + topic + " \n data: " + data);
 		refersh();
 	}
 	

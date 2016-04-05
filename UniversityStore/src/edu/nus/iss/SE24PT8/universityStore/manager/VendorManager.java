@@ -24,7 +24,7 @@ import javax.management.MXBean;
  *
  * @author Mugunthan
  */
-public class VendorManager implements IManager {
+public class VendorManager {
 
 	private static VendorManager instance = null;
 	private HashMap<String, ArrayList<Vendor>> vendors = new HashMap<String, ArrayList<Vendor>>();
@@ -54,30 +54,25 @@ public class VendorManager implements IManager {
 		return vendorsList;
 	}
 
-	public ReturnObject addVendor(String catCode, String name, String desc) {
+	public Vendor addVendor(String catCode, String name, String desc) throws BadVendorException {
 		if (catCode == null || catCode.trim().equals(""))
-			return new ReturnObject(false, Constants.CONST_VENDOR_ERR_CATCODEMISSING, null);
+			throw new BadVendorException(Constants.CONST_VENDOR_ERR_CATCODEMISSING);
 
 		Category cat = categoryMgr.getCategory(catCode);
 		if (cat != null) {
 			if(isVendorExist(cat , name)){
-				return new ReturnObject(true, Constants.CONST_VENDOR_ERR_EXIST, cat);
+				throw new BadVendorException(Constants.CONST_VENDOR_ERR_EXIST);
 			} else {
 				Vendor newVendor;
-				try {
 					newVendor = new Vendor(name, desc);
 					vendors.get(catCode).add(newVendor); // Update vendor list
 					categoryMgr.updateVendorList(vendors.get(catCode), catCode); //Update category vendor list in object
 					DataAdapter.writeVendors(vendors.get(catCode), catCode);
-					return new ReturnObject(true, Constants.CONST_VENDOR_MSG_CREATION_SUCUESS, newVendor);
-				} catch (BadVendorException ex) {
-					return new ReturnObject(false, ex.getMessage(), null);
-				}				
+					return newVendor;//new ReturnObject(true, Constants.CONST_VENDOR_MSG_CREATION_SUCUESS, newVendor);			
 			}
 		} else {
-			return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, null);
+			throw new BadVendorException(Constants.CONST_CAT_ERR_NOTEXIST);
 		}
-
 	}
 	
 	private boolean isVendorExist(Category cat, String name) {
@@ -94,26 +89,6 @@ public class VendorManager implements IManager {
 		oldList = vendorList;
 	}
 
-	// This method may used to change the vendor preference
-	public ReturnObject saveVendors(ArrayList<Vendor> vendorList, String catCode) {
-
-		if (catCode == null || catCode.trim().equals(""))
-			return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, null);
-
-		Category cat = categoryMgr.getCategory(catCode);
-		if (cat != null) {
-			vendors.put(cat.getCategoryCode(), vendorList);
-
-			/// Edited by Hendry. should use the vendor list passed in. Vendor
-			/// list not updated in memory
-			// DataAdapter.writeVendors(vendors.get(cat), catCode);
-			DataAdapter.writeVendors(vendorList, catCode);
-			return new ReturnObject(true, Constants.CONST_VENDOR_MSG_UPDATE_SUCUESS, vendors.get(cat));
-		} else {
-			return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, null);
-		}
-	}
-
 	public HashMap<String, ArrayList<Vendor>> getVendors() {
 		return vendors;
 	}
@@ -125,16 +100,6 @@ public class VendorManager implements IManager {
 			count += category.getVendorList().size();
 		}
 		return count;
-	}
-
-	@Override
-	public void getRelatedObjects() {
-		
-	}
-
-	@Override
-	public void saveData() {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	public Object[][] prepareListToTableModel(String catCode) {

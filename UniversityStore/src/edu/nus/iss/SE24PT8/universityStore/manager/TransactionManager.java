@@ -36,7 +36,7 @@ public class TransactionManager {
 		return Instance;
 	}
 
-	public TransactionManager() {
+	private TransactionManager() {
 		transactions = DataAdapter.loadTransactions();
 	}
 
@@ -123,8 +123,6 @@ public class TransactionManager {
 			columnNames.addElement("Transaction Date");
 			columnNames.addElement("Transaction No");
 		}
-		// {"Product ID", "Product Name", "Product Description", "Transaction
-		// No", "Transaction Date"};
 		return reportInArray;
 	}
 
