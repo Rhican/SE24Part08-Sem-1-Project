@@ -24,6 +24,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import javax.swing.JSeparator;
 
 /**
 * CheckoutMemberPanel for member and discount GUI
@@ -43,6 +44,8 @@ public class CheckoutMemberPanel extends JPanel {
 	private Member member = null;
 	private Discount discount = null;
 	private Discount defaultDiscount = null;
+	private JTextField textFieldDiscountDescription;
+	private JTextField textFieldDiscountType;
 
 	public void reset() {
 		member = null;
@@ -81,6 +84,7 @@ public class CheckoutMemberPanel extends JPanel {
 			textFieldRedeemPoint.setText("0");
 			labelMaxRedeemPoint.setText("/" + String.valueOf(maxPoint));
 			textFieldRedeemPoint.setEditable(true);
+			textFieldRedeemPoint.setEditable(maxPoint > 0);
 		} else {
 			member = null;
 			textFieldName.setText("");
@@ -97,9 +101,18 @@ public class CheckoutMemberPanel extends JPanel {
 				: defaultDiscount;
 
 		if (discount == null)
+		{
 			textFieldDiscount.setText("");
+			textFieldDiscountDescription.setText("No Discount Available.");
+			textFieldDiscountType.setText("");
+		}
 		else {
 			textFieldDiscount.setText(String.valueOf(discount.getDiscountPercent()) + "%");
+			textFieldDiscountDescription.setText(discount.getDiscountDes());
+			String type = discount.getApplicableFor().replace("M", "Member").replace("A", "All");
+			if (discount.isIsPeriodAlways() && discount.isIsStartDateAlways()) type += " [Always]";
+			else type += " [Period]";
+			textFieldDiscountType.setText(type);
 		}
 		SubjectManager.getInstance().Update("CheckOutPanel", "Discount", "Update"); // no
 																					// modification,
@@ -219,62 +232,100 @@ public class CheckoutMemberPanel extends JPanel {
 		textFieldDiscount.setBackground(SystemColor.menu);
 		textFieldDiscount.setEditable(false);
 		textFieldDiscount.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Name: ");
+		
+		textFieldDiscountDescription = new JTextField();
+		textFieldDiscountDescription.setEditable(false);
+		textFieldDiscountDescription.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textFieldDiscountDescription.setBackground(SystemColor.menu);
+		textFieldDiscountDescription.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Type:");
+		
+		JSeparator separator = new JSeparator();
+		
+		textFieldDiscountType = new JTextField();
+		textFieldDiscountType.setBackground(SystemColor.menu);
+		textFieldDiscountType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		textFieldDiscountType.setEditable(false);
+		textFieldDiscountType.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup().addContainerGap()
-										.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED))
-						.addGroup(gl_panel.createSequentialGroup().addContainerGap()
-								.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)).addGroup(
-										gl_panel.createSequentialGroup().addContainerGap()
-												.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 56,
-														Short.MAX_VALUE)
-												.addPreferredGap(ComponentPlacement.RELATED)))
-						.addGroup(gl_panel.createSequentialGroup().addContainerGap().addComponent(lblDiscount)
-								.addPreferredGap(ComponentPlacement.RELATED)))
-				.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(separator, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel.createSequentialGroup()
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addComponent(textFieldRedeemPoint, 94, 94, 94)
-										.addComponent(textFieldDiscount, 94, 94, 94))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-						.addComponent(textFieldName, GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-				.addContainerGap()));
-		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup().addContainerGap()
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblMemberId))
-						.addGap(11)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_1))
-						.addGap(14)
-						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE).addComponent(labelMaxRedeemPoint)
-								.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE,
-										GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblRedeemPoint))
-				.addGap(12)
-				.addGroup(gl_panel
-						.createParallelGroup(Alignment.BASELINE).addComponent(textFieldDiscount,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDiscount)).addGap(23)));
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMemberId, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+								.addComponent(label_1, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+								.addComponent(lblRedeemPoint, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+								.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblDiscount, Alignment.LEADING)
+									.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldID, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(labelMaxRedeemPoint, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
+								.addComponent(textFieldDiscountDescription, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+								.addComponent(textFieldDiscountType, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+								.addComponent(textFieldName, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+								.addComponent(textFieldDiscount, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))))
+					.addGap(16))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMemberId)
+						.addComponent(textFieldID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_1))
+					.addGap(14)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textFieldRedeemPoint, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblRedeemPoint)
+						.addComponent(labelMaxRedeemPoint))
+					.addGap(13)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblDiscount)
+						.addComponent(textFieldDiscount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(textFieldDiscountDescription, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(textFieldDiscountType, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(61))
+		);
 		panel.setLayout(gl_panel);
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
-				groupLayout.createSequentialGroup().addComponent(panel, GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-						.addGap(3)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+					.addGap(2))
+		);
 		groupLayout.setVerticalGroup(
-				groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup()
-						.addGap(5).addComponent(panel, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE).addGap(6)));
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(5)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 260, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 		setLayout(groupLayout);
 		// setFocusTraversalPolicy(new FocusTraversalOnArray(new
 		// Component[]{textFieldID, textFieldRedeemPoint, textFieldDiscount,

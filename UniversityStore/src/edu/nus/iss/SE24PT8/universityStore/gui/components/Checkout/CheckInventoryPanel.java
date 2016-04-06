@@ -58,7 +58,8 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 	public CheckInventoryPanel() {
 		
 		super();
-		SubjectManager.getInstance().addNotification("CheckInventoryPanel", "CheckInventory", this);
+		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
+		SubjectManager.getInstance().addNotification("CheckOutPanel", "CheckOut", this);
 		intitalizeComponent();
 		refersh();
 	}
@@ -223,6 +224,11 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 	public void update(String group, String topic, String data) {
 		if (group.equals("ProductPanel") && topic.equals("Product")) {
 			if (data.equalsIgnoreCase("Add")) {
+				refersh();
+			}
+		}
+		else if (group.equals("CheckOutPanel") && topic.equals("CheckOut")) {
+			if (data.equalsIgnoreCase("Complete")) {
 				refersh();
 			}
 		}
