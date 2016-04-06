@@ -212,7 +212,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 				JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" + transaction.getId(), "Success",
 						JOptionPane.INFORMATION_MESSAGE);
 				checkForLowInventoryProduct(transaction.getSaleItems());
-
+				SubjectManager.getInstance().Update("CheckOutPanel", "CheckOut", "Complete");
 				transaction = manager.getNewTransaction();
 				switchPanel("Product");
 				UpdateSaleItemTable();
@@ -252,18 +252,15 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	}
 
 	private void handlePaymentCancel() {
+		paymentDialog.reset();		
 		if (JOptionPane.showConfirmDialog(getRootPane(), "Do you want to reset current checkout?", "WARNING",
 				JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			transaction = TransactionManager.getInstance().getNewTransaction();
 			switchPanel("Product");
 			UpdateSaleItemTable();
-			paymentDialog.reset();
 			memberPanel.reset();
 			productPanel.reset();
-		} else {
-			paymentDialog.reset();
 		}
-
 	}
 
 	private void printTransaction(TransactionInterface transaction) {
@@ -503,10 +500,16 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		tableSaleItems.setRequestFocusEnabled(false);
 		tableSaleItems.setShowVerticalLines(false);
 		scrollPane_2.setViewportView(tableSaleItems);
-		tableSaleItems.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null }, },
-				new String[] { "ID", "Name", "Price", "Quantity", "Sub Total" }) {
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
-
+		tableSaleItems.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Name", "Price", "Quantity", "Sub Total"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}

@@ -20,12 +20,15 @@ import java.util.Date;
 public class Transaction implements TransactionInterface {
 	private static long transactionIDCount = 0;
 	private static NonMember nonMember = null;
+	private static final double dollarToRoyalPointRate = 0.1f; // Every $10 spent = 1 point
+	private static final double royalPointToDollarRate = 0.05f;// Every 20 points = 1 dollar
+	
 	private long id;
 	private String memberID;
 	private Date date;
 	private Discount discount;
 	private int redeemedPoint;
-	private HashMap<String, SaleItem> saleItems; // barcode vs saleitem
+	private HashMap<String, SaleItem> saleItems; // Table of "product id" vs "SaleItem"
 
 	// - Constructors -------------------------------------------------------
 	public Transaction() {
@@ -47,7 +50,7 @@ public class Transaction implements TransactionInterface {
 
 	// - Setters -------------------------------------------------------
 	public void setDate(Date date) {
-		if (isClosed())
+		if (!isClosed())
 			this.date = date;
 	}
 
@@ -264,17 +267,15 @@ public class Transaction implements TransactionInterface {
 	}
 
 	private double computeRedeemAmount(int redeemedPoint) {
-		return redeemedPoint / 20.0f; // fixed: Every 100 redeem point = $5
+		return redeemedPoint * royalPointToDollarRate; 
 	}
 
 	private int computeRoyalityPoint() {
-		return (int) (computeNetAmount() / 10.0f + 0.5f); // fixed: Every $10
-															// spent = 1 point
+		return (int) (computeNetAmount() * dollarToRoyalPointRate + 0.5f); // Round up
 	}
 
 	private double computeNetAmount() {
-		return computeTotalAmount() - computeRedeemAmount(redeemedPoint)
-				- ((discount != null) ? computeDiscountedAmount(discount.getDiscountPercent()) : 0);
+		return computeTotalAmount() - computeRedeemAmount(redeemedPoint) - getDiscountAmount();
 	}
 
 	private void validateThrowExceptionIfCanNotModify() throws TransactionException {

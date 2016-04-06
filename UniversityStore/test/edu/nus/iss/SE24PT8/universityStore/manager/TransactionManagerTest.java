@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
@@ -19,11 +20,25 @@ import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
 * @author Zehua
 */
 public class TransactionManagerTest {
-
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		if (ProductManager.getInstance().getProductByID("CLO/1") == null) {
+			try { 
+				ProductManager.getInstance().addNewProduct("Centenary Jumper", "A really nice momento", 100, 21.45f,
+						"1234", 10, 100, "CLO");
+			} catch (Exception e) {
+				System.out.println("Fail to Create product in setup.");
+				fail("Fail to Create product in setup");
+			}
+		}
+	}
+	
 	@Test
 	public void testGetInstance() {
 		TransactionManager transactionManager = TransactionManager.getInstance();
 		assertTrue(transactionManager != null);
+		System.out.println("Pass Transaction Manager GetInstance.");
 	}
 
 	@Test
@@ -38,6 +53,7 @@ public class TransactionManagerTest {
 		assertTrue(tran1 != null);
 		assertTrue(tran2 != null);
 		assertTrue(tran3 != null);
+		System.out.println("Pass TransactionManager getNewTransaction.");
 		
 		Transaction trans1 = (Transaction) tran1;
 		Transaction trans2 = (Transaction) tran2;
@@ -57,6 +73,7 @@ public class TransactionManagerTest {
 		} catch (TransactionException e) {
 			fail("TransactionException");
 		}
+		System.out.println("Pass TransactionManager closeTransaction.");
 		
 		assertTrue(tran1.getId() > 0);
 		assertTrue(tran2.getId() > 0);
@@ -74,6 +91,6 @@ public class TransactionManagerTest {
 		String[][] report = transactionManager.getTransactionReport(yesterday, today,  columns);
 		assertTrue(saleitemsToday.size() <= report.length);
 		
-		System.out.println("TransactionManager Transaction Operations passed.");
+		System.out.println("Pass All TransactionManager Transaction Operations.");
 	}
 }

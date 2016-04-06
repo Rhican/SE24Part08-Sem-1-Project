@@ -380,17 +380,25 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         jPanelStatus.setPreferredSize(new java.awt.Dimension(641, 10));
+        
+        JLabel lblDevelopers = new JLabel("developed by SE24PT8");
 
         javax.swing.GroupLayout jPanelStatusLayout = new javax.swing.GroupLayout(jPanelStatus);
-        jPanelStatus.setLayout(jPanelStatusLayout);
         jPanelStatusLayout.setHorizontalGroup(
-            jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 663, Short.MAX_VALUE)
+        	jPanelStatusLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, jPanelStatusLayout.createSequentialGroup()
+        			.addContainerGap(891, Short.MAX_VALUE)
+        			.addComponent(lblDevelopers)
+        			.addContainerGap())
         );
         jPanelStatusLayout.setVerticalGroup(
-            jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
+        	jPanelStatusLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(Alignment.TRAILING, jPanelStatusLayout.createSequentialGroup()
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addComponent(lblDevelopers)
+        			.addContainerGap())
         );
+        jPanelStatus.setLayout(jPanelStatusLayout);
 
         jScrollPaneBottom.setViewportView(jPanelStatus);
         GroupLayout groupLayout = new GroupLayout(getContentPane());
