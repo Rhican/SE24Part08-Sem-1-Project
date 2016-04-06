@@ -109,7 +109,7 @@ public class CheckoutMemberPanel extends JPanel {
 		else {
 			textFieldDiscount.setText(String.valueOf(discount.getDiscountPercent()) + "%");
 			textFieldDiscountDescription.setText(discount.getDiscountDes());
-			String type = discount.getApplicableFor().replace("M", "Member").replace("A", "All");
+			String type = discount.getApplicableFor().replace("M", "Member").replace("A", "Public");
 			if (discount.isIsPeriodAlways() && discount.isIsStartDateAlways()) type += " [Always]";
 			else type += " [Period]";
 			textFieldDiscountType.setText(type);

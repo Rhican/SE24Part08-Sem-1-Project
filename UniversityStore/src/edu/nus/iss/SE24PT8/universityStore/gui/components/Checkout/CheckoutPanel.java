@@ -500,10 +500,16 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		tableSaleItems.setRequestFocusEnabled(false);
 		tableSaleItems.setShowVerticalLines(false);
 		scrollPane_2.setViewportView(tableSaleItems);
-		tableSaleItems.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null }, },
-				new String[] { "ID", "Name", "Price", "Quantity", "Sub Total" }) {
-			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
-
+		tableSaleItems.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Name", "Price", "Quantity", "Sub Total"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false
+			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
