@@ -27,7 +27,7 @@ public class AddCategoryDialog extends BaseDialogBox {
     private JTextField codeField;
 
     public AddCategoryDialog () {
-        super (MainWindow.getInstance(), "Add Cetegory","add");
+        super (MainWindow.getInstance(), "New Cetegory","add");
         super.setModalityType(Dialog.ModalityType.MODELESS);
     }
 
