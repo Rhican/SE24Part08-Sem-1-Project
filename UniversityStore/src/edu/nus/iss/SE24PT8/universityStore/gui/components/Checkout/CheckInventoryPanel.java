@@ -226,6 +226,9 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 			if (data.equalsIgnoreCase("Add")) {
 				refersh();
 			}
+			else if (data.equalsIgnoreCase("Modify")) {
+				refersh();
+			}
 		}
 		else if (group.equals("CheckOutPanel") && topic.equals("CheckOut")) {
 			if (data.equalsIgnoreCase("Complete")) {

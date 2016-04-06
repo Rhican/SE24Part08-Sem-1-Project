@@ -137,7 +137,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
 			}
 
 			if (returnObj != null && returnObj.isSuccess()) {
-				SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
+				SubjectManager.getInstance().Update("ProductPanel", "Product", "Modify");
 			}
 		
 		
