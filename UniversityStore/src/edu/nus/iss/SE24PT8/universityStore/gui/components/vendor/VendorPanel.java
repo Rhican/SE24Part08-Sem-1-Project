@@ -36,7 +36,6 @@ public class VendorPanel extends JPanel  implements INotificable {
 	private static final long serialVersionUID = 1L;
 	private JScrollPane vendorPane;
 	private JLabel titleLabel;
-	private JTable vendorList;
 	private Store manager = Store.getInstance();
 	private Object[][] vendors;
 	private DefaultTableModel dataModel;
@@ -170,7 +169,8 @@ public class VendorPanel extends JPanel  implements INotificable {
 	}
 
 	protected void performAddAction() {
-		AddVendorDialog d = new AddVendorDialog();
+    	Item cat = (Item) categories.getSelectedItem();
+		AddVendorDialog d = new AddVendorDialog(cat);
 		d.pack();
 		d.setVisible(true);
 		refersh();

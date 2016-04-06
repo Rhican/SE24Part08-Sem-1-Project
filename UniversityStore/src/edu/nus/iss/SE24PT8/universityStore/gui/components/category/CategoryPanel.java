@@ -84,13 +84,13 @@ public class CategoryPanel extends BaseModulePanel implements INotificable {
             String code = catList.getValueAt(catList.getSelectedRow(), 0).toString();
             try {
 				boolean  isDeleted = manager.getMgrCategory().deleteCategory(code);
-            	JOptionPane.showMessageDialog(new JFrame(),
+            	JOptionPane.showMessageDialog(getRootPane(),
             			Constants.CONST_CAT_MSG_DELETE_SUCUESS,
     					"Success", JOptionPane.INFORMATION_MESSAGE);
             	SubjectManager.getInstance().Update("CategoryPanel", "Category", "Delete");
             	refersh();
 			} catch (BadCategoryException e) {
-            	JOptionPane.showMessageDialog(new JFrame(),
+            	JOptionPane.showMessageDialog(getRootPane(),
             			e.getMessage(),
     					"Error", JOptionPane.ERROR_MESSAGE);
 			}
