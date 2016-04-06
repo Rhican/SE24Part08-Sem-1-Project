@@ -86,7 +86,7 @@ public class DiscountEntryPanel extends BaseDialogBox{
     	txtPercent = new JFormattedTextField(formatter);
     	chkPeroidAlways = new JCheckBox("Always");
     	txtPeriod = new JFormattedTextField(formatter);
-    	lblDateFormat =new JLabel("YYYY/MM/DD");
+    	lblDateFormat =new JLabel("YYYY-MM-DD");
     	
     	
     	JPanel panel = new JPanel();
@@ -228,18 +228,12 @@ public class DiscountEntryPanel extends BaseDialogBox{
         }
         
         try {
-        	if (!isStartDateAlways && startDateStr.equals("") ){
-        		JOptionPane.showMessageDialog(rootPane,
-						"Please Enter the Correct Date Format",
-						"Error", JOptionPane.ERROR_MESSAGE);
-				return false;
-        	}
-        	else if ((!isStartDateAlways && !startDateStr.equals("") ) && !(dateFormat.parse(startDateStr)  instanceof Date)){
+        	 if (!isStartDateAlways && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
 				JOptionPane.showMessageDialog(rootPane,
 						"Please Enter the Correct Date Format",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				return false;
-			}else if (!isStartDateAlways &&  !startDateStr.equals("") && (dateFormat.parse(startDateStr)  instanceof Date)){
+			}else if (!isStartDateAlways &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
 				startDate = dateFormat.parse(startDateStr);
 				
 			}
@@ -282,4 +276,15 @@ public class DiscountEntryPanel extends BaseDialogBox{
       
     return true;
 }
+
+	public boolean isValidDate(String date, DateFormat format) {
+	     try {
+	          format.parse(date);
+	          return true;
+	     }
+	     catch(ParseException e){
+	          return false;
+	     }
+	}
+    
 }
