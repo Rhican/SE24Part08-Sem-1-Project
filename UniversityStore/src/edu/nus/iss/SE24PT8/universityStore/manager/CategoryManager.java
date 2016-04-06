@@ -20,6 +20,7 @@ public class CategoryManager {
     private ArrayList<Category> categories = null;
     
     private static ProductManager productMgr = ProductManager.getInstance();
+    private static VendorManager vendorMgr = VendorManager.getInstance();
     
     public static CategoryManager getInstance(){
         if(instance == null){
@@ -53,6 +54,7 @@ public class CategoryManager {
         if (getCategory(code.toUpperCase()) == null){  
             Category newCat = new Category (code.toUpperCase(), name);
             categories.add(newCat);
+            vendorMgr.getVendors().put(code.toUpperCase(), new ArrayList<Vendor>());
             
             DataAdapter.writeCategories(categories);
             DataAdapter.createVedorFile(code.toUpperCase());

@@ -32,9 +32,10 @@ public class AddVendorDialog extends BaseDialogBox {
 	private Store manager;
     private JComboBox<Item<String>> categoryField;
 
-    public AddVendorDialog () {
-        super (MainWindow.getInstance(), "Add Vedndor","add");
+    public AddVendorDialog (Item selectedCat) {
+        super (MainWindow.getInstance(), "Add Vendor","add");
         super.setModalityType(Dialog.ModalityType.MODELESS);
+        categoryField.setSelectedItem(selectedCat);
     }
 
     protected JPanel createFormPanel  ()  {
