@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
@@ -17,11 +18,8 @@ public class SaleItemTest {
 
 	SaleItem saleItem1, saleItem2;
 
-	public SaleItemTest() {
-	}
-
-	@Before
-	public void setUp() throws BadMemberRegistrationException {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		if (ProductManager.getInstance().getProductByID("CLO/1") == null) {
 			try { 
 				ProductManager.getInstance().addNewProduct("Centenary Jumper", "A really nice momento", 100, 21.45f,
@@ -49,6 +47,11 @@ public class SaleItemTest {
 				fail("Fail to Create product in setup");
 			}
 		}
+	}
+	
+	@Before
+	public void setUp() throws BadMemberRegistrationException {
+		
 		saleItem1 = new SaleItem("CLO/1", 1);
 		saleItem2 = new SaleItem(ProductManager.getInstance().getProductByID("MUG/1"), 2);
 	}
@@ -59,6 +62,15 @@ public class SaleItemTest {
 		saleItem2 = null;
 	}
 
+	@Test
+	public void SaleItemConstructorTest() {
+		SaleItem saleItem = new SaleItem("CLO/1", 1);
+		assertTrue(saleItem != null);
+		assertTrue(saleItem.getSaleQuantity() == 1);
+		assertTrue(saleItem.getProductID().equalsIgnoreCase("CLO/1"));
+	}	
+	
+	
 	@Test
 	public void testSaleItemStringInt() {
 
