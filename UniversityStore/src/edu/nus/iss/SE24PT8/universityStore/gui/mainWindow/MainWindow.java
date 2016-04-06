@@ -196,7 +196,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("University Souvenir Store Application");
-        setAlwaysOnTop(true);
         setLocation(300, 200);
 
         jPanelTop.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

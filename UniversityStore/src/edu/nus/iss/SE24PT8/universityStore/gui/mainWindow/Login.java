@@ -85,7 +85,6 @@ public class Login extends javax.swing.JFrame {
         footerPanel = new javax.swing.JPanel();
 
         setTitle("University Souvenir Store Application");
-        setAlwaysOnTop(true);
         //setLocation(300, 200);
         Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
         int iCoordX = (objDimension.width - 980) / 2;
