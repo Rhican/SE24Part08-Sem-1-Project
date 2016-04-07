@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @date 2016-March-20
  * assume member id is their NRIC number
  */
-public class MemberManager implements IManager {
+public class MemberManager  {
     
     private static MemberManager Instance=null;
     private HashMap<String,Member> memberlist=null;
@@ -333,10 +333,6 @@ public class MemberManager implements IManager {
      }
    }
    
-   @Override
-    public void getRelatedObjects() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    } 
 
     private void Save() throws BadMemberRegistrationException {
     
@@ -362,7 +358,6 @@ public class MemberManager implements IManager {
     }
    
    
-   @Override
     public void saveData() {
         ArrayList<Member> members=new ArrayList<>();
         Iterator<Member> iter=memberlist.values().iterator();

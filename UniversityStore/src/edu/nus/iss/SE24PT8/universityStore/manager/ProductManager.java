@@ -21,7 +21,7 @@ import javax.swing.table.TableModel;
  *
  * @author misitesawn
  */
-public class ProductManager implements IManager{
+public class ProductManager {
     //test git
 
     private static ProductManager Instance = null;
@@ -287,15 +287,6 @@ public class ProductManager implements IManager{
     }
 
     
-     @Override
-    public void getRelatedObjects() {
-       CategoryManager mgrCategory=CategoryManager.getInstance();
-       
-       for(Product product:productList){
-          product.setCategory(mgrCategory.getCategory(product.getCategoryCode()));
-       }
-    }
-     
      public String[] getProductTableHeader(){
     	 return columnNames;
      }

@@ -88,9 +88,9 @@ public class ProdcutEditDialog extends BaseDialogBox{
 		formatter.setValueClass(Double.class);
 		formatter.setMinimum(0.0);
 
-		txtName = new JTextField();
-		txtBarCode = new JTextField();
-		txtDescription = new JTextField();
+		txtName = new JTextField(20);
+		txtBarCode = new JTextField(20);
+		txtDescription = new JTextField(20);
 		txtPrice = new JFormattedTextField(doubleFormatter);
 		txtQty = new JFormattedTextField(formatter);
 		txtReorderQty = new JFormattedTextField(formatter);

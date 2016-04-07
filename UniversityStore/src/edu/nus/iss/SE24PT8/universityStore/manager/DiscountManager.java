@@ -29,7 +29,7 @@ import org.hamcrest.core.IsInstanceOf;
  *
  * @author misitesawn
  */
-public class DiscountManager implements IManager {
+public class DiscountManager  {
 
     private static DiscountManager Instance = null;
     private ArrayList<Discount> discountList;
@@ -138,11 +138,6 @@ public class DiscountManager implements IManager {
 
    }
 
-    
-     @Override
-    public void getRelatedObjects() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     //Added by hendry..get a particular discount by code regardless for member or not
     public Discount getDiscountByCode(String discountCode){
@@ -262,23 +257,19 @@ public class DiscountManager implements IManager {
 		return columnNames;
 	}
 	
-	public ReturnObject deleteDiscount(String code) {
+	public void deleteDiscount(String code) throws BadDiscountException {
 		if (code.trim().equals("") || code == null)
-			return new ReturnObject(false, Constants.CONST_CAT_ERR_NOTEXIST, null);
+			throw new BadDiscountException("Error during delete discount operation!");
 
 		Discount discount = getDiscountByCode(code);
-		if (discount != null) {
+		if (discount == null)
+			throw new BadDiscountException("Error during delete discount operation!");
 			discountList.remove(discount);
 			saveData();
-			return new ReturnObject(true, Constants.CONST_CAT_MSG_DELETE_SUCUESS, discount);
-		} else {
-			return new ReturnObject(false, Constants.CONST_DISCOUNT_ERR_NOTFOUND, null);
-		}
-
+		
 	}
         
     
-    @Override
     public void saveData() {
         DataAdapter.writeDiscounts(discountList);
        

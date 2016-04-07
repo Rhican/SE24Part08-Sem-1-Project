@@ -42,6 +42,10 @@ import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class DiscountEditDialog extends BaseDialogBox{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtID;
 	private JTextField txtDes;
 	
@@ -49,14 +53,11 @@ public class DiscountEditDialog extends BaseDialogBox{
 	private JRadioButton radioApplyMember;
 	private JRadioButton radioApplyPulic;
 	
-	//private ButtonGroup bntGrpStratDate;
 	private JToggleButton chkDateIsAlways;
 	private JCheckBox chkDatePick;
-	//private JTextField txtStartDate;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
     JFormattedTextField txtStartDate;
 	
-	//private ButtonGroup btnGrpPeriod;
 	private JToggleButton chkPeroidAlways;
 	private JFormattedTextField txtPeriod;
 	private JFormattedTextField txtPercent;
@@ -76,8 +77,10 @@ public class DiscountEditDialog extends BaseDialogBox{
 		if (discount != null) {
 			if (discount instanceof MemberDiscount) {
 				radioApplyMember.setSelected(true);
+				radioApplyMember.setEnabled(false);
 			} else if (discount instanceof OtherDiscount) {
 				radioApplyPulic.setSelected(true);
+				radioApplyPulic.setEnabled(false);
 			}
         
         
@@ -90,6 +93,7 @@ public class DiscountEditDialog extends BaseDialogBox{
         }else{
         	txtStartDate.setText( dateFormat.format( discount.getDiscountStartDate()));
         }
+        
         if (discount.isIsPeriodAlways()){
         	chkPeroidAlways.setSelected(true);
         }else {
@@ -123,7 +127,6 @@ public class DiscountEditDialog extends BaseDialogBox{
     	
     	JPanel panel = new JPanel();
         panel.setSize(300,300);
-       // GridBagLayout layout = new GridBagLayout();
         GridLayout layout = new GridLayout(0, 2);
 
         panel.setLayout(layout); 
@@ -191,6 +194,7 @@ public class DiscountEditDialog extends BaseDialogBox{
 					txtStartDate.setEditable(false);
 				}else{
 					txtStartDate.setEditable(true);
+					txtStartDate.setEnabled(false);
 				}
 				
 			}

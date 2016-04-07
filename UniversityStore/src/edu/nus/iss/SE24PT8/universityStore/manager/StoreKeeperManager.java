@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @author THIRILWIN
  * @date 2016-March-17
  */
-public class StoreKeeperManager implements IManager{
+public class StoreKeeperManager {
     
     private static StoreKeeperManager Instance=null;
     private ArrayList<StoreKeeper> storeKeeper=null;
@@ -160,12 +160,6 @@ public class StoreKeeperManager implements IManager{
         return null;
     }
     
-     @Override
-    public void getRelatedObjects() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
     public void saveData() {
         DataAdapter.writeStoreKeepers(storeKeeper); 
     }
