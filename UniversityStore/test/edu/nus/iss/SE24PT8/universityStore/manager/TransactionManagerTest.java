@@ -14,12 +14,13 @@ import org.junit.Test;
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
 import edu.nus.iss.SE24PT8.universityStore.domain.TransactionInterface;
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
+import junit.framework.TestCase;
 
 /**
 *
 * @author Zehua
 */
-public class TransactionManagerTest {
+public class TransactionManagerTest extends TestCase{
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

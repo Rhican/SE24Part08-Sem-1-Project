@@ -13,12 +13,13 @@ import org.junit.Test;
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
 import edu.nus.iss.SE24PT8.universityStore.manager.MemberManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
+import junit.framework.TestCase;
 
 /**
 *
 * @author Zehua
 */
-public class TransactionTest {
+public class TransactionTest extends TestCase {
 
 	private Transaction trans1, trans2, trans3;
 	private static int passCount = 0, passTotal = 10;
