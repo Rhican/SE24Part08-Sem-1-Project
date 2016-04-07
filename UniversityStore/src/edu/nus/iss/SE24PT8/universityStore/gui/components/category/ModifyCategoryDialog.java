@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import edu.nus.iss.SE24PT8.universityStore.UniversityStore;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
@@ -60,6 +61,7 @@ public class ModifyCategoryDialog extends BaseDialogBox {
         } else {
 	        p.add (new JLabel ("Note-No vendors available for this category"));        	
         }
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         return p;
     }
 

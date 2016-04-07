@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.Label;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
@@ -40,6 +41,7 @@ public class AddCategoryDialog extends BaseDialogBox {
         p.add(new JLabel ("Name"));
         nameField = new JTextField (20);
         p.add (nameField);
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         return p;
     }
 
