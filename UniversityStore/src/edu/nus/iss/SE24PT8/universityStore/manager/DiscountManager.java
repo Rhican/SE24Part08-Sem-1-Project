@@ -35,7 +35,7 @@ public class DiscountManager implements IManager {
     private ArrayList<Discount> discountList;
     private MemberManager memberManager;
     
-    private  static String[] columnNames = { "Code " ,"Description" , "Apply" , "From" , "Duration" };
+    private  static String[] columnNames = { "Code " ,"Description" , "Amount" ,"Apply" , "From" , "Duration" };
     private static final DateFormat Dateformat = new SimpleDateFormat("yyyy-M-dd");
     
      
@@ -229,7 +229,7 @@ public class DiscountManager implements IManager {
 		Object[][] tableData = new Object[list.size()][2];
 		for (int i = 0; i < list.size(); i++) {
 			Discount discount = list.get(i);
-			Object[] rowData = new Object[5];
+			Object[] rowData = new Object[6];
 			rowData[0] = discount.getDiscountCode();
 			rowData[1] = discount.getDiscountDes();
 			if (discount instanceof MemberDiscount) {
@@ -238,18 +238,20 @@ public class DiscountManager implements IManager {
 				rowData[2] = "Public";
 			}
 			
+			rowData[3] = discount.getDiscountPercent() + "%";
+			
 			if ( discount.isIsStartDateAlways() ){
-;				rowData[3] = Constants.CONST_ALWAYS;
+;				rowData[4] = Constants.CONST_ALWAYS;
 			}else if ( discount.getDiscountStartDate() != null){
-				rowData[3] = Dateformat.format(discount.getDiscountStartDate());
+				rowData[4] = Dateformat.format(discount.getDiscountStartDate());
 			}else {
-				rowData[3] = "NA";
+				rowData[4] = "NA";
 			}
 			
 			if (discount.isIsPeriodAlways()){
-				rowData[4] = Constants.CONST_ALWAYS;
+				rowData[5] = Constants.CONST_ALWAYS;
 			}else{
-				rowData[4] = discount.getDiscountPeriod() ;
+				rowData[5] = discount.getDiscountPeriod() ;
 			}
 			tableData[i] = rowData;
 		}
