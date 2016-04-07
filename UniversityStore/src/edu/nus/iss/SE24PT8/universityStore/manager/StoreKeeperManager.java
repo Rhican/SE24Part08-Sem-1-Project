@@ -1,6 +1,5 @@
 
 package edu.nus.iss.SE24PT8.universityStore.manager;
-import edu.nus.iss.SE24PT8.universityStore.domain.Member;
 import edu.nus.iss.SE24PT8.universityStore.domain.StoreKeeper;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadStoreKeeperAdminException;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
@@ -72,7 +71,7 @@ public class StoreKeeperManager implements IManager{
         }
         for(StoreKeeper s:storeKeeper)
         {
-            if(storeKeeperName.equals(s.getstoreKeeperName()))
+            if(storeKeeperName.toUpperCase().equals(s.getstoreKeeperName().toUpperCase()))
             {
                 throw new BadStoreKeeperAdminException(Constants.CONST_STOREKEEPER_ERR_MEMBEREXIST);
             }

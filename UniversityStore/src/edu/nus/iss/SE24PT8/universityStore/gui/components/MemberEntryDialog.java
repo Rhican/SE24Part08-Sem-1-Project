@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
@@ -36,6 +38,7 @@ public class MemberEntryDialog extends BaseDialogBox{
 		p.add(new JLabel("MemberID"));
 		memberIDField=new JTextField(3);
 		p.add(memberIDField);
+		p.setBorder(new EmptyBorder(10,10,10,10));
 		return p;
 	}
    

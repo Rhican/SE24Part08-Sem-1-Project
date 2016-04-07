@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.BadStoreKeeperAdminException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
@@ -25,7 +26,7 @@ public class StoreKeeperEntryDialog extends BaseDialogBox{
 	private JTextField storeKeeperPasswordField;
 	
 	public StoreKeeperEntryDialog(){
-		super(MainWindow.getInstance(),"Add NewStoreKeeper","add");
+		super(MainWindow.getInstance(),"New StoreKeeper","add");
 		super.setModalityType(Dialog.ModalityType.MODELESS);
 	}
 	
@@ -38,6 +39,7 @@ public class StoreKeeperEntryDialog extends BaseDialogBox{
 		p.add(new JLabel("StoreKeeperPassword"));
 		storeKeeperPasswordField=new JTextField(3);
 		p.add(storeKeeperPasswordField);
+		p.setBorder(new EmptyBorder(10,10,10,10));
 		return p;
 	}
    
