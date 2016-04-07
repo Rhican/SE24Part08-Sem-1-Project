@@ -1,7 +1,5 @@
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 
