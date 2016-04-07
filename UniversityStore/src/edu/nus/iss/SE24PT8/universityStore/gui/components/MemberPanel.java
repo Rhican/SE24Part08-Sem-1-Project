@@ -27,7 +27,7 @@ public class MemberPanel extends BaseModulePanel implements INotificable {
 	private Object[][] members;
 	private DefaultTableModel dataModel;
 	
-	private final static String[] columnNames={"MemberName","MemberID"};
+	private final static String[] columnNames={"MemberName","MemberID","LoyaltyPoint"};
 	private final static String[] allowedOperations = {Constants.ADD_OPERATION, Constants.MODIFY_OPERATION, Constants.DELETE_OPERATION};
 
 	public MemberPanel(){

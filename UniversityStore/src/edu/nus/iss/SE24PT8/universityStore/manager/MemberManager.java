@@ -385,9 +385,10 @@ public class MemberManager implements IManager {
 		Object[][] tableData = new Object[members.size()][2];
 		for (int i = 0; i < members.size(); i++) {
 			Member member = members.get(i);
-			Object[] rowData = new Object[2];
+			Object[] rowData = new Object[3];
 			rowData[0] = member.getName();
 			rowData[1] = member.getID();
+			rowData[2] = member.getLoyaltyPoints();
 			tableData[i] = rowData;
 		}
 		return tableData;
