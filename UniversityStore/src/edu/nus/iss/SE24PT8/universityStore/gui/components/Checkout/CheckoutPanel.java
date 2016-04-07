@@ -203,6 +203,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			}
 			UpdateSaleItemTable();
 			productPanel.reset();
+			btnDelete.setEnabled(false);
 		}
 	}
 
