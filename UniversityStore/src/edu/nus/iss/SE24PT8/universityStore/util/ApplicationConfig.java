@@ -21,10 +21,6 @@ public class ApplicationConfig {
     public static final String KEY_DATA_ROOT_FOLDER="DATAROOTFOLDER"; //
     public static final String KEY_DISCOUNT_CONVERSION_RATE="DISCOUNTCONVERSIONRATE";  //Number of points required to be convereted to 1 dollar
     
-    
-     
-    
-    
     private ApplicationConfig() {
         properties=new Properties();
         try{
@@ -42,8 +38,7 @@ public class ApplicationConfig {
     private static class ApplicationConfigHolder {
 
         private static final ApplicationConfig INSTANCE = new ApplicationConfig();
-    }
-    
+    }    
     
     public String getValue(String key){
         String val=null;
@@ -60,10 +55,4 @@ public class ApplicationConfig {
         properties.list(System.out);
     
     }
-    
-    
-    /*public static void main(String[] args) {
-        ApplicationConfig conf=ApplicationConfig.getInstance();
-        conf.listKeyValues();
-    }*/
 }
