@@ -132,7 +132,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 			Group hCatGroup = thisLayout.createSequentialGroup().addComponent(catLabel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(25).addComponent(categories, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE);
 			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup().addGap(20)
-					.addComponent(vendorPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 780,
+					.addComponent(vendorPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 800,
 							GroupLayout.PREFERRED_SIZE).addGroup(GroupLayout.Alignment.CENTER, hCatGroup)
 					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));
 
