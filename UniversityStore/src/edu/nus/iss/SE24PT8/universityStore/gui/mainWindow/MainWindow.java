@@ -82,7 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     private MainWindow() {
-    	setPreferredSize(new Dimension(980, 550));
+    	setPreferredSize(new Dimension(980, 580));
         
         setLookAndFeel("Nimbus");
 
