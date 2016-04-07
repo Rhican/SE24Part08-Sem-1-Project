@@ -86,6 +86,7 @@ public class DiscountEditDialog extends BaseDialogBox{
         
         txtID.setText(discount.getDiscountCode());
         txtID.setEditable(false);
+        txtID.setEnabled(false);
         txtDes.setText(discount.getDiscountDes());
         txtPercent.setValue(discount.getDiscountPercent());
         if(discount.isIsStartDateAlways()){
@@ -192,9 +193,10 @@ public class DiscountEditDialog extends BaseDialogBox{
 			public void actionPerformed(ActionEvent e) {
 				if (chkDateIsAlways.isSelected()){
 					txtStartDate.setEditable(false);
+					txtStartDate.setEnabled(false);
 				}else{
 					txtStartDate.setEditable(true);
-					txtStartDate.setEnabled(false);
+					txtStartDate.setEnabled(true);
 				}
 				
 			}
@@ -206,8 +208,10 @@ public class DiscountEditDialog extends BaseDialogBox{
 			public void actionPerformed(ActionEvent e) {
 				if (chkPeroidAlways.isSelected()){
 					txtPeriod.setEditable(false);
+					txtPeriod.setEnabled(false);
 				}else{
 					txtPeriod.setEditable(true);
+					txtPeriod.setEnabled(true);
 				}
 				
 			}

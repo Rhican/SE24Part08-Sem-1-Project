@@ -25,7 +25,7 @@ import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
-public class ProdcutEditDialog extends BaseDialogBox{
+public class ProductEditDialog extends BaseDialogBox{
 	/**
 	 * 
 	 */
@@ -44,7 +44,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
 
 	private ProductManager prodMgr = Store.getInstance().getMgrProduct();
 
-	public ProdcutEditDialog(Product prodcut) {
+	public ProductEditDialog(Product prodcut) {
 
 		super(MainWindow.getInstance(), "Modify Product", "add");
 		super.setModalityType(Dialog.ModalityType.MODELESS);

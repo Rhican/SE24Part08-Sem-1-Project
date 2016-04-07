@@ -88,7 +88,7 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 				}
             }
            
-            ProdcutEditDialog editProdcutDialog = new ProdcutEditDialog(product);
+            ProductEditDialog editProdcutDialog = new ProductEditDialog(product);
             editProdcutDialog.pack();
             editProdcutDialog.setVisible(true);
         }
