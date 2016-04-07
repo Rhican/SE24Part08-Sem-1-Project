@@ -37,7 +37,7 @@ public class CategoryManager {
     public Category getCategory(String code) {
         Category returnCat = null;
         for (Category category : categories) {
-            if (category.getCategoryCode().equals(code))
+            if (category.getCategoryCode().equals(code.toUpperCase()))
                 returnCat = category;
         }
         

@@ -41,13 +41,6 @@ public class AddCategoryDialog extends BaseDialogBox {
         p.add(new JLabel ("Name"));
         nameField = new JTextField (20);
         p.add (nameField);
-//    	EntryJPanel e = new EntryJPanel();
-//    	
-//        e.addCompCol1(new JLabel ("Code"));
-//        e.addCompCol1(new JTextField (3));
-//        
-//        e.addCompCol1(new JLabel ("Name"));
-//        e.addCompCol1( new JTextField (20));
         return p;
     }
 

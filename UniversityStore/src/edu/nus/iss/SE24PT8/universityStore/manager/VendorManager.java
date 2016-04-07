@@ -57,6 +57,8 @@ public class VendorManager {
 	public Vendor addVendor(String catCode, String name, String desc) throws BadVendorException {
 		if (catCode == null || catCode.trim().equals(""))
 			throw new BadVendorException(Constants.CONST_VENDOR_ERR_CATCODEMISSING);
+		if (name == null || name.trim().equals(""))
+			throw new BadVendorException(Constants.CONST_VENDOR_ERR_NAMEMISSING);
 
 		Category cat = categoryMgr.getCategory(catCode);
 		if (cat != null) {

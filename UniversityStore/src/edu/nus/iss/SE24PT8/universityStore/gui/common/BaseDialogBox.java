@@ -15,7 +15,7 @@ public abstract class BaseDialogBox extends JDialog {
 	public BaseDialogBox (JFrame parent, String title, String operation) {
         super (parent, title);
         super.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        super.setLocationRelativeTo(parent);
+        this.setLocation(getParent().getX() + 300, getParent().getY()+ 170);
         if(operation.equals("add")) {
             add ("Center", createFormPanel());        	
         }
