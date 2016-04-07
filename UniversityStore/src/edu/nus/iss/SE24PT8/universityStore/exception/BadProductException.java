@@ -5,6 +5,11 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.exception;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
+
 /**
  *
  * @author misitesawn
@@ -16,5 +21,8 @@ public class BadProductException extends Exception {
 
     public BadProductException(String msg) {
         super(msg);
+        
     }
+    
+   
 }
