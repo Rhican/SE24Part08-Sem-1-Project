@@ -166,7 +166,7 @@ public class Transaction implements TransactionInterface {
 		if (discount != null) return computeDiscountedAmount(discount.getDiscountPercent());
 		else {
 			Discount nonMemberDiscount = DiscountManager.getInstance().getMaxDiscount(date, nonMember);
-			return computeDiscountedAmount(nonMemberDiscount.getDiscountPercent());
+			 return (nonMemberDiscount != null) ? computeDiscountedAmount(nonMemberDiscount.getDiscountPercent()) : 0;
 		}
 	}
 
