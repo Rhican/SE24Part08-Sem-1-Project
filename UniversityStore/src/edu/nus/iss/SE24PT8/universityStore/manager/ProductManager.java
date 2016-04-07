@@ -82,24 +82,15 @@ public class ProductManager implements IManager{
      * @throws Exception 
      *
      */
-    
-    //0-Product ID
-    //  1-Product Name
-    ///  2-Product Description
-    //  3-QuantityAvailable
-    //  4-Price
-    //  5-Barcode Number
-    // 6-Reorder Quantity
-    //  7-Order Quantity
-    public ReturnObject addNewProduct(String productNmae, String briefDesp, int qty, double price, String barCode, int reorderQty, int orderQty, String categoryCode) throws Exception {
-        // new Product(productId, productName, briefDesp, 0, 0, barcode, 0, 0);
-        Product product;
-        ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+	public void addNewProduct(String productNmae, String briefDesp, int qty, double price, String barCode,
+			int reorderQty, int orderQty, String categoryCode) throws Exception {
+		// new Product(productId, productName, briefDesp, 0, 0, barcode, 0, 0);
+		Product product;
 		Category category;
 		category = categoryManager.getCategory(categoryCode);
 
 		if (category == null) {
-			throw new Exception("Category Eror during operation!");
+			throw new BadProductException("Error to get Product Category during operation!");
 		}
 
 		String productId = categoryCode + "/" + Integer.toString(getProductCountInCategory(category) + 1);
@@ -108,9 +99,8 @@ public class ProductManager implements IManager{
 		productList.add(product);
 
 		saveData();
-		return returnObj;
 
-    }
+	}
     
     
     /**
@@ -127,7 +117,7 @@ public class ProductManager implements IManager{
      *Assumption: ProdcutName and BarCode cannot be modified
      * @throws Exception 
      */
-    public ReturnObject editProduct(String barCode,String briefDescp, int qty, double price,int reorderQty, int orderQty, String categoryCode) throws Exception{
+    public void editProduct(String barCode,String briefDescp, int qty, double price,int reorderQty, int orderQty, String categoryCode) throws Exception{
     	Product product = Store.getInstance().getMgrProduct().getProductByBarcode(barCode);
     	ReturnObject returnObj  = new ReturnObject(true, "ok", null);
     	if ( product == null){
@@ -138,7 +128,7 @@ public class ProductManager implements IManager{
 		category = categoryManager.getCategory(categoryCode);
 
 		if (category == null) {
-			throw new Exception("Category Eror during operation!");
+			throw new BadProductException("Category Eror during operation!");
 		}
 
 		product.setQty(qty);
@@ -151,7 +141,6 @@ public class ProductManager implements IManager{
 		
 
 		saveData();
-        return returnObj;
     }
     
 	public ReturnObject orderProdcut(Product product, int orderQty) {

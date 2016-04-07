@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
@@ -70,12 +71,13 @@ private static final long serialVersionUID = 1L;
     	txtPrice = new JFormattedTextField(doubleFormatter);
     	txtQty = new JFormattedTextField(intFormatter);
     	txtReorderQty = new JFormattedTextField(intFormatter);
-    	txtOrderQty = new JFormattedTextField();
+    	txtOrderQty = new JFormattedTextField(intFormatter);
     	
-    	comboCategory = new JComboBox(getComboCatData().toArray());
-    	//for (ComboItem item : getComboCatData()) {
-		//	comboCategory.addItem(item);
-		//}
+    	//comboCategory = new JComboBox(getComboCatData().toArray());
+    	comboCategory = new JComboBox<ComboItem>();
+    	for (ComboItem item : getComboCatData()) {
+			comboCategory.addItem(item);
+		}
     	
         p.setLayout (new GridLayout (0, 2));
         p.add (new JLabel ("Product Name"));
@@ -101,50 +103,78 @@ private static final long serialVersionUID = 1L;
 	protected boolean performCreateUpdateAction() {
 		String productName = txtName.getText();
 		String briefDesp = txtDescription.getText();
-		int qty = Integer.parseInt(txtQty.getText());
-		double price = Double.parseDouble(txtPrice.getText());
 		String barCode = txtBarCode.getText();
-		int reorderQty = Integer.parseInt(txtReorderQty.getText());
-		int orderQty = Integer.parseInt(txtOrderQty.getText());
-		
-		ComboItem comboItem  =  (ComboItem) comboCategory.getSelectedItem();
-		Category category = (Category) comboItem.getValue();
+		int qty = 0;
+		double price = 0.0;
+		int reorderQty = 0;
+		int orderQty = 0;
+		try {
+			qty = Integer.parseInt(txtQty.getText());
 
-		if (entryFlag == Constants.DISCOUNT_ENTRYFLAG_NEW && prodMgr.getProductByBarcode(barCode) != null) {
-			JOptionPane.showMessageDialog(rootPane, Constants.CONST_PRODUCT_ERR_BARCODEEXIST, "Error",
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(rootPane, "Please Enter correct Quantity!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else {
-			try {
-				ReturnObject returnObj = null;
-				if (entryFlag == Constants.DISCOUNT_ENTRYFLAG_EDIT) {
-					returnObj = prodMgr.editProduct(barCode,briefDesp,qty,price,reorderQty,orderQty, "CLO");
-				} else {
-					returnObj = prodMgr.addNewProduct(productName, briefDesp, qty, price, barCode, reorderQty, orderQty,
-							category.getCategoryCode());
-				}
+		}
+		try {
+			
+			price = Double.parseDouble(txtPrice.getText());
+		} catch (NumberFormatException e) {
 
-				if (returnObj != null && returnObj.isSuccess()) {
-					SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			JOptionPane.showMessageDialog(rootPane, "Please enter correct price!", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		try {
+
+			reorderQty = Integer.parseInt(txtReorderQty.getText());
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(rootPane, "Please enter correct Reorder Quantity!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 
+		try {
+			
+			orderQty = Integer.parseInt(txtOrderQty.getText());
+		} catch (NumberFormatException e) {
+
+			JOptionPane.showMessageDialog(rootPane, "Please enter orrect Order Quantity!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		ComboItem comboItem = (ComboItem) comboCategory.getSelectedItem();
+		Category category = (Category) comboItem.getValue();
+
+		if (prodMgr.getProductByBarcode(barCode) == null) {
+
+		}
+		try {
+			
+			prodMgr.addNewProduct(productName, briefDesp, qty, price, barCode, reorderQty, orderQty,
+					category.getCategoryCode());
+		} catch (BadProductException e) {
+			JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		SubjectManager.getInstance().Update("ProductPanel", "Product", "Add");
 		return true;
 	}
     
-    public ArrayList<ComboItem> getComboCatData(){
-    	ArrayList<Category> categories= Store.getInstance().getMgrCategory().getCategories();
-    	ArrayList<ComboItem> comboCatData = new ArrayList<>();
-    	for (Category category : categories) {
-    		comboCatData.add(new ComboItem(category , category.getCategoryCode()));
+	public ArrayList<ComboItem> getComboCatData() {
+		ArrayList<Category> categories = Store.getInstance().getMgrCategory().getCategories();
+		ArrayList<ComboItem> comboCatData = new ArrayList<>();
+		for (Category category : categories) {
+			comboCatData.add(new ComboItem(category, category.getCategoryCode()));
 		}
-    	
-    	return comboCatData;
-    }
+
+		return comboCatData;
+	}
     
     public JTextField getProdcutNameTextField(){
     	return txtName;
