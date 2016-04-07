@@ -218,12 +218,16 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 					"Success", JOptionPane.INFORMATION_MESSAGE);
 		 }
 		 refersh();
+		 SubjectManager.getInstance().Update("ProductPanel", "Product", "Modify");
 	}
 
 	@Override
 	public void update(String group, String topic, String data) {
 		if (group.equals("ProductPanel") && topic.equals("Product")) {
 			if (data.equalsIgnoreCase("Add")) {
+				refersh();
+			}
+			else if (data.equalsIgnoreCase("Modify")) {
 				refersh();
 			}
 		}

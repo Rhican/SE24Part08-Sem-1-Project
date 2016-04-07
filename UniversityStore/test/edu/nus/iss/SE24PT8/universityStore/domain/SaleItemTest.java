@@ -9,12 +9,13 @@ import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
+import junit.framework.TestCase;
 
 /**
  *
  * @author Zehua
  */
-public class SaleItemTest {
+public class SaleItemTest extends TestCase {
 
 	SaleItem saleItem1, saleItem2;
 

@@ -110,7 +110,22 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			} else if (data.equalsIgnoreCase("Cancel")) {
 				handlePaymentCancel();
 			}
+		} else if (group.equals("MainWindow") && topic.equals("MenuClicked")) {
+			if (data.equalsIgnoreCase("Checkout")) {
+				if (transaction.getSaleItems().size() > 0) {
+					transaction = TransactionManager.getInstance().getNewTransaction();
+				}
+				else {
+					transaction.setMember("");
+					transaction.setDiscount(null);
+				}
+				switchPanel("Product");
+				UpdateSaleItemTable();
+				memberPanel.reset();
+				productPanel.reset();
+			}
 		}
+			
 
 	}
 
@@ -188,6 +203,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 			}
 			UpdateSaleItemTable();
 			productPanel.reset();
+			btnDelete.setEnabled(false);
 		}
 	}
 
@@ -208,6 +224,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		TransactionManager manager = TransactionManager.getInstance();
 		try {
 			if (manager.closeTransaction(transaction)) {
+				paymentDialog.reset();
 				printTransaction(transaction);
 				JOptionPane.showMessageDialog(getRootPane(), "Transaction Completed #" + transaction.getId(), "Success",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -216,7 +233,6 @@ public class CheckoutPanel extends JPanel implements INotificable {
 				transaction = manager.getNewTransaction();
 				switchPanel("Product");
 				UpdateSaleItemTable();
-				paymentDialog.reset();
 				memberPanel.reset();
 				productPanel.reset();
 			} else {
@@ -537,6 +553,7 @@ public class CheckoutPanel extends JPanel implements INotificable {
 		SubjectManager.getInstance().addNotification("CheckOutPanel", "Member", this);
 		SubjectManager.getInstance().addNotification("CheckOutPanel", "Discount", this);
 		SubjectManager.getInstance().addNotification("CheckOutPanel", "Payment", this);
+		SubjectManager.getInstance().addNotification("MainWindow", "MenuClicked", this);  
 		switchPanel("Product");
 	}
 

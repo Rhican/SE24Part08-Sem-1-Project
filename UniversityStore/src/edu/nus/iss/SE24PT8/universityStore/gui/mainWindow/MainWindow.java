@@ -82,7 +82,7 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     private MainWindow() {
-    	setPreferredSize(new Dimension(980, 550));
+    	setPreferredSize(new Dimension(980, 580));
         
         setLookAndFeel("Nimbus");
 
@@ -196,7 +196,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("University Souvenir Store Application");
-        setAlwaysOnTop(true);
         setLocation(300, 200);
 
         jPanelTop.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -479,19 +478,20 @@ public class MainWindow extends javax.swing.JFrame {
     		catView = new CategoryPanel();
         }
         switchView(catView);
-        
-        
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Categories");
     }
     private void jToggleButtonVendorsActionPerformed(ActionEvent evt) {
     	if (vendorView == null) {
     		vendorView = new VendorPanel();
         }
         switchView(vendorView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Vendors");
     }
        
 	private void jToggleButtonDiscountsActionPerformed(ActionEvent evt) {
 		if (discountView == null) {
 			discountView = new DiscountPanel();
+		    SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Discount");
 		}
 	switchView(discountView);
         
@@ -503,8 +503,7 @@ public class MainWindow extends javax.swing.JFrame {
     		memberView = new MemberPanel();
         }
         switchView(memberView);
-        
-        
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "Members");
     }
     
     private void jToggleButtonStoreKeepersActionPerformed(ActionEvent evt) {
@@ -512,6 +511,7 @@ public class MainWindow extends javax.swing.JFrame {
     		storeKeeperView = new StoreKeeperPanel();
         }
         switchView(storeKeeperView);
+        SubjectManager.getInstance().Update("MainWindow", "MenuClicked", "StoreKeepers");
     }
     
   	// Variables declaration - do not modify//GEN-BEGIN:variables

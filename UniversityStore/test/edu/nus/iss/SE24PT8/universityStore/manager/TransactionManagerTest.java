@@ -1,25 +1,22 @@
 package edu.nus.iss.SE24PT8.universityStore.manager;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
 import edu.nus.iss.SE24PT8.universityStore.domain.TransactionInterface;
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
+import junit.framework.TestCase;
 
 /**
 *
 * @author Zehua
 */
-public class TransactionManagerTest {
+public class TransactionManagerTest extends TestCase{
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

@@ -9,7 +9,6 @@ import javax.swing.*;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
-import edu.nus.iss.SE24PT8.universityStore.gui.common.EntryJPanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
