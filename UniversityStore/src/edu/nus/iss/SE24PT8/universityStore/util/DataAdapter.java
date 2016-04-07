@@ -613,6 +613,16 @@ public class DataAdapter {
 		}
 
 	}
+	
+    //Added by Mugunthan      
+	public static void createFiles() {
+		FileOperations.createFile(FILENAME_CATEGORY);
+		FileOperations.createFile(FILENAME_DISCOUNT);
+		FileOperations.createFile(FILENAME_MEMBERS);
+		FileOperations.createFile(FILENAME_PRODUCT);
+		FileOperations.createFile(FILENAME_STOREKEEPER);
+		FileOperations.createFile(FILENAME_TRANSACTIONS);	
+	}
 
 
 }// end of class

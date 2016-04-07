@@ -10,15 +10,8 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadVendorException;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.management.MXBean;
 
 /**
  *
@@ -94,19 +87,10 @@ public class VendorManager {
 	public HashMap<String, ArrayList<Vendor>> getVendors() {
 		return vendors;
 	}
-	
-	public int getTotalVendorCount(){
-		int count = 0;
-		ArrayList<Category> categories = categoryMgr.getCategories();
-		for (Category category : categories) {
-			count += category.getVendorList().size();
-		}
-		return count;
-	}
 
 	public Object[][] prepareListToTableModel(String catCode) {
 		Object[][] tableData = new Object[0][0];
-		int maxLengh = 50;
+		int maxLengh = 100;
 		ArrayList<Vendor> vendorList = categoryMgr.getCategory(catCode).getVendorList();
 		if (vendorList != null && vendorList.size() > 0){
 			tableData = new Object[vendorList.size()][2];

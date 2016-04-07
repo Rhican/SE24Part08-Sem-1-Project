@@ -2,19 +2,16 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components.category;
 
 import java.awt.Dialog;
 import java.awt.GridLayout;
-import java.awt.Label;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 /**
 *
 * @author Mugunthan
@@ -34,11 +31,13 @@ public class AddCategoryDialog extends BaseDialogBox {
     protected JPanel createFormPanel  ()  {
     	JPanel p = new JPanel ();
         
-        p.setLayout (new GridLayout (0, 2));
-        p.add (new JLabel ("Code"));
+        p.setLayout ((new GridLayout (0, 2)));
+        JLabel codeLabel = new JLabel ("Code");
+        p.add(codeLabel);
         codeField = new JTextField (3);
         p.add (codeField);
-        p.add(new JLabel ("Name"));
+        JLabel nameLabel = new JLabel ("Name");
+        p.add(nameLabel);
         nameField = new JTextField (20);
         p.add (nameField);
         p.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -61,7 +60,7 @@ public class AddCategoryDialog extends BaseDialogBox {
             return false;
         }
         try {
-			Category  cat = Store.getInstance().getMgrCategory().addCategory(code, name);
+			Store.getInstance().getMgrCategory().addCategory(code, name);
         	JOptionPane.showMessageDialog(rootPane,
         			Constants.CONST_CAT_MSG_CREATION_SUCUESS,
 					"Success", JOptionPane.INFORMATION_MESSAGE);

@@ -12,15 +12,12 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.LayoutStyle;
 import javax.swing.GroupLayout.Group;
 import javax.swing.table.DefaultTableModel;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
-import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.category.AddCategoryDialog;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
@@ -120,7 +117,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 
 			thisLayout.setVerticalGroup(thisLayout.createSequentialGroup().addContainerGap().addGroup(group1)
 					.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addGap(20).addGroup(catGroup).addGap(20)
-					.addComponent(vendorPane, 0, 440, Short.MAX_VALUE).addGap(20).addGroup(group2));
+					.addComponent(vendorPane, 0, 300, Short.MAX_VALUE).addGap(20).addGroup(group2));
 
 			Group group3 = thisLayout.createSequentialGroup().addGap(340).addComponent(titleLabel,
 					GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE).addGap(200);
@@ -134,7 +131,7 @@ public class VendorPanel extends JPanel  implements INotificable {
 				group4.addComponent(deleteButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE);
 			Group hCatGroup = thisLayout.createSequentialGroup().addComponent(catLabel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
 					.addGap(25).addComponent(categories, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE);
-			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup()
+			thisLayout.setHorizontalGroup(thisLayout.createParallelGroup().addGap(20)
 					.addComponent(vendorPane, GroupLayout.Alignment.CENTER, GroupLayout.PREFERRED_SIZE, 780,
 							GroupLayout.PREFERRED_SIZE).addGroup(GroupLayout.Alignment.CENTER, hCatGroup)
 					.addGroup(GroupLayout.Alignment.LEADING, group3).addGroup(GroupLayout.Alignment.CENTER, group4));

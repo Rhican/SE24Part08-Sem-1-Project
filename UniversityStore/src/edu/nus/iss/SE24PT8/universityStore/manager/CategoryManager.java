@@ -5,9 +5,7 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadCategoryException;
-import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.ArrayList;
 
 /**
