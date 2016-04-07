@@ -4,6 +4,7 @@ import java.awt.Dialog;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 /**
 *
 * @author Mugunthan
@@ -65,7 +66,7 @@ public abstract class BaseDialogBox extends JDialog {
         };
         b.addActionListener (l);
         p.add (b);
-
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         return p;
     }
 

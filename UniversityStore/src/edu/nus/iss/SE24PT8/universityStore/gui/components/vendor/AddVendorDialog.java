@@ -6,6 +6,7 @@ import java.awt.Label;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Vendor;
@@ -51,6 +52,7 @@ public class AddVendorDialog extends BaseDialogBox {
         p.add (new JLabel ("Description"));
         descField = new JTextArea();
         p.add (descField);
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         
 
     	ArrayList<Category> categories= manager.getMgrCategory().getCategories();
