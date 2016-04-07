@@ -5,8 +5,9 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import java.util.Objects;
+
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 
 /**
  *
@@ -130,13 +131,12 @@ public class Product {
     }
 
     
-    public ReturnObject reduceQuantity(int reduceAmount){
+    public void reduceQuantity(int reduceAmount) throws BadProductException{
         //check reduce amount
         if(reduceAmount>qty){
-            return new ReturnObject(false, "Amount reduced is greated than current quantity", this);
+           throw new BadProductException( "Amount reduced is greated than current quantity");
         }
         qty=qty-reduceAmount;
-        return new ReturnObject(true, "Amount reduced", this);
     }
 
     @Override

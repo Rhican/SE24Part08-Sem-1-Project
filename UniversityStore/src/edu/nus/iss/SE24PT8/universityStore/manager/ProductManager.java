@@ -10,7 +10,6 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -119,7 +118,6 @@ public class ProductManager {
      */
     public void editProduct(String barCode,String briefDescp, int qty, double price,int reorderQty, int orderQty, String categoryCode) throws Exception{
     	Product product = Store.getInstance().getMgrProduct().getProductByBarcode(barCode);
-    	ReturnObject returnObj  = new ReturnObject(true, "ok", null);
     	if ( product == null){
     		throw new BadProductException("Can not retrive prodcut information.");
     	}
@@ -143,11 +141,9 @@ public class ProductManager {
 		saveData();
     }
     
-	public ReturnObject orderProdcut(Product product, int orderQty) {
-		ReturnObject returnObj = new ReturnObject(true, "ok", null);
+	public void orderProdcut(Product product, int orderQty) throws BadProductException{
 		product.setQty(product.getQty() + orderQty);
 		saveData();
-		return returnObj;
 
 	}
     
@@ -352,17 +348,15 @@ public class ProductManager {
 		return inventoryCheckColumnNames;
 	}
 
-	public ReturnObject orderAllLowInventoryProdcut() {
-		ReturnObject returnObj  = new ReturnObject(true, "ok", null);
+	public void orderAllLowInventoryProdcut() throws BadProductException{
 		if(  getLowerInventoryProducts().size() >=1) {
 			for (Product product : getLowerInventoryProducts()) {
-				//product.setQty(product.getOrderQty() + product.getOrderQty());
 				int orderno= product.getOrderQty() + product.getQty();
 				product.setQty(orderno);
 				saveData();
 			}
 		}
+		
 			
-		return returnObj;
 	}
 }

@@ -22,7 +22,6 @@ import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class ProdcutEntryDialog extends BaseDialogBox{
 

@@ -23,7 +23,6 @@ import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class ProductEditDialog extends BaseDialogBox{
 	/**

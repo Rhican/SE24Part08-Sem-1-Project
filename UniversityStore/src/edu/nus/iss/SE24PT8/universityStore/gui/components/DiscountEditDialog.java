@@ -10,12 +10,10 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,20 +23,14 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.text.NumberFormatter;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
 import edu.nus.iss.SE24PT8.universityStore.domain.MemberDiscount;
 import edu.nus.iss.SE24PT8.universityStore.domain.OtherDiscount;
-import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadDiscountException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
-import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
-import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
-import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class DiscountEditDialog extends BaseDialogBox{
 	
@@ -78,9 +70,11 @@ public class DiscountEditDialog extends BaseDialogBox{
 			if (discount instanceof MemberDiscount) {
 				radioApplyMember.setSelected(true);
 				radioApplyMember.setEnabled(false);
+				radioApplyPulic.setEnabled(false);
 			} else if (discount instanceof OtherDiscount) {
 				radioApplyPulic.setSelected(true);
 				radioApplyPulic.setEnabled(false);
+				radioApplyMember.setEnabled(false);
 			}
         
         
@@ -91,12 +85,14 @@ public class DiscountEditDialog extends BaseDialogBox{
         txtPercent.setValue(discount.getDiscountPercent());
         if(discount.isIsStartDateAlways()){
         	chkDateIsAlways.setSelected(true);
+        	txtStartDate.setEnabled(false);
         }else{
         	txtStartDate.setText( dateFormat.format( discount.getDiscountStartDate()));
         }
         
         if (discount.isIsPeriodAlways()){
         	chkPeroidAlways.setSelected(true);
+        	txtPeriod.setEnabled(false);
         }else {
         	txtPeriod.setValue(discount.getDiscountPeriod());
         }
@@ -225,6 +221,7 @@ public class DiscountEditDialog extends BaseDialogBox{
     }
 
     protected boolean performCreateUpdateAction ()  {
+
         String code = txtID.getText();
         String des = txtDes.getText();
         String startDateStr;
@@ -256,11 +253,9 @@ public class DiscountEditDialog extends BaseDialogBox{
         }
        
     
-        boolean isStartDateAlways = chkDateIsAlways.isSelected();
-        boolean isPeriodAlways = chkPeroidAlways.isSelected();
+        //boolean isStartDateAlways = chkDateIsAlways.isSelected();
+       // boolean isPeriodAlways = chkPeroidAlways.isSelected();
         String applicableFor ="A";
-        
-        
         
         if ( radioApplyMember.isSelected()){
         	applicableFor = "M";
@@ -272,52 +267,52 @@ public class DiscountEditDialog extends BaseDialogBox{
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
         }
-        
-		try {
-			if (!isStartDateAlways && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))) {
-				JOptionPane.showMessageDialog(rootPane, "Please Enter the Correct Date Format", "Error",
-						JOptionPane.ERROR_MESSAGE);
+        try {
+        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
+				JOptionPane.showMessageDialog(rootPane,
+						"Please Enter the Correct Date Format",
+						"Error", JOptionPane.ERROR_MESSAGE);
 				return false;
-			} else if (!isStartDateAlways && !startDateStr.equals("")
-					&& (dateFormat.parse(startDateStr) instanceof Date)) {
+			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
 				startDate = dateFormat.parse(startDateStr);
-
+				
 			}
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane,
+					"Please Enter the Correct Date Format",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}catch (NullPointerException e){
+			JOptionPane.showMessageDialog(rootPane,
+					"Please Enter the Correct Date Format",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
         
        int period = 0 ;
         
-        if ((!isPeriodAlways  &&  txtPeriod.getValue() == null )  || (!isPeriodAlways && ( txtPeriod.getValue().toString().equals("") || (Integer.parseInt(txtPeriod.getValue().toString())  <0))) ){
-    		JOptionPane.showMessageDialog(rootPane,
-					"Please Enter the periods of discount in Days",
-					"Error", JOptionPane.ERROR_MESSAGE);
+		if ((!chkPeroidAlways.isSelected() && txtPeriod.getValue() == null)
+				|| (!chkPeroidAlways.isSelected() && (txtPeriod.getValue().toString().equals("")
+						|| (Integer.parseInt(txtPeriod.getValue().toString()) < 0)))) {
+			JOptionPane.showMessageDialog(rootPane, "Please Enter the periods of discount in Days", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
-    	}
-    	else if (!isPeriodAlways && (Integer.parseInt(txtPeriod.getValue().toString()) >=0)){
+		} else if (!chkPeroidAlways.isSelected() && (Integer.parseInt(txtPeriod.getValue().toString()) >= 0)) {
 			period = Integer.parseInt(txtPeriod.getValue().toString());
+
+		}
         
-    	}
-        
-         try {
-			ReturnObject returnObj = Store.getInstance().getMgrDiscount().upDateDiscount(code, des, percent, startDate, period, isStartDateAlways, isPeriodAlways, applicableFor);
-			if (returnObj.isSuccess()){
+		try {
+			Store.getInstance().getMgrDiscount().upDateDiscount(code, des, percent, startDate, period,
+					chkDateIsAlways.isSelected(), chkPeroidAlways.isSelected(), applicableFor);
 				SubjectManager.getInstance().Update("DiscountPanel", "Discount", "Add");
-				return true;
-			}else{
-				JOptionPane.showMessageDialog(rootPane,
-						returnObj.getMessage(),
-						"Error", JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
+			
 		} catch (BadDiscountException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
       
     return true;

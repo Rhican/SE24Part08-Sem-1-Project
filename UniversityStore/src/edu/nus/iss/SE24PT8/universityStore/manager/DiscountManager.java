@@ -11,7 +11,6 @@ import edu.nus.iss.SE24PT8.universityStore.exception.BadDiscountException;
 import edu.nus.iss.SE24PT8.universityStore.util.ApplicationConfig;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -63,19 +62,16 @@ public class DiscountManager  {
      *
      * @param memberDiscount
      */
-   public ReturnObject addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
+   public void addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
 
         Discount discount;
-        ReturnObject returnObj  = new ReturnObject(true, "ok", null);
         
         if (isPeriodAlways) {
             period = 0;
         }
 
         if (getDiscountByCode(discountCode) != null) {
-        	returnObj  = new ReturnObject(false, Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST,Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
-           //throw new BadDiscountException(Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
-        	return returnObj;
+           throw new BadDiscountException(Constants.CONST_DISCOUNT_ERR_DISCOUNTCODEEXIST);
         }
 
         if (applicableFor.trim().equalsIgnoreCase(Constants.CONST_CUST_TYPE_MEMBER)) {
@@ -96,32 +92,21 @@ public class DiscountManager  {
         
         discountList.add(discount);
         saveData();
-        return returnObj;
 
     }
    
-   public ReturnObject upDateDiscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
+   public void upDateDiscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
 	   
-	   ReturnObject returnObj  = new ReturnObject(true, "ok", null);
        Discount discount =  getDiscountByCode(discountCode);
        
        if (  discount == null){
-    		returnObj  = new ReturnObject(false, "Eror in Updating Discount information",null);
-    		return returnObj;
+    	   throw new BadDiscountException( "Eror in Updating Discount information");
        }
        
        if (isPeriodAlways) {
            period = 0;
        }
 
-
-       if (applicableFor.trim().equalsIgnoreCase(Constants.CONST_CUST_TYPE_MEMBER)) {
-           discount = (MemberDiscount) discount;
-           discount.setApplicableFor(Constants.CONST_CUST_TYPE_MEMBER);
-       } else {
-    	   discount = (MemberDiscount) discount;
-           discount.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
-       }
        discount.setDiscountCode(discountCode);
        discount.setDiscountDes(description);
        discount.setDiscountPercent(percentage);
@@ -132,7 +117,6 @@ public class DiscountManager  {
        
        
        saveData();
-       return returnObj;
 
    }
 

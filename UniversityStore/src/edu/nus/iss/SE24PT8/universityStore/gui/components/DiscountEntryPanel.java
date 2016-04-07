@@ -1,11 +1,7 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components;
 
-import java.awt.Button;
-import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -31,14 +27,15 @@ import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadDiscountException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
-import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.Login;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
-import edu.nus.iss.SE24PT8.universityStore.util.Constants;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class DiscountEntryPanel extends BaseDialogBox{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtID;
 	private JTextField txtDes;
 	
@@ -91,7 +88,6 @@ public class DiscountEntryPanel extends BaseDialogBox{
     	
     	JPanel panel = new JPanel();
         panel.setSize(300,300);
-       // GridBagLayout layout = new GridBagLayout();
         GridLayout layout = new GridLayout(0, 2);
 
         panel.setLayout(layout); 
@@ -212,8 +208,8 @@ public class DiscountEntryPanel extends BaseDialogBox{
         }
        
     
-        boolean isStartDateAlways = chkDateIsAlways.isSelected();
-        boolean isPeriodAlways = chkPeroidAlways.isSelected();
+       // boolean isStartDateAlways = chkDateIsAlways.isSelected();
+       // boolean isPeriodAlways = chkPeroidAlways.isSelected();
         String applicableFor ="A";
         
         if ( radioApplyMember.isSelected()){
@@ -226,14 +222,13 @@ public class DiscountEntryPanel extends BaseDialogBox{
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
         }
-        
         try {
-        	 if (!isStartDateAlways && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
+        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
 				JOptionPane.showMessageDialog(rootPane,
 						"Please Enter the Correct Date Format",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				return false;
-			}else if (!isStartDateAlways &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
+			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
 				startDate = dateFormat.parse(startDateStr);
 				
 			}
@@ -241,50 +236,49 @@ public class DiscountEntryPanel extends BaseDialogBox{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane,
+					"Please Enter the Correct Date Format",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}catch (NullPointerException e){
+			JOptionPane.showMessageDialog(rootPane,
+					"Please Enter the Correct Date Format",
+					"Error", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
         
        int period = 0 ;
         
-        if ((!isPeriodAlways  &&  txtPeriod.getValue() == null )  || (!isPeriodAlways && ( txtPeriod.getValue().toString().equals("") || (Integer.parseInt(txtPeriod.getValue().toString())  <0))) ){
-    		JOptionPane.showMessageDialog(rootPane,
-					"Please Enter the periods of discount in Days",
-					"Error", JOptionPane.ERROR_MESSAGE);
+		if ((!chkPeroidAlways.isSelected() && txtPeriod.getValue() == null)
+				|| (!chkPeroidAlways.isSelected() && (txtPeriod.getValue().toString().equals("")
+						|| (Integer.parseInt(txtPeriod.getValue().toString()) < 0)))) {
+			JOptionPane.showMessageDialog(rootPane, "Please Enter the periods of discount in Days", "Error",
+					JOptionPane.ERROR_MESSAGE);
 			return false;
-    	}
-    	else if (!isPeriodAlways && (Integer.parseInt(txtPeriod.getValue().toString()) >=0)){
+		} else if (!chkPeroidAlways.isSelected() && (Integer.parseInt(txtPeriod.getValue().toString()) >= 0)) {
 			period = Integer.parseInt(txtPeriod.getValue().toString());
+
+		}
         
-    	}
-        
-         try {
-			ReturnObject returnObj = Store.getInstance().getMgrDiscount().addNewiDscount(code, des, percent, startDate, period, isStartDateAlways, isPeriodAlways, applicableFor);
-			if (returnObj.isSuccess()){
-				SubjectManager.getInstance().Update("DiscountPanel", "Discount", "Add");
-				return true;
-			}else{
-				JOptionPane.showMessageDialog(rootPane,
-						returnObj.getMessage(),
-						"Error", JOptionPane.ERROR_MESSAGE);
-				return false;
-			}
+		try {
+			Store.getInstance().getMgrDiscount().addNewiDscount(code, des, percent, startDate, period,
+					chkDateIsAlways.isSelected(), chkPeroidAlways.isSelected(), applicableFor);
+			SubjectManager.getInstance().Update("DiscountPanel", "Discount", "Add");
 		} catch (BadDiscountException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
       
     return true;
 }
 
 	public boolean isValidDate(String date, DateFormat format) {
-	     try {
-	          format.parse(date);
-	          return true;
-	     }
-	     catch(ParseException e){
-	          return false;
-	     }
+		try {
+			format.parse(date);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
 	}
     
 }

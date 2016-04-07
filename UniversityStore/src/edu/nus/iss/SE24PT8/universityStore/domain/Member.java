@@ -6,7 +6,6 @@
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
 /**

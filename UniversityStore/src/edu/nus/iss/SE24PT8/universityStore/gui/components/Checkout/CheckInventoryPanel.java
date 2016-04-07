@@ -24,6 +24,7 @@ import javax.swing.GroupLayout.Group;
 import javax.swing.table.DefaultTableModel;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
 import edu.nus.iss.SE24PT8.universityStore.gui.components.ProdcutEntryDialog;
@@ -32,7 +33,6 @@ import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 
 public class CheckInventoryPanel  extends JPanel implements INotificable{
 
@@ -78,11 +78,9 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		GroupLayout thisLayout = new GroupLayout((JComponent) this);
 		this.setLayout(thisLayout);
 		setLocation(500, 500);
-		//this.setPreferredSize(getRootPane().getSize());
 		this.setPreferredSize(new java.awt.Dimension(500, 300));
 		titleLabel = new JLabel();
 		titleLabel.setText("Check Inventory");
-		//titleLabel.setText("Check Inventory( Product List - quantity below a specific threshold)" );
 		titleLabel.setVerifyInputWhenFocusTarget(false);
 		titleLabel.setForeground(Constants.STORE_APP_TITLE_COLOR);
 		titleLabel.setFont(Constants.STORE_APP_TITLE_FONT);
@@ -101,12 +99,6 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 					performOrderAllItem();
 				}
 			});
-			//btnOrderItem = new JButton("Order All");
-			//btnOrderItem.addActionListener(new ActionListener() {
-				//public void actionPerformed(ActionEvent arg0) {
-					//performOrderAll();
-				//}
-			//});
 		
 		Group group1 = thisLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(titleLabel,
 				GroupLayout.Alignment.BASELINE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
@@ -146,44 +138,8 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 		return dataPane;
 	}
 	
- 	/*
-	protected void performAddAction (){
-		ProdcutEntryDialog d = new ProdcutEntryDialog();
-		d.setEntryFlag(Constants.PRODCUT_ENTRYFLAG_NEW);
-		d.pack();
-		d.setVisible(true);
-		refersh();
-	}
-	*/
- 	/*
-	protected void performModifyAction () {
-		if (productTable.getSelectedRow() != -1) {
-			int selectedRow = productTable.getSelectedRow();
-			Product product = manager.getMgrProduct().getProductList().get(selectedRow);
-
-			if (product == null) {
-				try {
-
-					throw new Exception("Error in loading prodcut information");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			ReturnObject returnObj = manager.getMgrProduct().orderProdcut(product, product.getOrderQty());
-			
-			if ( returnObj != null && returnObj.isSuccess() ){
-				JOptionPane.showMessageDialog(new JFrame(),
-						returnObj.getMessage(),
-    					"Success", JOptionPane.INFORMATION_MESSAGE);
-			}
-		}
-		refersh();
-	}
-	*/
 	public void performOrderItem() {
 		if (productTable.getSelectedRow() != -1) {
-			int selectedRow = productTable.getSelectedRow();
 			String producID=productTable.getValueAt(productTable.getSelectedRow(),0).toString();
 			Product product = manager.getMgrProduct().getProductByID(producID);
 			//Product product = manager.getMgrProduct().getProductList().get(selectedRow);
@@ -199,21 +155,26 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 				}
 			}
 			
-		 ReturnObject returnObj  = 	manager.getMgrProduct().orderProdcut(product, product.getOrderQty());
-		 if ( returnObj!=null && returnObj.isSuccess()){
-			 JOptionPane.showMessageDialog(getRootPane(),
-						"Order successful!",
- 					"Success", JOptionPane.INFORMATION_MESSAGE);
-		 }
+		try{
+			manager.getMgrProduct().orderProdcut(product, product.getOrderQty());
+			refersh();
+			
+		}catch( BadProductException e){
+			JOptionPane.showMessageDialog(getRootPane(),
+					"Order successful!",
+					"Success", JOptionPane.INFORMATION_MESSAGE);
+		}
 
 		}
-		refersh();
+		
 	}
 	
 	public void performOrderAllItem(){
-		 ReturnObject returnObj  = 	manager.getMgrProduct().orderAllLowInventoryProdcut();
-		 if ( returnObj!=null && returnObj.isSuccess()){
-			 JOptionPane.showMessageDialog(getRootPane(),
+		 try{
+			 manager.getMgrProduct().orderAllLowInventoryProdcut();
+		 }
+		 catch (BadProductException e){
+		 JOptionPane.showMessageDialog(getRootPane(),
 						"All Items are ordered sucessfully!",
 					"Success", JOptionPane.INFORMATION_MESSAGE);
 		 }
