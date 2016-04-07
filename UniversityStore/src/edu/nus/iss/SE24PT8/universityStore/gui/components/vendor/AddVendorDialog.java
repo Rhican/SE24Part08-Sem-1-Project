@@ -2,7 +2,6 @@ package edu.nus.iss.SE24PT8.universityStore.gui.components.vendor;
 
 import java.awt.Dialog;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -15,10 +14,8 @@ import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
-import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import edu.nus.iss.SE24PT8.universityStore.util.Item;
-import edu.nus.iss.SE24PT8.universityStore.util.ReturnObject;
 /**
 *
 * @author Mugunthan
