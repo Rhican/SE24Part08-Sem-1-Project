@@ -64,6 +64,7 @@ public class ProdcutEditDialog extends BaseDialogBox{
 			}
 		}
 		txtName.setText(prodcut.getProductName());
+		txtName.setEditable(false);
 		txtBarCode.setText(prodcut.getBarcode());
 		txtBarCode.setEditable(false);
 		txtDescription.setText(prodcut.getBriefDesp());
