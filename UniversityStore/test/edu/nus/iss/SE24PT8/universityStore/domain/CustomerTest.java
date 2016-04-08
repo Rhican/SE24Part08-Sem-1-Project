@@ -25,8 +25,8 @@ public class CustomerTest extends TestCase {
    
     @Before
     public void setUp() throws BadMemberRegistrationException {
-         cus1= new Customer("Ang Lee","R64565FG4");
-         cus2= new Customer("Yan Martel","F42563743156");
+         cus1= new Customer("Customer1","R64565FG41");
+         cus2= new Customer("Customer2","F425637431562");
     }
     
     @After
@@ -37,23 +37,23 @@ public class CustomerTest extends TestCase {
 
     @Test
     public void testGetCustomerName(){
-        assertEquals("Ang Lee",cus1.getName());
-        assertEquals("Yan Martel",cus2.getName());
+        assertEquals("Customer1",cus1.getName());
+        assertEquals("Customer2",cus2.getName());
     }
     
     @Test
     public void testGetPassword(){
-       assertEquals("R64565FG4",cus1.getID());
-       assertEquals("F42563743156",cus2.getID());
+       assertEquals("R64565FG41",cus1.getID());
+       assertEquals("F425637431562",cus2.getID());
     }
    
     @Test
     public void testCustomer()
     {
-        assertEquals("Ang Lee",cus1.getName());
-        assertEquals("R64565FG4",cus1.getID());
-        assertEquals("Yan Martel",cus2.getName());
-        assertEquals("F42563743156",cus2.getID());
+        assertEquals("Customer1",cus1.getName());
+        assertEquals("R64565FG41",cus1.getID());
+        assertEquals("Customer2",cus2.getName());
+        assertEquals("F425637431562",cus2.getID());
         assertSame(cus1,cus1);
         assertSame(cus2,cus2);
         
@@ -61,9 +61,8 @@ public class CustomerTest extends TestCase {
     
     @Test
     public void testEquals() throws BadMemberRegistrationException{
-        
-        assertEquals(cus1, new Customer("Ang Lee","R64565FG4"));
-        assertEquals(cus2,new Customer("Yan Martel","F42563743156"));
+        assertEquals(cus1, new Customer("Customer1","R64565FG41"));
+        assertEquals(cus2,new Customer("Customer2","F425637431562"));
     }
     
     @Test

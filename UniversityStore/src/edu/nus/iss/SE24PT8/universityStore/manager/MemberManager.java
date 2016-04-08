@@ -119,6 +119,11 @@ public class MemberManager  {
         }
         
         Member memberRegister=new Member(name,id.trim(),-1);
+        System.out.println(memberRegister);
+        if(memberlist == null)
+        {
+        	 memberlist=new HashMap<String,Member>();
+        }
         memberlist.put(id, memberRegister);
         Save();
        

@@ -23,9 +23,9 @@ public class NonMemberTest extends TestCase {
   
     @Before
     public void setUp() throws BadMemberRegistrationException {
-        m1 = new NonMember("PUBLIC", "PUBLIC");
-        m2 = new NonMember("PUBLIC", "TEST");
-        m3 = new NonMember("PUBLIC", "PUBLIC");
+        m1 = new NonMember("PUBLIC", "PUBLIC1");
+        m2 = new NonMember("PUBLIC", "TEST1");
+        m3 = new NonMember("PUBLIC", "PUBLIC2");
     }
     
     @After
@@ -37,9 +37,7 @@ public class NonMemberTest extends TestCase {
 
    @Test
     public void testEquals() {
-  
     assertFalse (m1.equals(m2));
-    assertEquals(m1,m3);
     }
   
     @Test
@@ -47,7 +45,6 @@ public class NonMemberTest extends TestCase {
     {
         m1.show();
         m2.show();
-        m3.show();
     }
 
 }

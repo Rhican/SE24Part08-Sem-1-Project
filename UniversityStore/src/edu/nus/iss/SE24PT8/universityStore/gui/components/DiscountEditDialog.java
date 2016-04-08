@@ -87,6 +87,9 @@ public class DiscountEditDialog extends BaseDialogBox{
         	chkDateIsAlways.setSelected(true);
         	txtStartDate.setEnabled(false);
         }else{
+        	
+        	System.out.println(discount.getDiscountStartDate());
+        	System.out.println(dateFormat.format( discount.getDiscountStartDate()));
         	txtStartDate.setText( dateFormat.format( discount.getDiscountStartDate()));
         }
         
@@ -183,20 +186,28 @@ public class DiscountEditDialog extends BaseDialogBox{
         panel.add(compPeriod);
         
         
-        chkDateIsAlways.addActionListener(new ActionListener() {
+ chkDateIsAlways.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (chkDateIsAlways.isSelected()){
 					txtStartDate.setEditable(false);
 					txtStartDate.setEnabled(false);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(false);
+					txtPeriod.setEditable(false);
+					txtPeriod.setEnabled(false);
 				}else{
 					txtStartDate.setEditable(true);
 					txtStartDate.setEnabled(true);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(true);
+					
 				}
 				
 			}
 		});
+        
         
         chkPeroidAlways.addActionListener(new ActionListener() {
 			
@@ -213,10 +224,6 @@ public class DiscountEditDialog extends BaseDialogBox{
 			}
 		});
         
-        
-        
-		
-        
         return panel;
     }
 
@@ -225,11 +232,6 @@ public class DiscountEditDialog extends BaseDialogBox{
         String code = txtID.getText();
         String des = txtDes.getText();
         String startDateStr;
-        if ( txtStartDate.getValue() != null){
-        	   startDateStr = txtStartDate.getValue().toString();
-        }else {
-        	   startDateStr ="";
-        }
        
         Date startDate = null;
         
@@ -268,13 +270,13 @@ public class DiscountEditDialog extends BaseDialogBox{
         	return false;
         }
         try {
-        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
+        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getText(), dateFormat))){
 				JOptionPane.showMessageDialog(rootPane,
 						"Please Enter the Correct Date Format",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				return false;
-			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
-				startDate = dateFormat.parse(startDateStr);
+			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getText(), dateFormat))){
+				startDate = dateFormat.parse(txtStartDate.getText());
 				
 			}
 		} catch (HeadlessException e) {

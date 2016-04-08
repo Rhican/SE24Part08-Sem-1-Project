@@ -41,20 +41,23 @@ public class StoreKeeperManager {
         ValidateUserNameAndPassword(storeKeeperName,password,"STOPERKEEPERNAME");
         ValidateUserNameAndPassword(storeKeeperName,password,"PASSWORD");
         
-        Iterator<StoreKeeper> i=storeKeeper.iterator();
-        while(i.hasNext()){
-           StoreKeeper storeKeeper=i.next();
-           if(storeKeeper.getstoreKeeperName().equalsIgnoreCase(storeKeeperName))
-           {
-               if(storeKeeper.getPassword().equals(password))
-               {
-                   return true;
-               }
-               else
-                {
-                     throw new BadStoreKeeperAdminException(Constants.CONST_STOREKEEPER_ERR_LOGIN);
-                }
-           }
+        if(storeKeeper != null)
+        {
+	        Iterator<StoreKeeper> i=storeKeeper.iterator();
+	        while(i.hasNext()){
+	           StoreKeeper storeKeeper=i.next();
+	           if(storeKeeper.getstoreKeeperName().equalsIgnoreCase(storeKeeperName))
+	           {
+	               if(storeKeeper.getPassword().equals(password))
+	               {
+	                   return true;
+	               }
+	               else
+	                {
+	                     throw new BadStoreKeeperAdminException(Constants.CONST_STOREKEEPER_ERR_LOGIN);
+	                }
+	           }
+	        }
         }
         return false;
     }
