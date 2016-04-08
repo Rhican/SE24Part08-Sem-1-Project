@@ -29,6 +29,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseDialogBox;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
 public class DiscountEntryPanel extends BaseDialogBox{
 	
@@ -43,14 +44,11 @@ public class DiscountEntryPanel extends BaseDialogBox{
 	private JRadioButton radioApplyMember;
 	private JRadioButton radioApplyPulic;
 	
-	//private ButtonGroup bntGrpStratDate;
 	private JToggleButton chkDateIsAlways;
 	private JCheckBox chkDatePick;
-	//private JTextField txtStartDate;
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");
     JFormattedTextField txtStartDate;
 	
-	//private ButtonGroup btnGrpPeriod;
 	private JToggleButton chkPeroidAlways;
 	private JFormattedTextField txtPeriod;
 	private JFormattedTextField txtPercent;
@@ -146,19 +144,28 @@ public class DiscountEntryPanel extends BaseDialogBox{
         
         panel.add(compPeriod);
         
-        
-        chkDateIsAlways.addActionListener(new ActionListener() {
-			
+		chkDateIsAlways.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (chkDateIsAlways.isSelected()){
+				if (chkDateIsAlways.isSelected()) {
 					txtStartDate.setEditable(false);
-				}else{
+					txtStartDate.setEnabled(false);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(false);
+					txtPeriod.setEditable(false);
+					txtPeriod.setEnabled(false);
+				} else {
 					txtStartDate.setEditable(true);
+					txtStartDate.setEnabled(true);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(true);
+
 				}
-				
+
 			}
 		});
+        
         
         chkPeroidAlways.addActionListener(new ActionListener() {
 			
@@ -166,8 +173,10 @@ public class DiscountEntryPanel extends BaseDialogBox{
 			public void actionPerformed(ActionEvent e) {
 				if (chkPeroidAlways.isSelected()){
 					txtPeriod.setEditable(false);
+					txtPeriod.setEnabled(false);
 				}else{
 					txtPeriod.setEditable(true);
+					txtPeriod.setEnabled(true);
 				}
 				
 			}
@@ -179,16 +188,10 @@ public class DiscountEntryPanel extends BaseDialogBox{
     protected boolean performCreateUpdateAction ()  {
         String code = txtID.getText();
         String des = txtDes.getText();
-        String startDateStr;
-        if ( txtStartDate.getValue() != null){
-        	   startDateStr = txtStartDate.getValue().toString();
-        }else {
-        	   startDateStr ="";
-        }
-       
         Date startDate = null;
-        
+        String applicableFor ="A";
         int percent;
+        int period = 0 ;
         
         if ( code.equals("")){
         	JOptionPane.showMessageDialog(rootPane,
@@ -207,29 +210,26 @@ public class DiscountEntryPanel extends BaseDialogBox{
         	percent = Integer.parseInt(txtPercent.getValue().toString());
         }
        
-    
-       // boolean isStartDateAlways = chkDateIsAlways.isSelected();
-       // boolean isPeriodAlways = chkPeroidAlways.isSelected();
-        String applicableFor ="A";
         
         if ( radioApplyMember.isSelected()){
-        	applicableFor = "M";
+        	applicableFor = Constants.CONST_CUST_TYPE_MEMBER;
         }else if ( radioApplyPulic.isSelected()){
-        	applicableFor = "A";
+        	applicableFor = Constants.CONST_CUST_TYPE_PUBLIC;
         }else{
         	JOptionPane.showMessageDialog(rootPane,
 					"Please Choose Discount Type",
 					"Error", JOptionPane.ERROR_MESSAGE);
         	return false;
         }
+        
         try {
-        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getValue().toString(), dateFormat))){
+        	 if (!chkDateIsAlways.isSelected() && (!isValidDate(txtStartDate.getText(), dateFormat))){
 				JOptionPane.showMessageDialog(rootPane,
 						"Please Enter the Correct Date Format",
 						"Error", JOptionPane.ERROR_MESSAGE);
 				return false;
-			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getValue().toString(), dateFormat))){
-				startDate = dateFormat.parse(startDateStr);
+			}else if (!chkDateIsAlways.isSelected() &&  (isValidDate(txtStartDate.getText(), dateFormat))){
+				startDate = dateFormat.parse(txtStartDate.getText());
 				
 			}
 		} catch (HeadlessException e) {
@@ -247,9 +247,10 @@ public class DiscountEntryPanel extends BaseDialogBox{
 			return false;
 		}
         
-       int period = 0 ;
+      
         
 		if ((!chkPeroidAlways.isSelected() && txtPeriod.getValue() == null)
+				
 				|| (!chkPeroidAlways.isSelected() && (txtPeriod.getValue().toString().equals("")
 						|| (Integer.parseInt(txtPeriod.getValue().toString()) < 0)))) {
 			JOptionPane.showMessageDialog(rootPane, "Please Enter the periods of discount in Days", "Error",

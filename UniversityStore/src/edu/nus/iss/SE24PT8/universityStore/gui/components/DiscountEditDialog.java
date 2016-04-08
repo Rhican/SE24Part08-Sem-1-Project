@@ -90,7 +90,7 @@ public class DiscountEditDialog extends BaseDialogBox{
         	
         	System.out.println(discount.getDiscountStartDate());
         	System.out.println(dateFormat.format( discount.getDiscountStartDate()));
-        	txtStartDate.setValue( dateFormat.format( discount.getDiscountStartDate()));
+        	txtStartDate.setText( dateFormat.format( discount.getDiscountStartDate()));
         }
         
         if (discount.isIsPeriodAlways()){
@@ -186,20 +186,28 @@ public class DiscountEditDialog extends BaseDialogBox{
         panel.add(compPeriod);
         
         
-        chkDateIsAlways.addActionListener(new ActionListener() {
+ chkDateIsAlways.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (chkDateIsAlways.isSelected()){
 					txtStartDate.setEditable(false);
 					txtStartDate.setEnabled(false);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(false);
+					txtPeriod.setEditable(false);
+					txtPeriod.setEnabled(false);
 				}else{
 					txtStartDate.setEditable(true);
 					txtStartDate.setEnabled(true);
+					chkPeroidAlways.setSelected(true);
+					chkPeroidAlways.setEnabled(true);
+					
 				}
 				
 			}
 		});
+        
         
         chkPeroidAlways.addActionListener(new ActionListener() {
 			
@@ -215,10 +223,6 @@ public class DiscountEditDialog extends BaseDialogBox{
 				
 			}
 		});
-        
-        
-        
-		
         
         return panel;
     }
