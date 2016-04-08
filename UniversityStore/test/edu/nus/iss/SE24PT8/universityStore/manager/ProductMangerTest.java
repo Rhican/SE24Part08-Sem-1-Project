@@ -5,70 +5,96 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.manager;
  
-import edu.nus.iss.SE24PT8.universityStore.domain.Product;
-import edu.nus.iss.SE24PT8.universityStore.domain.Category;
-import java.util.ArrayList;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import edu.nus.iss.SE24PT8.universityStore.domain.Category;
+import edu.nus.iss.SE24PT8.universityStore.domain.Product;
+import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
+import edu.nus.iss.SE24PT8.universityStore.gui.components.ProdcutEntryDialog;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
+import junit.framework.TestCase;
+
+
+import java.io.IOException;
     
 
 /**
  *
  * @author misitesawn
  */
-public class ProductMangerTest {
-    private ProductManager productMgr;
-    private CategoryManager categoryMgr;
-    ArrayList<Product> products;
-    @Before
-    public void setUp() {
-        productMgr = ProductManager.getInstance();
-        categoryMgr = CategoryManager.getInstance();
-        products = productMgr.getProductList();
-        products.removeAll(products);
+public class ProductMangerTest extends TestCase{
+	ProductManager pordMgr  = null;
+	CategoryManager catMgr = null;
+	
+	Category cat1  = null;
+	public ProductMangerTest(){
+		
+	}
+	@Before
+	public void setUp()  {
+		pordMgr = ProductManager.getInstance();
+		catMgr = CategoryManager.getInstance();
+		
+		try{
+			cat1 = catMgr.getCategories().get(1);
+		}catch (NullPointerException e){
+		}
+	}
 
-        productMgr.saveData();
+	@After
+	public void tearDown() throws IOException {
+		pordMgr = null;
+		catMgr = null;
+	}
 
-    }
-    
+	@Test
+	public void testProdcutMgrInstance() {
+		ProductManager mgr1 = ProductManager.getInstance();
+		ProductManager mgr2 = ProductManager.getInstance();
+		assertFalse(mgr1 == null);
+		assertFalse(mgr2 == null);
+		assertTrue(mgr1.equals(mgr2)); // Singleton test
+	}
+	
     @Test
     public void addProdcutTest(){
         
-        Category cat1  = categoryMgr.getCategory("CLO");
-        //productMgr.addNewProduct("Air Tight Coffee", "Coffe Bup", 14, 24.90, "11994456", 20, 200, cat1);
-      
-        Category cat2  = categoryMgr.getCategory("CLO");
-      //  productMgr.addNewProduct("Coffee Bean Mug", "Coffe Bean Special Mug", 100, 100, "11992235", 30, 100, cat2);
-       
-        
         Product prod1  = new Product();
-        Product prod2  = new Product();
+        int oriProdSize = pordMgr.getProductList().size();
+        int catProdcutCnt = pordMgr.getProductCountInCategory(cat1);
+        
+        try {
+			pordMgr.addNewProduct("Air Tight Coffee", "Air Tight Coffee Cup", 20, 25, "BAR1", 50, 20, cat1.getCategoryCode());
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        prod1 = pordMgr.getProductList().get(oriProdSize +1);
+        System.out.println(prod1.getProductId());
+        assertTrue( prod1.getProductId().equalsIgnoreCase(cat1.getCategoryCode()+"/"+ String.valueOf(catProdcutCnt+1) ));
+        
+       try{
+    	   pordMgr.addNewProduct("Air Tight Coffee", "Air Tight Coffee Cup", 20, 25, "BAR1", 50, 20, cat1.getCategoryCode());
+       }catch(BadProductException e){
+    	    assertTrue(e.getMessage().equalsIgnoreCase(Constants.CONST_PRODUCT_ERR_BARCODEEXIST));
+       }catch (Exception e){
+    	   e.printStackTrace();
+       }
        
-        prod1.setProductId("CLO/1");
-        prod1.setProductName("Air Tight Coffee");
-        prod1.setBriefDesp("Coffe Bup");
-        prod1.setPrice(24.90);
-        prod1.setBarcode("11994456");
-        prod1.setReorderQty(20);
-        prod1.setOrderQty(200);
-        prod1.setCategory(cat1);
-        prod1.setQty(14);
-        
-        prod2.setProductId("CLO/2");
-        prod2.setProductName("Coffee Bean Mug");
-        prod2.setQty(100);
-        prod2.setBriefDesp("Coffe Bean Special Mug");
-        prod2.setPrice(100);
-        prod2.setBarcode("11992235");
-        prod2.setReorderQty(30);
-        prod2.setOrderQty(100);
-        prod2.setCategory(cat2);
-        
-        assertEquals(products.get(0)  , prod1);
-        
-        
-        assertEquals(products.get(1)  , prod2);
+		try {
+
+			pordMgr.addNewProduct("Air Tight Coffee", "Air Tight Coffee Cup", 20, 25, "BAR2", 50, 20,
+					cat1.getCategoryCode());
+			prod1 = pordMgr.getProductList().get(oriProdSize + 1);
+			System.out.println(prod1.getProductId());
+			assertTrue(prod1.getProductId()
+					.equalsIgnoreCase(cat1.getCategoryCode() + "/" + String.valueOf(catProdcutCnt + 1)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    
     }
     
    

@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
@@ -34,7 +35,7 @@ import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 public class DiscountEntryPanel extends BaseDialogBox{
 	
 	/**
-	 * 
+	 * @author misitesawn
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField txtID;
@@ -181,7 +182,7 @@ public class DiscountEntryPanel extends BaseDialogBox{
 				
 			}
 		});
-        
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         return panel;
     }
 

@@ -62,9 +62,9 @@ public class DiscountManager  {
      * to add new Member Discount check Discount Code is already exists or not
      * add new Member Discount for valid record
      *
-     * @param memberDiscount
+     * 
      */
-   public void addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
+	public void addNewiDscount(String discountCode, String description, int percentage, Date startDate, int period, boolean isStartDateAlways, boolean isPeriodAlways, String applicableFor) throws BadDiscountException {
 
         Discount discount;
         

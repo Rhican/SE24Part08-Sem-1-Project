@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
@@ -95,6 +96,7 @@ private static final long serialVersionUID = 1L;
         p.add(txtReorderQty);
         p.add (new JLabel ("Order Quantity"));
         p.add(txtOrderQty);
+        p.setBorder(new EmptyBorder(10, 10, 10, 10));
         return p;
     }
     

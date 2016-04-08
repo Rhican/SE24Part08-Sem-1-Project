@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
@@ -223,6 +224,8 @@ public class DiscountEditDialog extends BaseDialogBox{
 				
 			}
 		});
+        
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         
         return panel;
     }

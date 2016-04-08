@@ -5,12 +5,16 @@
  */
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
-import edu.nus.iss.SE24PT8.universityStore.domain.Customer;
 import edu.nus.iss.SE24PT8.universityStore.domain.Discount;
 import edu.nus.iss.SE24PT8.universityStore.domain.NonMember;
 import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ApplicationConfig;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
+import junit.framework.TestCase;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.junit.After;
@@ -22,90 +26,78 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author hendry
+ * @author misitesawn
  */
-public class DiscountTest2 {
-    
-    public DiscountTest2() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
+public class DiscountTest extends TestCase {
+	Discount mdis1;
+	Discount mdis2;
+	Discount pdis3;
+	Discount pdis4;
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");	
+		
+		public DiscountTest() {
+			
+		}
+		
+	@Before
+	public void setUp() throws ParseException {
+		
+		
+		mdis1 = new MemberDiscount();
+		mdis1.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		mdis1.setDiscountCode("CHRIS");
+		mdis1.setDiscountDes("Christmas Sale");
+		mdis1.setDiscountPercent(20);
+		mdis1.setIsStartDateAlways(false);
+		mdis1.setDiscountStartDate(dateFormat.parse("2015-12-12"));
+		mdis1.setDiscountPeriod(10);
+		mdis1.setIsPeriodAlways(false);
+		
+		mdis2 = new MemberDiscount();
+		mdis2.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		mdis2.setDiscountCode("EXCM");
+		mdis2.setDiscountDes("Member Special");
+		mdis2.setDiscountPercent(20);
+		mdis2.setIsStartDateAlways(true);
+		mdis2.setDiscountStartDate(null);
+		mdis2.setDiscountPeriod(0);
+		mdis2.setIsPeriodAlways(true);
+		
+		pdis3 = new OtherDiscount();
+		pdis3.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		pdis3.setDiscountCode("SCH");
+		pdis3.setDiscountDes("School Start Sale");
+		pdis3.setDiscountPercent(30);
+		pdis3.setIsStartDateAlways(false);
+		pdis3.setDiscountStartDate(dateFormat.parse("2015-06-12"));
+		pdis3.setDiscountPeriod(0);
+		pdis3.setIsPeriodAlways(true);
+		
+		pdis4 = new OtherDiscount();
+		pdis4.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		pdis4.setDiscountCode("SUMMER");
+		pdis4.setDiscountDes("SUMMER Sale");
+		pdis4.setDiscountPercent(10);
+		pdis4.setIsStartDateAlways(false);
+		pdis4.setDiscountStartDate(dateFormat.parse("2015-03-01"));
+		pdis4.setDiscountPeriod(30);
+		pdis4.setIsPeriodAlways(false);
+	
+	}
 
- 
-    @Test
-    public void hello() {
-        DiscountManager dm=DiscountManager.getInstance();
-        Customer nonmember;
-        for(Discount dis:dm.getDiscountList()){
-            System.out.println("Discount"+dis.getDiscountCode()+" , startdate:"+dis.getDiscountStartDate());
-        }
-        
-        
-        try{
-         nonmember=new NonMember(Constants.CONST_CUST_NONMEMBER_ID,Constants.CONST_CUST_NONMEMBER_NAME);
-        }catch(Exception e){
-            System.out.println("Exception e"+e);
-        }
-        
-        Discount disMemberFirstTime;
-        Discount disMemberMax;
-        Discount disNonMax;
-        String discountCodeFirstTime=ApplicationConfig.getInstance().getValue(ApplicationConfig.KEY_MEMBER_FIRSTTIME_DISCOUNTCODE);
-        
-        System.out.println("Member Firsttime discount:"+discountCodeFirstTime);
-        disMemberFirstTime=dm.getDiscountByCode(discountCodeFirstTime);
-        System.out.println("Discount for first time is:"+disMemberFirstTime);
-        
-        
-        //now getting maxium discount for member(except first discount base on date
-        for(Discount discount:dm.getDiscountList()){
-            //Skip public discounts
-            if(discount.getApplicableFor().equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC)){
-                continue;
-            }
-            
-            System.out.println("Discount:"+discount);
-
-        }
-        
-        
-        //Check if Discount is valid for today regardless for member or public
-        Date today=new Date();
-        for(Discount discount:dm.getDiscountList()){
-            System.out.println("Discount:"+discount.getDiscountCode()+" is valid?"+discount.isDiscountValidForDate(today));
-            ;
-        }
-        
-        
-        //Check max Discount
-        Customer notMember;
-        Discount maxDiscount;
-        try{
-            notMember=new NonMember(Constants.CONST_CUST_NONMEMBER_ID,Constants.CONST_CUST_NONMEMBER_NAME);
-            maxDiscount=dm.getMaxDiscount(new Date(), notMember);
-            System.out.println("Max discount is :"+maxDiscount);
-        }catch(Exception e){
-            
-        }
-        
-        
-        
-        
-        
-    
-    }
+		@After
+		public void tearDown() {
+			mdis1 = null;
+			mdis2= null;
+			pdis3=null;
+			pdis4 = null;
+			  
+		}
+		
+		
+		@Test
+	public void testEquals() {
+		assertEquals(mdis1.getClass(), new MemberDiscount().getClass());
+	}
 }
+
