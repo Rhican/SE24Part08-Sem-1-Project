@@ -139,10 +139,10 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 	}
 	
 	public void performOrderItem() {
+		
 		if (productTable.getSelectedRow() != -1) {
 			String producID=productTable.getValueAt(productTable.getSelectedRow(),0).toString();
 			Product product = manager.getMgrProduct().getProductByID(producID);
-			//Product product = manager.getMgrProduct().getProductList().get(selectedRow);
 			if (product == null) {
 				try {
 					//throw new Exception("Error in loading product information");
@@ -156,6 +156,10 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 			}
 			
 		try{
+			int dialogResult = JOptionPane.showConfirmDialog(getRootPane(),"Order the select porduct","Order Product Confirmation",JOptionPane.OK_CANCEL_OPTION);
+			if(dialogResult == JOptionPane.CANCEL_OPTION){
+				return;
+			}
 			manager.getMgrProduct().orderProdcut(product, product.getOrderQty());
 			refersh();
 			
@@ -170,6 +174,11 @@ public class CheckInventoryPanel  extends JPanel implements INotificable{
 	}
 	
 	public void performOrderAllItem(){
+		int dialogResult = JOptionPane.showConfirmDialog(getRootPane(),"Order all prodcuts in table","Order Product Confirmation",JOptionPane.OK_CANCEL_OPTION);
+		if(dialogResult == JOptionPane.CANCEL_OPTION){
+			return;
+		}
+		
 		 try{
 			 manager.getMgrProduct().orderAllLowInventoryProdcut();
 		 }
