@@ -9,6 +9,8 @@ import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationExcept
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
 import edu.nus.iss.SE24PT8.universityStore.manager.DiscountManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.MemberManager;
+import edu.nus.iss.SE24PT8.universityStore.util.ApplicationConfig;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
@@ -20,8 +22,8 @@ import java.util.Date;
 public class Transaction implements TransactionInterface {
 	private static long transactionIDCount = 0;
 	private static NonMember nonMember = null;
-	private static final double dollarToRoyalPointRate = 0.1f; // Every $10 spent = 1 point
-	private static final double royalPointToDollarRate = 0.05f;// Every 20 points = 1 dollar
+	private static double dollarToRoyalPointRate; // Every $10 spent = 1 point
+	private static double royalPointToDollarRate;// Every 20 points = 1 dollar
 	
 	private long id;
 	private String memberID;
@@ -46,6 +48,11 @@ public class Transaction implements TransactionInterface {
 		this.discount = getDefaultDiscount();
 		this.redeemedPoint = 0;
 		this.saleItems = new HashMap<String, SaleItem>();
+		
+		dollarToRoyalPointRate = Double.parseDouble(ApplicationConfig.getInstance()
+				.getValue(ApplicationConfig.DOLLER_TO_POINTS_RATE));
+		royalPointToDollarRate = Double.parseDouble(ApplicationConfig.getInstance()
+				.getValue(ApplicationConfig.LOYAL_TO_POINTS_RATE));
 	}
 
 	// - Setters -------------------------------------------------------
