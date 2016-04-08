@@ -20,6 +20,8 @@ public class ApplicationConfig {
     public static final String KEY_MEMBER_FIRSTTIME_DISCOUNTCODE="MEMBERFIRSTDISCOUNTCODE";
     public static final String KEY_DATA_ROOT_FOLDER="DATAROOTFOLDER"; //
     public static final String KEY_DISCOUNT_CONVERSION_RATE="DISCOUNTCONVERSIONRATE";  //Number of points required to be convereted to 1 dollar
+    public static final String DOLLER_TO_POINTS_RATE = "DollarToRoyalPointRate"; //
+    public static final String LOYAL_TO_POINTS_RATE = "LoyalPointToDollarRate"; //
     
     private ApplicationConfig() {
         properties=new Properties();

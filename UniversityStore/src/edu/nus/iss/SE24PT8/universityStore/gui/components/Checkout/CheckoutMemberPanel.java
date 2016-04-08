@@ -182,6 +182,8 @@ public class CheckoutMemberPanel extends JPanel {
 				int point = 0;
 				try {
 					point = Integer.parseInt(textFieldRedeemPoint.getText().replace(",", ""));
+					if (point > member.getLoyaltyPoints())
+						textFieldRedeemPoint.setText(Integer.toString(member.getLoyaltyPoints()));
 				} catch (NumberFormatException ex) {
 					textFieldRedeemPoint.setText(Integer.toString(member.getLoyaltyPoints()));
 				}
