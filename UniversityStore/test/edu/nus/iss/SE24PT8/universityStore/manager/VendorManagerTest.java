@@ -28,18 +28,29 @@ public class VendorManagerTest {//extends TestCase{
 	VendorManager venManager;
     
     @Before
-    public void setUp() throws BadCategoryException {
+    public void setUp() {
 		catManager = CategoryManager.getInstance();
 		venManager = VendorManager.getInstance();
-		catManager.addCategory("PEN", "PENSIL");
-		catManager.addCategory("MOB", "MOBILE");
+		try {
+			catManager.addCategory("PEN", "PENSIL");
+			catManager.addCategory("MOB", "MOBILE");
+		} catch (BadCategoryException e) {
+		}
     }
     
     @After
     public void tearDown() {
     }
-
+    
     @Test
+    public void testAllMethods() throws BadVendorException{
+    	testVendorMgrInstance();
+    	testAddVendor();
+    	testVendorListBycat();
+    	testGetVendors();
+    }
+
+    
     public void testVendorMgrInstance(){
         VendorManager vendorManager1 = VendorManager.getInstance();
         VendorManager vendorManager2 = VendorManager.getInstance();
@@ -48,7 +59,7 @@ public class VendorManagerTest {//extends TestCase{
         assertTrue(vendorManager1.equals(vendorManager2)); // Singleton test    	
     }
     
-    @Test
+    
     public void testAddVendor(){
     	assertNotNull(venManager.getVendorsListByCategory("PEN"));
     	try {
@@ -85,7 +96,6 @@ public class VendorManagerTest {//extends TestCase{
 			assertTrue(e.getMessage().equals(Constants.CONST_VENDOR_ERR_NAMEMISSING));
 		}
     	try {
-			venManager.addVendor("PEN", "RENOLD", "Number 1 brand in Asia");
 			venManager.addVendor("PEN", "Atlas", "Atlas");	
 			venManager.addVendor("MOB", "SAMSUNG", "SAMSUNG");	
 			venManager.addVendor("MOB", "IPHONE", "A Apple brand");				
@@ -95,14 +105,14 @@ public class VendorManagerTest {//extends TestCase{
     	
     }
     
-    @Test
+    
     public void testVendorListBycat(){
-    	assertTrue(venManager.getVendorsListByCategory("PEN").size() == 3);
+    	assertTrue(venManager.getVendorsListByCategory("PEN").size() == 2);
     	assertTrue(venManager.getVendorsListByCategory("MOB").size() == 2);
-    	assertTrue(venManager.getVendorsListByCategory("XXX").size() == 0);
+    	assertNull(venManager.getVendorsListByCategory("XXX"));
     }
     
-    @Test
+    
     public void testGetVendors() throws BadVendorException{
     	HashMap<String, ArrayList<Vendor>> vendors = venManager.getVendors();
     	assertTrue(vendors.get("MOB").size() == 2);

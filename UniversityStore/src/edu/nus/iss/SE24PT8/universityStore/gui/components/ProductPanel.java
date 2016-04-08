@@ -41,6 +41,7 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	public ProductPanel() {
 		super("Product",allowedOperations);
 		SubjectManager.getInstance().addNotification("ProductPanel", "Product", this);
+		SubjectManager.getInstance().addNotification("InventoryPanel", "Inventory", this);
 		refersh();
 	}
 
@@ -121,6 +122,11 @@ public class ProductPanel extends BaseModulePanel implements INotificable {
 	public void update(String group, String topic, String data) {
 		if (group.equals("ProductPanel") && topic.equals("Product")) {
 			if (data.equalsIgnoreCase("Add")) {
+				refersh();
+			}
+		}
+		if (group.equals("InventoryPanel") && topic.equals("Inventory")) {
+			if (data.equalsIgnoreCase("orderItem") || data.equalsIgnoreCase("orderAll")) {
 				refersh();
 			}
 		}
