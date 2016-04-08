@@ -33,6 +33,7 @@ public class MemberPanel extends BaseModulePanel implements INotificable {
 	public MemberPanel(){
 		super("Member", allowedOperations);
 		SubjectManager.getInstance().addNotification("MemberPanel", "Member", this);
+		refresh();
 	}
     
 	public void refresh(){

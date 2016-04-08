@@ -28,10 +28,10 @@ public class MemberManagerTest extends TestCase{
     
      @Test
      public void testMemberManagerInstance() {
-       System.out.println("1:testMemberManagerInstance");
-       MemberManager memberManager=MemberManager.getInstance();
-       assertFalse(memberManager.getMembers()==null);
-       assertFalse(memberManager.getMembers().size()==0);
+       System.out.println("1 :testMemberManagerInstance");
+       MemberManager memberManager1=MemberManager.getInstance();
+       MemberManager memberManager2=MemberManager.getInstance();
+       assertEquals(memberManager1,memberManager2);
      }
 
      @Test
@@ -39,21 +39,21 @@ public class MemberManagerTest extends TestCase{
      {
         System.out.println("2:testAddMember");
         MemberManager memberManager=MemberManager.getInstance();
-        if(memberManager.getMember( "G6365444U")==null)
+        if(memberManager.getMember("Q00015123")==null)
         {
-        memberManager.addMember("ThiriLwin","G6365444U");
+        memberManager.addMember("Test member 1","Q00015123");
         }
-        if(memberManager.getMember( "G6365499U")==null)
+        if(memberManager.getMember("Q00015124")==null)
         {
-        memberManager.addMember("Mi Site","G6365499U");
+        memberManager.addMember("Test member 1","Q00015124");
         }
-        if(memberManager.getMember("G6365498U")==null)
+        if(memberManager.getMember("Q00015125")==null)
         {
-        memberManager.addMember("Theingi","G6365498U");
+        memberManager.addMember("Lim","Q00015125");
         }
         
-        Member m=memberManager.getMember("G6365499U");
-        assertEquals(m.getName(),"Mi Site");
+        Member m=memberManager.getMember("Q00015124");
+        assertEquals(m.getName(),"Test member 1");
      }
      
      @Test
@@ -63,15 +63,15 @@ public class MemberManagerTest extends TestCase{
         MemberManager memberManager=MemberManager.getInstance();
         if(memberManager.getMember( "A123456")==null)
         {
-        memberManager.addMember("FirstMember", "A123456");
+        memberManager.addMember("MemberTest1", "A123456");
         }
         if(memberManager.getMember("B123456")==null)
         {
-        memberManager.addMember("SecondMember", "B123456");
+        memberManager.addMember("MemberTest2", "B123456");
         }
         if(memberManager.getMember("C123456") == null)
         {
-        memberManager.addMember("Third member", "C123456");
+        memberManager.addMember("MemberTest3", "C123456");
         }
         memberManager.removeMember("A123456");
         assertNull( memberManager.getMember("A123456"));
@@ -83,11 +83,11 @@ public class MemberManagerTest extends TestCase{
      {
           System.out.println("5:testisFirstTransaction");
           MemberManager memberManager=MemberManager.getInstance();
-          if(memberManager.getMember("B123456") == null)
+          if(memberManager.getMember("D123456") == null)
           {
-            memberManager.addMember("SecondMember", "B123456");
+        	memberManager.addMember("MemberTest4", "D123456");
           }
-          assertTrue(memberManager.isFirstTransaction("B123456"));
+          assertTrue(memberManager.isFirstTransaction("D123456"));
      }
      
      @Test
@@ -102,12 +102,12 @@ public class MemberManagerTest extends TestCase{
      public void testGetMember() throws BadMemberRegistrationException{
          System.out.println("7:testGetMember");
           MemberManager memberManager=MemberManager.getInstance();
-          if(memberManager.getMember("B123456")==null)
+          if(memberManager.getMember("J00015123")==null)
           {
-          memberManager.addMember("SecondMember", "B123456");
+          memberManager.addMember("J00015123", "J00015123");
           }
-          Member m=memberManager.getMember("B123456");
-          assertEquals(m.getName(),"SecondMember");
+          Member m=memberManager.getMember("J00015123");
+          assertEquals(m.getName(),"J00015123");
      }
   
      @Test
@@ -115,14 +115,14 @@ public class MemberManagerTest extends TestCase{
      {
           System.out.println("8:testAddLoyaltyPoints");
           MemberManager memberManager=MemberManager.getInstance();
-          if(memberManager.getMember("LPOINT123") == null)
+          if(memberManager.getMember("Point12345") == null)
           {
-            memberManager.addMember("LPoint test account", "LPOINT123");
-            memberManager.addLoyaltyPoints("LPOINT123", 1000);
-            Member m=memberManager.getMember("LPOINT123");
+            memberManager.addMember("LoyaltyAccount", "Point12345");
+            memberManager.addLoyaltyPoints("Point12345", 1000);
+            Member m=memberManager.getMember("Point12345");
             assertEquals(m.getLoyaltyPoints(),1000);
-            memberManager.addLoyaltyPoints("LPOINT123", 750);
-            Member m2=memberManager.getMember("LPOINT123");
+            memberManager.addLoyaltyPoints("Point12345", 750);
+            Member m2=memberManager.getMember("Point12345");
             assertEquals(m2.getLoyaltyPoints(),1750);
           }
      }
@@ -131,17 +131,17 @@ public class MemberManagerTest extends TestCase{
       @Test
      public void testRedeemPoints() throws BadMemberRegistrationException
      {
-          System.out.println("8:testRedeemPoints");
-          MemberManager memberManager=MemberManager.getInstance();
+         System.out.println("8:test  Redeem Points");
+         MemberManager memberManager=MemberManager.getInstance();
          if(memberManager.getMember("L123") == null)
-          {
-          memberManager.addMember("LoyaltyTest", "L123");
-          memberManager.addLoyaltyPoints("L123", 1000);
-          Member m=memberManager.getMember("L123");
-          assertEquals(m.getLoyaltyPoints(),1000);
-          memberManager.redeemPoints("L123", 750);
-          Member m2=memberManager.getMember("L123");
-          assertEquals(m2.getLoyaltyPoints(),250);
-          }
+         {
+	          memberManager.addMember("LoyaltyTest", "L123");
+	          memberManager.addLoyaltyPoints("L123", 1000);
+	          Member m=memberManager.getMember("L123");
+	          assertEquals(m.getLoyaltyPoints(),1000);
+	          memberManager.redeemPoints("L123", 750);
+	          Member m2=memberManager.getMember("L123");
+	          assertEquals(m2.getLoyaltyPoints(),250);
+         }
      }
 }

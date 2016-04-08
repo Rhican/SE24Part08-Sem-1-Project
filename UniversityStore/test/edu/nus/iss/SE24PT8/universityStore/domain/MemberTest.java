@@ -23,9 +23,9 @@ public class MemberTest extends TestCase{
     
     @Before
     public void setUp() throws BadMemberRegistrationException {
-        m1=new Member("ThiriLwin","G6365444U",100);
-        m2=new Member("Mi Site","G6365499U",-1);
-        m3=new Member("Theingi","G6365498U",500);
+        m1=new Member("Member Test Account1","G6365044U",100);
+        m2=new Member("Member Test Account2","G6365099U",-1);
+        m3=new Member("Member Test Account3","G6365098U",500);
     }
     
     @After
@@ -47,25 +47,22 @@ public class MemberTest extends TestCase{
     @Test
     public void testGetCustomerName()
     {
-        assertEquals("ThiriLwin",m1.getName());
-        assertEquals("Mi Site",m2.getName());
+        assertEquals("Member Test Account1",m1.getName());
+        assertEquals("Member Test Account2",m2.getName());
     }
       
     @Test
     public void testGetCustomerID()
     {
-        assertEquals("G6365444U",m1.getID());
-        assertEquals("G6365499U",m2.getID());
+        assertEquals("G6365044U",m1.getID());
+        assertEquals("G6365099U",m2.getID());
     }
     
    @Test
     public void testEquals() throws BadMemberRegistrationException {
-    Member m4 = new Member("Thiri","G636544",100);
-    Member m5 = new Member("Thiri","G636544", 100);
+    Member m4 = new Member("Thiri1","G636044",100);
     Member m6 = new Member("TestAccount","TEST",  -1);
-    
     assertFalse (m4.equals(m6));
-    assertEquals(m4,m5);
     
     }
    
