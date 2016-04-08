@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.hamcrest.core.IsInstanceOf;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -146,16 +148,27 @@ public class DiscountManager  {
         // Customer is not member, so just check discounts applicable for all
         if(!(customer instanceof Member)){
             for(Discount dis:discountList){
-                //check whether it's applicable for all
+            	
+            	if( dis instanceof MemberDiscount){
+            		continue;
+            	}
+            	
+            	 if(!dis.isDiscountValidForDate(date)){
+                     continue; //continue to next record
+                 }
+            	
+            	
+            	
+              /*  //check whether it's applicable for all
                 if(!(dis.getApplicableFor().equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC))){
                     continue; //continue to next record
-                }
+                }*/
                 
-                //check if it's valid for the date
+                /*//check if it's valid for the date
                 if(!dis.isDiscountValidForDate(date)){
                     continue; //continue to next record
                 }
-                
+                */
                 //get discount amount and compare
                 if(maxAmount<dis.getDiscountPercent()){
                     maxAmount=dis.getDiscountPercent();
@@ -178,9 +191,14 @@ public class DiscountManager  {
                 continue;
             }
             //Skip those public discounts
-            if(dis.getApplicableFor().equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC)){
+           /* if(dis.getApplicableFor().equalsIgnoreCase(Constants.CONST_CUST_TYPE_PUBLIC)){
                 continue;
+            }*/
+            
+            if(!dis.isDiscountValidForDate(date)){
+                continue; //continue to next record
             }
+            
             if(maxAmount<dis.getDiscountPercent()){
                 maxAmount=dis.getDiscountPercent();
                 maxDiscount=dis;
