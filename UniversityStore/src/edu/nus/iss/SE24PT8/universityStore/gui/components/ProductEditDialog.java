@@ -73,6 +73,7 @@ public class ProductEditDialog extends BaseDialogBox{
 		txtQty.setText(String.valueOf(prodcut.getQty()));
 		txtReorderQty.setText(String.valueOf(prodcut.getReorderQty()));
 		txtOrderQty.setText(String.valueOf(prodcut.getOrderQty()));
+		comboCategory.setEnabled(false);
 	}
 
 	protected JPanel createFormPanel() {
