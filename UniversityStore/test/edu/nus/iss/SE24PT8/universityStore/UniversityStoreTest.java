@@ -17,6 +17,7 @@ import edu.nus.iss.SE24PT8.universityStore.domain.VendorTest;
 import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManagerTest;
 import edu.nus.iss.SE24PT8.universityStore.manager.MemberManagerTest;
 import edu.nus.iss.SE24PT8.universityStore.manager.StoreKeeperManagerTest;
+import edu.nus.iss.SE24PT8.universityStore.manager.VendorManagerTest;
 import edu.nus.iss.SE24PT8.universityStore.util.ApplicationConfig;
 import edu.nus.iss.SE24PT8.universityStore.util.DataAdapter;
 import edu.nus.iss.SE24PT8.universityStore.util.FileOperations;
@@ -37,7 +38,7 @@ import junit.framework.TestCase;
 					 MemberManagerTest.class,
 					 StoreKeeperManagerTest.class,
 					 CategoryManagerTest.class,
-					 VendorTest.class})
+					 VendorManagerTest.class})
 
 public class UniversityStoreTest extends TestCase {
 	
