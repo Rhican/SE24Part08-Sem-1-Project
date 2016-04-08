@@ -38,6 +38,7 @@ import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.TransactionManager;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
 /**
 * Checkout Main panel 
@@ -341,7 +342,14 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	}
 
 	private void UpdatePaymentButton() {
-		btnPay.setEnabled(transaction.getSaleItems().size() > 0 && !btnPage.getText().equalsIgnoreCase("Next"));
+		btnPay.setEnabled(false);
+		if (transaction.getNetAmount() < 0){
+			JOptionPane.showMessageDialog(getRootPane(),
+					"Net Amount canno't be negative. Please adjust the redeem points",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		} else {
+			btnPay.setEnabled(transaction.getSaleItems().size() > 0 && !btnPage.getText().equalsIgnoreCase("Next"));			
+		}
 	}
 
 	private String formatDollar(double value) {
