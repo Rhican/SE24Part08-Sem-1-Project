@@ -498,6 +498,7 @@ public class DataAdapter {
 		for (int start = 0; start < dataLines.size(); start++) {
 			ArrayList<ArrayList<String>> transactionSaleItems = new ArrayList<ArrayList<String>>();
 			ArrayList<String> firstSaleItem = dataLines.get(start);
+			if (firstSaleItem == null || firstSaleItem.size() < 5) continue;
 			transactionSaleItems.add(firstSaleItem);
 			String idString = firstSaleItem.get(0).trim();
 			for (int end = start + 1; end < dataLines.size(); end++) {
