@@ -25,6 +25,9 @@ import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 
+/**
+ * @author misitesawn
+ */
 public class ProductEditDialog extends BaseDialogBox{
 	/**
 	 * 

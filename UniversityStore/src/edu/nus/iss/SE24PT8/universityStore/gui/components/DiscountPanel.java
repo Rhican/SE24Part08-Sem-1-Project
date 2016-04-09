@@ -19,6 +19,9 @@ import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
+/**
+ * @author misitesawn
+ */
 
 public class DiscountPanel extends BaseModulePanel implements INotificable {
 

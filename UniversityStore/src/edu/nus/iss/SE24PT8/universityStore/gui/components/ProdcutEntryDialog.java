@@ -24,6 +24,9 @@ import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.ComboItem;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 
+/**
+ * @author misitesawn
+ */
 public class ProdcutEntryDialog extends BaseDialogBox{
 
 private static final long serialVersionUID = 1L;

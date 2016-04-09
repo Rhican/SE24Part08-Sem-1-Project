@@ -33,6 +33,10 @@ import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.gui.mainWindow.MainWindow;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
 
+/**
+ * @author misitesawn
+ */
+
 public class DiscountEditDialog extends BaseDialogBox{
 	
 	/**

@@ -1,38 +1,33 @@
 package edu.nus.iss.SE24PT8.universityStore.gui.components.Checkout;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.GroupLayout.Group;
 import javax.swing.table.DefaultTableModel;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
-import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseModulePanel;
 import edu.nus.iss.SE24PT8.universityStore.gui.common.BaseTable;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.ProdcutEntryDialog;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.INotificable;
 import edu.nus.iss.SE24PT8.universityStore.gui.framework.SubjectManager;
 import edu.nus.iss.SE24PT8.universityStore.main.Store;
-import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
+
+/**
+ * 
+ * @author misitesawn
+ * 
+ */
 
 public class CheckInventoryPanel  extends JPanel implements INotificable{
 
