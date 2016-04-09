@@ -12,7 +12,6 @@ import org.junit.Test;
 import edu.nus.iss.SE24PT8.universityStore.domain.Category;
 import edu.nus.iss.SE24PT8.universityStore.domain.Product;
 import edu.nus.iss.SE24PT8.universityStore.exception.BadProductException;
-import edu.nus.iss.SE24PT8.universityStore.gui.components.ProdcutEntryDialog;
 import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import junit.framework.TestCase;
 
