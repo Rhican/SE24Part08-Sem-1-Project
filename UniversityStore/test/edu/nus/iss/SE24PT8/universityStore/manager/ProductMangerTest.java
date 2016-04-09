@@ -99,12 +99,5 @@ public class ProductMangerTest extends TestCase{
     
    
     
-    @Test 
-    public void getLoserInventoryProdcutsTest(){
-        
-    }
-    
-    
-    
     
 }
