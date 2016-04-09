@@ -342,8 +342,8 @@ public class CheckoutPanel extends JPanel implements INotificable {
 	}
 
 	private void UpdatePaymentButton() {
-		btnPay.setEnabled(false);
 		if (transaction.getNetAmount() < 0){
+			btnPay.setEnabled(false);
 			JOptionPane.showMessageDialog(getRootPane(),
 					"Net Amount canno't be negative. Please adjust the redeem points",
 					"Error", JOptionPane.ERROR_MESSAGE);
