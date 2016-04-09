@@ -33,6 +33,7 @@ public class MemberPanel extends BaseModulePanel implements INotificable {
 	public MemberPanel(){
 		super("Member", allowedOperations);
 		SubjectManager.getInstance().addNotification("MemberPanel", "Member", this);
+		SubjectManager.getInstance().addNotification("CheckOutPanel", "CheckOut", this);
 		refresh();
 	}
     
@@ -95,6 +96,11 @@ public class MemberPanel extends BaseModulePanel implements INotificable {
 	public void update(String group,String topic,String data){
 		if(group.equals("MemberPanel") && topic.equals("Member")){
 			if(data.equals("Add")){
+				refresh();
+			}
+		}
+		if(group.equals("CheckOutPanel") && topic.equals("CheckOut")){
+			if(data.equals("Complete")){
 				refresh();
 			}
 		}
