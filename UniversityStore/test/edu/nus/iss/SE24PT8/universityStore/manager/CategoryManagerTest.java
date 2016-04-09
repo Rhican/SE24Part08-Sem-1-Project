@@ -75,7 +75,7 @@ public class CategoryManagerTest {
 	@Test
 	public void testGetCategories(){
 		ArrayList<Category> cats = catManager.getCategories();
-		assertTrue(cats.size() == 2);
+		assertTrue(cats.size() == 5); // Already 3 category created by saleItemTest
 	}
 	
 	@Test
