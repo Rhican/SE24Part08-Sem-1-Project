@@ -1,5 +1,7 @@
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,8 +11,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.exception.TransactionException;
+import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.MemberManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
+import edu.nus.iss.SE24PT8.universityStore.util.Constants;
 import junit.framework.TestCase;
 
 /**
@@ -27,6 +31,15 @@ public class TransactionTest extends TestCase {
 		passCount = 0;
 		passTotal = 9;
 		
+		
+	}
+	
+	@Before
+	public void setUp() throws Exception {
+		trans1 = new Transaction();
+		trans2 = new Transaction();
+		trans3 = new Transaction();		
+		
 		//Ensure test member are in system
 		MemberManager memberManager = MemberManager.getInstance();
 		if (memberManager.getMember("100001") == null ) MemberManager.getInstance().addMember("User1", "100001");
@@ -34,6 +47,20 @@ public class TransactionTest extends TestCase {
 		if (memberManager.getMember("100003") == null ) MemberManager.getInstance().addMember("User3", "100003");
 		
 		//Ensure test product are in system
+		// Add categories
+		if (CategoryManager.getInstance().getCategory("CLO") == null) {
+			CategoryManager.getInstance().addCategory("CLO", "test data- CLO");
+		}
+		
+		if (CategoryManager.getInstance().getCategory("MUG") == null) {
+			CategoryManager.getInstance().addCategory("MUG", "test data- MUG");
+		}
+		
+		if (CategoryManager.getInstance().getCategory("STA") == null) {
+			CategoryManager.getInstance().addCategory("STA", "test data- STA");
+		}
+		
+		// Add products
 		if (ProductManager.getInstance().getProductByID("CLO/1") == null) {
 			try { 
 				ProductManager.getInstance().addNewProduct("Centenary Jumper", "A really nice momento", 100, 21.45f,
@@ -61,13 +88,50 @@ public class TransactionTest extends TestCase {
 				fail("Fail to Create product in setup");
 			}
 		}
-	}
-	
-	@Before
-	public void setUp() throws Exception {
-		trans1 = new Transaction();
-		trans2 = new Transaction();
-		trans3 = new Transaction();		
+		
+		MemberDiscount mdis1, mdis2;
+		OtherDiscount pdis3, pdis4;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-M-dd");	
+		
+		mdis1 = new MemberDiscount();
+		mdis1.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		mdis1.setDiscountCode("CHRIS");
+		mdis1.setDiscountDes("Christmas Sale");
+		mdis1.setDiscountPercent(20);
+		mdis1.setIsStartDateAlways(false);
+		mdis1.setDiscountStartDate(dateFormat.parse("2015-12-12"));
+		mdis1.setDiscountPeriod(10);
+		mdis1.setIsPeriodAlways(false);
+		
+		mdis2 = new MemberDiscount();
+		mdis2.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		mdis2.setDiscountCode("EXCM");
+		mdis2.setDiscountDes("Member Special");
+		mdis2.setDiscountPercent(20);
+		mdis2.setIsStartDateAlways(true);
+		mdis2.setDiscountStartDate(null);
+		mdis2.setDiscountPeriod(0);
+		mdis2.setIsPeriodAlways(true);
+		
+		pdis3 = new OtherDiscount();
+		pdis3.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		pdis3.setDiscountCode("SCH");
+		pdis3.setDiscountDes("School Start Sale");
+		pdis3.setDiscountPercent(30);
+		pdis3.setIsStartDateAlways(false);
+		pdis3.setDiscountStartDate(dateFormat.parse("2015-06-12"));
+		pdis3.setDiscountPeriod(0);
+		pdis3.setIsPeriodAlways(true);
+		
+		pdis4 = new OtherDiscount();
+		pdis4.setApplicableFor(Constants.CONST_CUST_TYPE_PUBLIC);
+		pdis4.setDiscountCode("SUMMER");
+		pdis4.setDiscountDes("SUMMER Sale");
+		pdis4.setDiscountPercent(10);
+		pdis4.setIsStartDateAlways(false);
+		pdis4.setDiscountStartDate(dateFormat.parse("2015-03-01"));
+		pdis4.setDiscountPeriod(30);
+		pdis4.setIsPeriodAlways(false);
 	}
 
 	@After

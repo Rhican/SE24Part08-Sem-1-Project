@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.nus.iss.SE24PT8.universityStore.domain.Transaction;
@@ -18,8 +18,11 @@ import junit.framework.TestCase;
 */
 public class TransactionManagerTest extends TestCase{
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		if (CategoryManager.getInstance().getCategory("CLO") == null) {
+			CategoryManager.getInstance().addCategory("CLO", "test data- CLO");
+		}
 		if (ProductManager.getInstance().getProductByID("CLO/1") == null) {
 			try { 
 				ProductManager.getInstance().addNewProduct("Centenary Jumper", "A really nice momento", 100, 21.45f,

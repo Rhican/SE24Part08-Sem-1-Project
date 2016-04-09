@@ -1,13 +1,13 @@
 package edu.nus.iss.SE24PT8.universityStore.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.nus.iss.SE24PT8.universityStore.exception.BadMemberRegistrationException;
+import edu.nus.iss.SE24PT8.universityStore.manager.CategoryManager;
 import edu.nus.iss.SE24PT8.universityStore.manager.ProductManager;
 import junit.framework.TestCase;
 
@@ -21,6 +21,30 @@ public class SaleItemTest extends TestCase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		
+	}
+	
+	@Before
+	public void setUp() throws Exception {
+		
+		saleItem1 = new SaleItem("CLO/1", 1);
+		saleItem2 = new SaleItem(ProductManager.getInstance().getProductByID("MUG/1"), 2);
+		
+		//Ensure test product are in system
+		// Add categories
+		if (CategoryManager.getInstance().getCategory("CLO") == null) {
+			CategoryManager.getInstance().addCategory("CLO", "test data- CLO");
+		}
+		
+		if (CategoryManager.getInstance().getCategory("MUG") == null) {
+			CategoryManager.getInstance().addCategory("MUG", "test data- MUG");
+		}
+		
+		if (CategoryManager.getInstance().getCategory("STA") == null) {
+			CategoryManager.getInstance().addCategory("STA", "test data- STA");
+		}
+		
+		// Add products
 		if (ProductManager.getInstance().getProductByID("CLO/1") == null) {
 			try { 
 				ProductManager.getInstance().addNewProduct("Centenary Jumper", "A really nice momento", 100, 21.45f,
@@ -48,13 +72,6 @@ public class SaleItemTest extends TestCase {
 				fail("Fail to Create product in setup");
 			}
 		}
-	}
-	
-	@Before
-	public void setUp() throws BadMemberRegistrationException {
-		
-		saleItem1 = new SaleItem("CLO/1", 1);
-		saleItem2 = new SaleItem(ProductManager.getInstance().getProductByID("MUG/1"), 2);
 	}
 
 	@After
