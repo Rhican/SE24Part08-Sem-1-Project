@@ -76,7 +76,6 @@ public final class Constants {
     
     //Added by MiSite
     public static final String CONST_DISCOUNT_ERR_LONG_CODE = "Code should contain three characters";
-    public static final String CONST_DISCOUNT_ERR_CODEEXIST = "Discount code already exist";
     public static final String CONST_DISCOUNT_ERR_NOTFOUND = "Discount dosent not exist";
     public static final String CONST_DISCOUNT_MSG_UPDATE_SUCUESS = "Discount updated sucessfully";
     
